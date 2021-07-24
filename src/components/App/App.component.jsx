@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { lightTheme } from './App.theme';
 import { GlobalStyle } from './App.style';
+import Header from '../Header';
 import random from '../../utils/random';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
+      <Header />
       <h1>React Bootcamp 2021</h1>
     </ThemeProvider>
   );

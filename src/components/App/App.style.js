@@ -2,19 +2,16 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-size: 1.125rem;
-    line-height: 1.6;
-    font-weight: 400;
-    font-family: sans-serif;
     box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.6;
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
   body {
-    margin: 0;
-    padding: 0;
-    text-rendering: optimizeLegibility;
     background-image: linear-gradient(
       120deg,
       ${(props) => props.theme.backgroundColors[0]} 0,
@@ -23,8 +20,11 @@ const GlobalStyle = createGlobalStyle`
       ${(props) => props.theme.backgroundColors[3]} 79%,
       ${(props) => props.theme.backgroundColors[4]} 100%
     );
-    background-size: 400% 400%;
     background-position: var(--bg-position);
+    background-size: 400% 400%;
+    margin: 0;
+    padding: 0;
+    text-rendering: optimizeLegibility;
     transition: background-position 2s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
