@@ -10,7 +10,8 @@
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "styled-components": "^5.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -49,13 +50,18 @@
   "lint-staged": {
     "*.{js, jsx, css, json}": [
       "yarn run lint:fix",
-      "pretty-quick --staged",
-      "git add"
+      "pretty-quick --staged"
     ]
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/**/index.js"
+    ]
   }
 }
