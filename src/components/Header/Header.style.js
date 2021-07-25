@@ -52,7 +52,7 @@ const Search = styled.input`
 `;
 
 const OptionsMenu = styled.div`
-  @media (max-width: 960px) {
+  @media (max-width: 600px) {
     display: none;
   }
 `;
