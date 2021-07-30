@@ -3,11 +3,11 @@ import React from 'react';
 import { drawerIcon, searchIcon, loginIcon } from './Header.icon';
 import {
   StyledHeader,
-  HeaderWrapper,
+  Wrapper,
   DrawerButton,
   SearchWrapper,
   Search,
-  OptionsMenu,
+  Options,
   Toggle,
   LoginButton,
   Icon,
@@ -17,7 +17,7 @@ import {
 function Header() {
   return (
     <StyledHeader>
-      <HeaderWrapper>
+      <Wrapper>
         <DrawerButton aria-label="drawer">
           <Icon viewBox="0 0 24 24">
             <path d={drawerIcon} />
@@ -30,7 +30,7 @@ function Header() {
           <Search aria-label="search" defaultValue="wizeline" />
         </SearchWrapper>
         <div style={{ flexGrow: 1 }} />
-        <OptionsMenu>
+        <Options>
           <Toggle aria-label="theme" type="checkbox" />
           <span style={{ fontSize: '0.8em' }}>Dark Mode</span>
           <LoginButton aria-label="login">
@@ -38,8 +38,8 @@ function Header() {
               <path d={loginIcon} />
             </Icon>
           </LoginButton>
-        </OptionsMenu>
-      </HeaderWrapper>
+        </Options>
+      </Wrapper>
     </StyledHeader>
   );
 }

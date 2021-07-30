@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { CardListWrapper, Message } from './CardList.style';
-import Card from '../Card';
+import { StyledVideoList, Message } from './VideoList.style';
+import VideoCard from '../VideoCard';
 import { getVideos } from '../../utils/youtubeAPI';
 import charCodeReplace from '../../utils/charCodeReplace';
 
-function CardList() {
+function VideoList() {
   const videos = getVideos();
   const cards =
     videos.length === 0 ? (
@@ -13,7 +13,7 @@ function CardList() {
     ) : (
       videos.map((video) => {
         return (
-          <Card
+          <VideoCard
             key={video.id.videoId}
             image={video.snippet.thumbnails.medium.url}
             title={charCodeReplace(video.snippet.title)}
@@ -22,11 +22,7 @@ function CardList() {
         );
       })
     );
-  return (
-    <>
-      <CardListWrapper>{cards}</CardListWrapper>
-    </>
-  );
+  return <StyledVideoList>{cards}</StyledVideoList>;
 }
 
-export default CardList;
+export default VideoList;

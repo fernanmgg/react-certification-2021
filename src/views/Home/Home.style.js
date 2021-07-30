@@ -5,11 +5,11 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const HomeWrapper = styled.div`
+const Wrapper = styled.div`
   background-color: ${(props) => props.theme.backgroundTransparent};
   display: flex;
   justify-content: center;
   padding: 24px 0;
 `;
 
-export { Title, HomeWrapper };
+export { Title, Wrapper };

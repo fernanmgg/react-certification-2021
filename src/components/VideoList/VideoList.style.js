@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const CardListWrapper = styled.div`
+const StyledVideoList = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
@@ -27,4 +27,4 @@ const Message = styled.h2`
   width: 100%;
 `;
 
-export { CardListWrapper, Message };
+export { StyledVideoList, Message };

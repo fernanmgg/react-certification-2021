@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import Card from './Card.component';
+import VideoCard from './VideoCard.component';
 
-describe('Card UI tests', () => {
+describe('VideoCard UI tests', () => {
   test('renders card with correct props', () => {
     render(
-      <Card
+      <VideoCard
         key="1"
         image="Test image"
         title="Test title"

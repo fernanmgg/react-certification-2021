@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import CardList from './CardList.component';
+import VideoList from './VideoList.component';
 import * as youtubeAPI from '../../utils/youtubeAPI';
-import { mockedVideos } from './CardList.test.mock';
+import { mockedVideos } from './VideoList.test.mock';
 
 youtubeAPI.getVideos = jest.fn();
 
-describe('CardList UI tests', () => {
+describe('VideoList UI tests', () => {
   test('renders video cards', () => {
     youtubeAPI.getVideos.mockReturnValue(mockedVideos);
-    render(<CardList />);
+    render(<VideoList />);
     const title1 = screen.getByText(/test title 1/i);
     const title2 = screen.getByText(/test title 2/i);
     const title3 = screen.getByText(/test title 3/i);
@@ -27,7 +27,7 @@ describe('CardList UI tests', () => {
 
   test('renders message if there are no videos', () => {
     youtubeAPI.getVideos.mockReturnValue([]);
-    render(<CardList />);
+    render(<VideoList />);
     const text = screen.getByText(/no videos found/i);
     expect(text).toBeInTheDocument();
   });

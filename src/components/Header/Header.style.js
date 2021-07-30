@@ -6,7 +6,7 @@ const StyledHeader = styled.header`
   color: ${(props) => props.theme.text};
 `;
 
-const HeaderWrapper = styled.div`
+const Wrapper = styled.div`
   align-items: center;
   display: flex;
   min-height: 64px;
@@ -51,7 +51,7 @@ const Search = styled.input`
   }
 `;
 
-const OptionsMenu = styled.div`
+const Options = styled.div`
   @media (max-width: 600px) {
     display: none;
   }
@@ -86,11 +86,11 @@ const InlineIcon = styled(Icon)`
 
 export {
   StyledHeader,
-  HeaderWrapper,
+  Wrapper,
   DrawerButton,
   SearchWrapper,
   Search,
-  OptionsMenu,
+  Options,
   Toggle,
   LoginButton,
   Icon,
