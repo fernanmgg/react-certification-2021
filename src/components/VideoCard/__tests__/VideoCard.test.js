@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import VideoCard from './VideoCard.component';
+import VideoCard from '../VideoCard.component';
 
 describe('VideoCard UI tests', () => {
   test('renders card with correct props', () => {

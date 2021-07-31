@@ -1,16 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import VideoList from './VideoList.component';
-import * as youtubeAPI from '../../utils/youtubeAPI';
-import { mockedVideos } from './VideoList.test.mock';
-
-youtubeAPI.getVideos = jest.fn();
+import VideoList from '../VideoList.component';
+import { mockedVideos } from '../VideoList.mock';
 
 describe('VideoList UI tests', () => {
   test('renders video cards', () => {
-    youtubeAPI.getVideos.mockReturnValue(mockedVideos);
-    render(<VideoList />);
+    render(<VideoList videos={mockedVideos} loading={false} error={false} />);
     const title1 = screen.getByText(/test title 1/i);
     const title2 = screen.getByText(/test title 2/i);
     const title3 = screen.getByText(/test title 3/i);
@@ -26,9 +22,20 @@ describe('VideoList UI tests', () => {
   });
 
   test('renders message if there are no videos', () => {
-    youtubeAPI.getVideos.mockReturnValue([]);
-    render(<VideoList />);
-    const text = screen.getByText(/no videos found/i);
+    render(<VideoList videos={[]} loading={false} error={false} />);
+    const text = screen.queryByText(/search for videos.../i);
+    expect(text).toBeInTheDocument();
+  });
+
+  test('renders message if the content is loading', () => {
+    render(<VideoList videos={[]} loading error={false} />);
+    const text = screen.queryByText(/loading.../i);
+    expect(text).toBeInTheDocument();
+  });
+
+  test('renders message if there is an error', () => {
+    render(<VideoList videos={[]} loading={false} error />);
+    const text = screen.queryByText(/error getting videos. try again later.../i);
     expect(text).toBeInTheDocument();
   });
 });

@@ -1,7 +1,9 @@
 function charCodeReplace(input) {
-  return input.replace(/&#(\d+);/g, (_, code) => {
-    return String.fromCharCode(parseInt(code, 10));
-  });
+  return input
+    .replace(/&#(\d+);/g, (_, code) => {
+      return String.fromCharCode(parseInt(code, 10));
+    })
+    .replace(/&amp;/g, '&');
 }
 
 export default charCodeReplace;

@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { lightTheme } from './App.theme';
 import { GlobalStyle } from './App.style';
+import { lightTheme } from './App.theme';
 import Header from '../Header';
 import Content from '../../views/Content';
+import useFetch from '../../utils/hooks/useFetch';
 import random from '../../utils/random';
 
 function App() {
-  useEffect(() => {
+  const [search, setSearch] = useState('');
+  const { videos, loading, error } = useFetch(search);
+
+  useLayoutEffect(() => {
     const { body } = document;
 
     const intervalId = setInterval(() => {
@@ -25,8 +29,8 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
-      <Header />
-      <Content />
+      <Header setSearch={setSearch} />
+      <Content videos={videos} loading={loading} error={error} />
     </ThemeProvider>
   );
 }

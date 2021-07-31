@@ -1,5 +1,5 @@
-import random from './random';
-import charCodeReplace from './charCodeReplace';
+import random from '../random';
+import charCodeReplace from '../charCodeReplace';
 
 describe('Random function tests', () => {
   test('returns correct floored value', () => {
@@ -11,7 +11,7 @@ describe('Random function tests', () => {
 
 describe('Char code replacement function tests', () => {
   test('replaces char codes with corresponding character', () => {
-    expect(charCodeReplace('We&#39;re testing components &#38; functions')).toBe(
+    expect(charCodeReplace('We&#39;re testing components &amp; functions')).toBe(
       "We're testing components & functions"
     );
   });

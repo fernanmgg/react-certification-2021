@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { drawerIcon, searchIcon, loginIcon } from './Header.icon';
 import {
@@ -7,6 +7,7 @@ import {
   DrawerButton,
   SearchWrapper,
   Search,
+  Message,
   Options,
   Toggle,
   LoginButton,
@@ -14,7 +15,20 @@ import {
   InlineIcon,
 } from './Header.style';
 
-function Header() {
+function Header({ setSearch }) {
+  const [showError, setShowError] = useState(false);
+
+  function handleSearchEnter(event) {
+    if (event.key === 'Enter') {
+      if (event.target.value.length > 3) {
+        setSearch(event.target.value);
+        setShowError(false);
+      } else {
+        setShowError(true);
+      }
+    }
+  }
+
   return (
     <StyledHeader>
       <Wrapper>
@@ -27,8 +41,13 @@ function Header() {
           <InlineIcon viewBox="0 0 24 24">
             <path d={searchIcon} />
           </InlineIcon>
-          <Search aria-label="search" defaultValue="wizeline" />
+          <Search
+            aria-label="search"
+            defaultValue="wizeline"
+            onKeyPress={handleSearchEnter}
+          />
         </SearchWrapper>
+        {showError && <Message>Search must be more than 3 characters</Message>}
         <div style={{ flexGrow: 1 }} />
         <Options>
           <Toggle aria-label="theme" type="checkbox" />
