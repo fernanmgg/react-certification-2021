@@ -27,6 +27,12 @@ describe('VideoList UI tests', () => {
     expect(text).toBeInTheDocument();
   });
 
+  test('renders message if there are no related videos', () => {
+    render(<VideoList videos={[]} loading={false} error={false} related />);
+    const text = screen.queryByText(/related videos.../i);
+    expect(text).toBeInTheDocument();
+  });
+
   test('renders message if the content is loading', () => {
     render(<VideoList videos={[]} loading error={false} />);
     const text = screen.queryByText(/loading.../i);

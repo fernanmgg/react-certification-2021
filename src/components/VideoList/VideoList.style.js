@@ -21,10 +21,19 @@ const StyledVideoList = styled.div`
   }
 `;
 
+const StyledVideoListRel = styled.div`
+  background-color: ${(props) => props.theme.background};
+  border-radius: 8px;
+  overflow-y: scroll;
+  flex: 1 1 0;
+  height: 100vh;
+  padding-top: 8px;
+`;
+
 const Message = styled.h2`
   color: ${(props) => props.theme.textLight};
   text-align: center;
   width: 100%;
 `;
 
-export { StyledVideoList, Message };
+export { StyledVideoList, StyledVideoListRel, Message };

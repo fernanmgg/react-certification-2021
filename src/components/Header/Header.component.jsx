@@ -15,13 +15,14 @@ import {
   InlineIcon,
 } from './Header.style';
 
-function Header({ setSearch }) {
+function Header({ setSearch, setVideo }) {
   const [showError, setShowError] = useState(false);
 
   function handleSearchEnter(event) {
     if (event.key === 'Enter') {
       if (event.target.value.length > 3) {
         setSearch(event.target.value);
+        setVideo(null);
         setShowError(false);
       } else {
         setShowError(true);

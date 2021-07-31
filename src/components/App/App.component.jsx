@@ -15,7 +15,7 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
-      <Header setSearch={setSearch} />
+      <Header setSearch={setSearch} setVideo={setVideo} />
       <Content
         videos={videos}
         loading={loading}

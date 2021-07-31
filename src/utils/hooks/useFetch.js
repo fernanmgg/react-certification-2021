@@ -4,7 +4,7 @@ const key = process.env.REACT_APP_API_KEY;
 
 const baseUrl = 'https://www.googleapis.com/youtube/v3/search?';
 
-export default function useFetch(search) {
+export default function useFetch(query, relatedVideos = false) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -17,8 +17,9 @@ export default function useFetch(search) {
         'maxResults=20',
         'type=video',
         `key=${key}`,
-        `q=${search}`,
       ];
+      if (!relatedVideos) fields.push(`q=${query}`);
+      else fields.push(`relatedToVideoId=${query}`);
       return baseUrl.concat(
         fields.reduce((previous, current) => previous.concat(`&${current}`))
       );
@@ -36,8 +37,9 @@ export default function useFetch(search) {
       setLoading(false);
     };
 
-    if (search.length > 3) fetchData();
-  }, [search]);
+    const check = !relatedVideos ? query.length > 3 : /[A-Za-z0-9_-]{11}/.test(query);
+    if (check) fetchData();
+  }, [query, relatedVideos]);
 
   return { videos, loading, error };
 }

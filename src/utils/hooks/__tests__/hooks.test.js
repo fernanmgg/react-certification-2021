@@ -11,7 +11,7 @@ const controlledPromise = () => {
 };
 
 describe('useFetch tests', () => {
-  test('videos are returned with search of appropriate length', async () => {
+  test('fetch is called with search of appropriate length', async () => {
     const { deferred, promise } = controlledPromise();
     const mockedVideos = ['test 1', 'test 2', 'test 3'];
     global.fetch = jest.fn(() => promise);
@@ -24,12 +24,37 @@ describe('useFetch tests', () => {
     });
     await waitForNextUpdate();
     expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch.mock.calls[0][0]).toMatch(/q=1234/i);
     expect(result.current.videos).toEqual(mockedVideos);
   });
 
   test('videos state remains if the search is too short', async () => {
     global.fetch = jest.fn();
     const { result } = renderHook(() => useFetch('123'));
+    expect(result.current.videos).toEqual([]);
+    expect(fetch).toHaveBeenCalledTimes(0);
+  });
+
+  test('fetch is called with video ID of appropriate length', async () => {
+    const { deferred, promise } = controlledPromise();
+    const mockedVideos = ['test 1', 'test 2', 'test 3'];
+    global.fetch = jest.fn(() => promise);
+    const { result, waitForNextUpdate } = renderHook(() => useFetch('A1234567890', true));
+    expect(result.current.videos).toEqual([]);
+    deferred.resolve({
+      json: () => ({
+        items: mockedVideos,
+      }),
+    });
+    await waitForNextUpdate();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch.mock.calls[0][0]).toMatch(/relatedToVideoId=A1234567890/i);
+    expect(result.current.videos).toEqual(mockedVideos);
+  });
+
+  test('videos state remains if the video ID is not valid', async () => {
+    global.fetch = jest.fn();
+    const { result } = renderHook(() => useFetch('123', true));
     expect(result.current.videos).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(0);
   });

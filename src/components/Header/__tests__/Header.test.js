@@ -21,11 +21,13 @@ describe('Header UI tests', () => {
 
   test('calls setSearch if search is an appropriate length', () => {
     const setSearch = jest.fn();
-    render(<Header setSearch={setSearch} />);
+    const setVideo = jest.fn();
+    render(<Header setSearch={setSearch} setVideo={setVideo} />);
     const search = screen.getByRole('textbox', { name: /search/i });
     user.clear(search);
     user.type(search, '1234{enter}');
     expect(setSearch).toHaveBeenCalledTimes(1);
+    expect(setVideo).toHaveBeenCalledTimes(1);
   });
 
   test('renders message if search is too short', () => {
