@@ -10,6 +10,7 @@ import random from '../../utils/random';
 
 function App() {
   const [search, setSearch] = useState('');
+  const [video, setVideo] = useState(null);
   const { videos, loading, error } = useFetch(search);
 
   useLayoutEffect(() => {
@@ -30,7 +31,13 @@ function App() {
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
       <Header setSearch={setSearch} />
-      <Content videos={videos} loading={loading} error={error} />
+      <Content
+        videos={videos}
+        loading={loading}
+        error={error}
+        video={video}
+        setVideo={setVideo}
+      />
     </ThemeProvider>
   );
 }

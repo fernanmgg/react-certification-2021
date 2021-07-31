@@ -10,10 +10,18 @@ import {
   Effects,
 } from './VideoCard.style';
 
-function VideoCard({ image, title, description }) {
+function VideoCard({ videoId, image, title, description, setVideo }) {
+  function handleClick() {
+    setVideo({
+      videoId,
+      title,
+      description,
+    });
+  }
+
   return (
     <StyledVideoCard>
-      <Wrapper>
+      <Wrapper onClick={handleClick}>
         <Image backgroundImage={image} />
         <Content>
           <Title>{title}</Title>
