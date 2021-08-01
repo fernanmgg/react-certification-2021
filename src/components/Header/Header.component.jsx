@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { drawerIcon, searchIcon, loginIcon } from './Header.icon';
 import {
   StyledHeader,
+  Overlay,
+  DrawerMenu,
+  DrawerItem,
   Wrapper,
   DrawerButton,
   SearchWrapper,
@@ -17,6 +20,7 @@ import {
 
 function Header({ setSearch, setVideo }) {
   const [showError, setShowError] = useState(false);
+  const [drawer, setDrawer] = useState(false);
 
   function handleSearchEnter(event) {
     if (event.key === 'Enter') {
@@ -30,10 +34,29 @@ function Header({ setSearch, setVideo }) {
     }
   }
 
+  function handleDrawerClick() {
+    setDrawer(true);
+  }
+
+  function handleHomeClick() {
+    setVideo(null);
+    setDrawer(false);
+  }
+
+  function handleOverlayClick() {
+    setDrawer(false);
+  }
+
   return (
     <StyledHeader>
+      {drawer && <Overlay onClick={handleOverlayClick} data-testid="overlay" />}
+      <DrawerMenu DrawerMenu drawer={drawer}>
+        <DrawerItem onClick={handleHomeClick} aria-label="home">
+          Home
+        </DrawerItem>
+      </DrawerMenu>
       <Wrapper>
-        <DrawerButton aria-label="drawer">
+        <DrawerButton onClick={handleDrawerClick} aria-label="drawer">
           <Icon viewBox="0 0 24 24">
             <path d={drawerIcon} />
           </Icon>

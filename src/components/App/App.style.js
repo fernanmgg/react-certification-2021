@@ -21,7 +21,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     text-rendering: optimizeLegibility;
-    transition: background-position 2s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

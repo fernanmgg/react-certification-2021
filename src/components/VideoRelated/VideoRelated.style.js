@@ -10,7 +10,6 @@ const StyledVideoRelated = styled.div`
 const Wrapper = styled.button`
   background-color: ${(props) => props.theme.background};
   border: 0;
-  border-top: black;
   cursor: pointer;
   display: flex;
   flex-direction: row;

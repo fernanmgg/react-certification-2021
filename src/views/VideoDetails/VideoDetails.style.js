@@ -14,12 +14,15 @@ const Wrapper = styled.div`
   margin: 0 16px;
 `;
 
-const Title = styled.h1`
+const Title = styled.div`
   color: ${(props) => props.theme.text};
+  font-size: 1.5rem;
 `;
 
-const Description = styled.h3`
+const Description = styled.div`
   color: ${(props) => props.theme.textLight};
+  font-size: 1rem;
+  margin-top: 16px;
 `;
 
 export { StyledVideoDetails, Wrapper, Title, Description };

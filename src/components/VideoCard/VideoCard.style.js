@@ -18,6 +18,7 @@ const Wrapper = styled.button`
   padding: 0;
   position: relative;
   text-align: left;
+  width: 100%;
   &:focus {
     outline: none;
   }

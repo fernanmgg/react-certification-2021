@@ -6,6 +6,43 @@ const StyledHeader = styled.header`
   color: ${(props) => props.theme.text};
 `;
 
+const Overlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+`;
+
+const DrawerMenu = styled.div`
+  background-color: ${(props) => props.theme.background};
+  position: fixed;
+  height: 100%;
+  transition: left 0.15s linear;
+  width: 240px;
+  z-index: 3;
+  ${(props) => (props.drawer ? 'left: 0px;' : 'left: -240px;')}
+`;
+
+const DrawerItem = styled.button`
+  background-color: ${(props) => props.theme.background};
+  border-bottom: 1px solid ${(props) => props.theme.textLight};
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  color: ${(props) => props.theme.textLight};
+  cursor: pointer;
+  font-size: 1rem;
+  height: 64px;
+  padding-left: 16px;
+  text-align: left;
+  transition: background-color 1s ease;
+  width: inherit;
+  &:hover {
+    background-color: ${(props) => props.theme.backgroundFocus};
+  }
+`;
+
 const Wrapper = styled.div`
   align-items: center;
   display: flex;
@@ -47,7 +84,7 @@ const Search = styled.input`
   transition: background-color 0.25s;
   width: inherit;
   &:hover {
-    background-color: ${(props) => props.theme.title};
+    background-color: ${(props) => props.theme.backgroundTransparent};
   }
 `;
 
@@ -93,6 +130,9 @@ const InlineIcon = styled(Icon)`
 
 export {
   StyledHeader,
+  Overlay,
+  DrawerMenu,
+  DrawerItem,
   Wrapper,
   DrawerButton,
   SearchWrapper,
