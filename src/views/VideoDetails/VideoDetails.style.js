@@ -2,11 +2,14 @@ import styled from 'styled-components';
 
 const StyledVideoDetails = styled.div`
   background-color: ${(props) => props.theme.backgroundTransparent};
+  display: flex;
+  flex-direction: row;
   margin-top: 16px;
   padding: 16px;
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -22,7 +25,7 @@ const Title = styled.div`
 const Description = styled.div`
   color: ${(props) => props.theme.textLight};
   font-size: 1rem;
-  margin-top: 16px;
+  margin: 16px 0;
 `;
 
 export { StyledVideoDetails, Wrapper, Title, Description };

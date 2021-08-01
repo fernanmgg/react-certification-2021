@@ -24,10 +24,13 @@ const StyledVideoList = styled.div`
 const StyledVideoListRel = styled.div`
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
-  overflow-y: scroll;
   flex: 1 1 0;
   height: 100vh;
+  overflow-y: scroll;
   padding-top: 8px;
+  @media (max-width: 900px) {
+    flex: 1 1 480px;
+  }
 `;
 
 const Message = styled.h2`
