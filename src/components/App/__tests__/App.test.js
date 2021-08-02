@@ -13,7 +13,7 @@ describe('App UI tests', () => {
     const homeView = screen.getByText(/react bootcamp 2021/i);
     expect(header).toBeInTheDocument();
     expect(homeView).toBeInTheDocument();
-    expect(useFetch.default).toHaveBeenCalledTimes(1);
+    expect(useFetch.default).toHaveBeenCalled();
     expect(useFetch.default).toHaveBeenCalledWith('wizeline');
   });
 });

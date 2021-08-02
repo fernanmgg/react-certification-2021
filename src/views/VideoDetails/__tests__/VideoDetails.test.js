@@ -18,7 +18,7 @@ describe('VideoDetails UI tests', () => {
     const description = screen.getByText(/test description/i);
     expect(title).toBeInTheDocument();
     expect(description).toBeInTheDocument();
-    expect(useFetch.default).toHaveBeenCalledTimes(1);
+    expect(useFetch.default).toHaveBeenCalled();
     expect(useFetch.default).toHaveBeenCalledWith('Test id', true);
   });
 });
