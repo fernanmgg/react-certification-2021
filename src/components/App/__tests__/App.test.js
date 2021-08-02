@@ -2,19 +2,18 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import App from '../App.component';
+import * as useFetch from '../../../utils/hooks/useFetch';
+
+useFetch.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
 describe('App UI tests', () => {
-  beforeEach(() => {
+  test('renders header and home view', () => {
     render(<App />);
-  });
-
-  test('renders header', () => {
-    const text = screen.getByText(/dark mode/i);
-    expect(text).toBeInTheDocument();
-  });
-
-  test('renders home view', () => {
-    const text = screen.getByText(/react bootcamp 2021/i);
-    expect(text).toBeInTheDocument();
+    const header = screen.getByText(/dark mode/i);
+    const homeView = screen.getByText(/react bootcamp 2021/i);
+    expect(header).toBeInTheDocument();
+    expect(homeView).toBeInTheDocument();
+    expect(useFetch.default).toHaveBeenCalledTimes(1);
+    expect(useFetch.default).toHaveBeenCalledWith('wizeline');
   });
 });

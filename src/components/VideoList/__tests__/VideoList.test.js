@@ -23,13 +23,13 @@ describe('VideoList UI tests', () => {
 
   test('renders message if there are no videos', () => {
     render(<VideoList videos={[]} loading={false} error={false} />);
-    const text = screen.queryByText(/search for videos.../i);
+    const text = screen.queryByText(/no videos found.../i);
     expect(text).toBeInTheDocument();
   });
 
   test('renders message if there are no related videos', () => {
     render(<VideoList videos={[]} loading={false} error={false} related />);
-    const text = screen.queryByText(/related videos.../i);
+    const text = screen.queryByText(/no videos found.../i);
     expect(text).toBeInTheDocument();
   });
 

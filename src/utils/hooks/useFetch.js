@@ -30,14 +30,17 @@ export default function useFetch(query, relatedVideos = false) {
       try {
         const response = await fetch(encodeURI(buildURI()));
         const json = await response.json();
-        setVideos(json.items);
+        if (json.items) setVideos(json.items);
+        else setError(true);
       } catch (e) {
         setError(true);
       }
       setLoading(false);
     };
 
-    const check = !relatedVideos ? query.length > 3 : /[A-Za-z0-9_-]{11}/.test(query);
+    const check = !relatedVideos
+      ? query.length > 0 && query.length < 64
+      : /[A-Za-z0-9_-]{11}/.test(query);
     if (check) fetchData();
   }, [query, relatedVideos]);
 

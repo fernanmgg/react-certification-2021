@@ -88,13 +88,6 @@ const Search = styled.input`
   }
 `;
 
-const Message = styled.span`
-  color: ${(props) => props.theme.textLight};
-  font-size: 0.7rem;
-  margin: 0 8px;
-  text-align: center;
-`;
-
 const Options = styled.div`
   @media (max-width: 600px) {
     display: none;
@@ -137,7 +130,6 @@ export {
   DrawerButton,
   SearchWrapper,
   Search,
-  Message,
   Options,
   Toggle,
   LoginButton,

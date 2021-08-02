@@ -8,14 +8,14 @@ import Content from '../../views/Content';
 import useFetch from '../../utils/hooks/useFetch';
 
 function App() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('wizeline');
   const [video, setVideo] = useState(null);
   const { videos, loading, error } = useFetch(search);
 
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
-      <Header setSearch={setSearch} setVideo={setVideo} />
+      <Header search={search} setSearch={setSearch} setVideo={setVideo} />
       <Content
         videos={videos}
         loading={loading}

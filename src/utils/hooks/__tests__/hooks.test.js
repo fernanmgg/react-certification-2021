@@ -11,7 +11,7 @@ const controlledPromise = () => {
 };
 
 describe('useFetch tests', () => {
-  test('fetch is called with search of appropriate length', async () => {
+  test('fetch is called with search of at least one character', async () => {
     const { deferred, promise } = controlledPromise();
     const mockedVideos = ['test 1', 'test 2', 'test 3'];
     global.fetch = jest.fn(() => promise);
@@ -28,9 +28,9 @@ describe('useFetch tests', () => {
     expect(result.current.videos).toEqual(mockedVideos);
   });
 
-  test('videos state remains if the search is too short', async () => {
+  test('videos state remains if the search is empty', async () => {
     global.fetch = jest.fn();
-    const { result } = renderHook(() => useFetch('123'));
+    const { result } = renderHook(() => useFetch(''));
     expect(result.current.videos).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(0);
   });
@@ -76,6 +76,19 @@ describe('useFetch tests', () => {
     const { result, waitForNextUpdate } = renderHook(() => useFetch('1234'));
     expect(result.current.error).toBe(false);
     deferred.reject();
+    await waitForNextUpdate();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(result.current.error).toBe(true);
+  });
+
+  test('returns error if API does not return items object', async () => {
+    const { deferred, promise } = controlledPromise();
+    global.fetch = jest.fn(() => promise);
+    const { result, waitForNextUpdate } = renderHook(() => useFetch('1234'));
+    expect(result.current.error).toBe(false);
+    deferred.resolve({
+      json: () => ({ test: 'test' }),
+    });
     await waitForNextUpdate();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(result.current.error).toBe(true);

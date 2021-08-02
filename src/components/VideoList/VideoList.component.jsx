@@ -10,7 +10,7 @@ function VideoList({ videos, loading, error, setVideo, related }) {
   const VideoComponent = !related ? VideoCard : VideoRelated;
   const videoCards =
     videos.length === 0 ? (
-      <Message>{!related ? 'Search for videos...' : 'Related videos...'}</Message>
+      <Message>No videos found...</Message>
     ) : (
       videos
         .filter((video) => {

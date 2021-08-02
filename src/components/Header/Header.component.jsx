@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import _ from 'lodash';
 
 import { drawerIcon, searchIcon, loginIcon } from './Header.icon';
 import {
@@ -10,7 +11,6 @@ import {
   DrawerButton,
   SearchWrapper,
   Search,
-  Message,
   Options,
   Toggle,
   LoginButton,
@@ -18,20 +18,19 @@ import {
   InlineIcon,
 } from './Header.style';
 
-function Header({ setSearch, setVideo }) {
-  const [showError, setShowError] = useState(false);
+function Header({ search, setSearch, setVideo }) {
   const [drawer, setDrawer] = useState(false);
 
-  function handleSearchEnter(event) {
-    if (event.key === 'Enter') {
-      if (event.target.value.length > 3) {
-        setSearch(event.target.value);
-        setVideo(null);
-        setShowError(false);
-      } else {
-        setShowError(true);
-      }
-    }
+  function fetchVideos(_search) {
+    setSearch(_search);
+    setVideo(null);
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debounce = useCallback(_.debounce(fetchVideos, 500), []);
+
+  function handleChange(event) {
+    debounce(event.target.value);
   }
 
   function handleDrawerClick() {
@@ -65,13 +64,8 @@ function Header({ setSearch, setVideo }) {
           <InlineIcon viewBox="0 0 24 24">
             <path d={searchIcon} />
           </InlineIcon>
-          <Search
-            aria-label="search"
-            defaultValue="wizeline"
-            onKeyPress={handleSearchEnter}
-          />
+          <Search aria-label="search" defaultValue={search} onChange={handleChange} />
         </SearchWrapper>
-        {showError && <Message>Search must be more than 3 characters</Message>}
         <div style={{ flexGrow: 1 }} />
         <Options>
           <Toggle aria-label="theme" type="checkbox" />

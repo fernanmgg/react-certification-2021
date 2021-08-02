@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
+import _ from 'lodash';
 
 import Header from '../Header.component';
 
@@ -19,26 +20,17 @@ describe('Header UI tests', () => {
     expect(themeText).toBeInTheDocument();
   });
 
-  test('calls setSearch if search is an appropriate length', () => {
+  test('calls setSearch after typing', () => {
+    _.debounce = jest.fn((fn) => fn);
     const setSearch = jest.fn();
     const setVideo = jest.fn();
     render(<Header setSearch={setSearch} setVideo={setVideo} />);
     const search = screen.getByRole('textbox', { name: /search/i });
-    user.clear(search);
-    user.type(search, '1234{enter}');
+    user.type(search, '1');
     expect(setSearch).toHaveBeenCalledTimes(1);
-    expect(setSearch.mock.calls[0][0]).toBe('1234');
+    expect(setSearch.mock.calls[0][0]).toBe('1');
     expect(setVideo).toHaveBeenCalledTimes(1);
     expect(setVideo.mock.calls[0][0]).toBe(null);
-  });
-
-  test('renders message if search is too short', () => {
-    render(<Header />);
-    const search = screen.getByRole('textbox', { name: /search/i });
-    user.clear(search);
-    user.type(search, '123{enter}');
-    const message = screen.getByText(/search must be more than 3 characters/i);
-    expect(message).toBeInTheDocument();
   });
 
   test('toggle overlay with home button', () => {
