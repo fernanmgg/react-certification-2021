@@ -2,10 +2,10 @@ import React from 'react';
 
 import { StyledVideoDetails, Wrapper, Title, Description } from './VideoDetails.style';
 import VideoList from '../../components/VideoList';
-import useFetch from '../../utils/hooks/useFetch';
+import useVideoAPI from '../../utils/hooks/useVideoAPI';
 
 function VideoDetails({ video, setVideo }) {
-  const { videos, loading, error } = useFetch(video.videoId, true);
+  const { videos, loading, error } = useVideoAPI(video.videoId, true);
 
   return (
     <StyledVideoDetails>

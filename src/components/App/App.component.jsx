@@ -5,12 +5,12 @@ import { GlobalStyle } from './App.style';
 import { lightTheme } from './App.theme';
 import Header from '../Header';
 import Content from '../../views/Content';
-import useFetch from '../../utils/hooks/useFetch';
+import useVideoAPI from '../../utils/hooks/useVideoAPI';
 
 function App() {
   const [search, setSearch] = useState('wizeline');
   const [video, setVideo] = useState(null);
-  const { videos, loading, error } = useFetch(search);
+  const { videos, loading, error } = useVideoAPI(search);
 
   return (
     <ThemeProvider theme={lightTheme}>

@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import useFetch from '../useFetch';
+import useVideoAPI from '../useVideoAPI';
 
 const controlledPromise = () => {
   let deferred;
@@ -10,12 +10,12 @@ const controlledPromise = () => {
   return { deferred, promise };
 };
 
-describe('useFetch tests', () => {
+describe('useVideoAPI tests', () => {
   test('fetch is called with search of at least one character', async () => {
     const { deferred, promise } = controlledPromise();
     const mockedVideos = ['test 1', 'test 2', 'test 3'];
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useFetch('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
     expect(result.current.videos).toEqual([]);
     deferred.resolve({
       json: () => ({
@@ -30,7 +30,7 @@ describe('useFetch tests', () => {
 
   test('videos state remains if the search is empty', async () => {
     global.fetch = jest.fn();
-    const { result } = renderHook(() => useFetch(''));
+    const { result } = renderHook(() => useVideoAPI(''));
     expect(result.current.videos).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(0);
   });
@@ -39,7 +39,9 @@ describe('useFetch tests', () => {
     const { deferred, promise } = controlledPromise();
     const mockedVideos = ['test 1', 'test 2', 'test 3'];
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useFetch('A1234567890', true));
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useVideoAPI('A1234567890', true)
+    );
     expect(result.current.videos).toEqual([]);
     deferred.resolve({
       json: () => ({
@@ -54,7 +56,7 @@ describe('useFetch tests', () => {
 
   test('videos state remains if the video ID is not valid', async () => {
     global.fetch = jest.fn();
-    const { result } = renderHook(() => useFetch('123', true));
+    const { result } = renderHook(() => useVideoAPI('123', true));
     expect(result.current.videos).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(0);
   });
@@ -62,7 +64,7 @@ describe('useFetch tests', () => {
   test('loading state is toggled accordingly', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useFetch('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
     expect(result.current.loading).toBe(true);
     deferred.resolve();
     await waitForNextUpdate();
@@ -73,7 +75,7 @@ describe('useFetch tests', () => {
   test('error state is toggled accordingly', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useFetch('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
     expect(result.current.error).toBe(false);
     deferred.reject();
     await waitForNextUpdate();
@@ -84,7 +86,7 @@ describe('useFetch tests', () => {
   test('returns error if API does not return items object', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useFetch('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
     expect(result.current.error).toBe(false);
     deferred.resolve({
       json: () => ({ test: 'test' }),

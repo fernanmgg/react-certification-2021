@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import VideoDetails from '../VideoDetails.view';
-import * as useFetch from '../../../utils/hooks/useFetch';
+import * as useVideoAPI from '../../../utils/hooks/useVideoAPI';
 
-useFetch.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
+useVideoAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
 describe('VideoDetails UI tests', () => {
   test('renders details with correct props', () => {
@@ -18,7 +18,7 @@ describe('VideoDetails UI tests', () => {
     const description = screen.getByText(/test description/i);
     expect(title).toBeInTheDocument();
     expect(description).toBeInTheDocument();
-    expect(useFetch.default).toHaveBeenCalled();
-    expect(useFetch.default).toHaveBeenCalledWith('Test id', true);
+    expect(useVideoAPI.default).toHaveBeenCalled();
+    expect(useVideoAPI.default).toHaveBeenCalledWith('Test id', true);
   });
 });

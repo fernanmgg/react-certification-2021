@@ -4,7 +4,7 @@ const key = process.env.REACT_APP_API_KEY;
 
 const baseUrl = 'https://www.googleapis.com/youtube/v3/search?';
 
-export default function useFetch(query, relatedVideos = false) {
+export default function useVideoAPI(query, relatedVideos = false) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
