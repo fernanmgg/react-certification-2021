@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledHeader = styled.header`
   background-color: ${(props) => props.theme.backgroundTransparent};
@@ -25,6 +25,7 @@ const DrawerMenu = styled.div`
 `;
 
 const DrawerItem = styled.button`
+  align-items: center;
   background-color: ${(props) => props.theme.background};
   border-bottom: 1px solid ${(props) => props.theme.textLight};
   border-left: 0px;
@@ -32,6 +33,8 @@ const DrawerItem = styled.button`
   border-top: 0px;
   color: ${(props) => props.theme.textLight};
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
   font-size: 1rem;
   height: 64px;
   padding-left: 16px;
@@ -41,6 +44,13 @@ const DrawerItem = styled.button`
   &:hover {
     background-color: ${(props) => props.theme.backgroundFocus};
   }
+  ${(props) =>
+    props.hiddenItem &&
+    css`
+      @media (min-width: 600px) {
+        display: none;
+      },
+    `}
 `;
 
 const Wrapper = styled.div`
@@ -94,11 +104,10 @@ const Options = styled.div`
   }
 `;
 
-const Toggle = styled.input`
-  cursor: pointer;
-  height: 1.5em;
+const ToggleText = styled.span`
+  color: ${(props) => props.theme.textLight};
+  font-size: 0.8rem;
   margin-right: 8px;
-  width: 1.5em;
 `;
 
 const LoginButton = styled.button`
@@ -121,6 +130,10 @@ const InlineIcon = styled(Icon)`
   z-index: 1;
 `;
 
+const GapFill = styled.div`
+  flex-grow: 1;
+`;
+
 export {
   StyledHeader,
   Overlay,
@@ -131,8 +144,9 @@ export {
   SearchWrapper,
   Search,
   Options,
-  Toggle,
+  ToggleText,
   LoginButton,
   Icon,
   InlineIcon,
+  GapFill,
 };
