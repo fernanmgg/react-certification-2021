@@ -13,19 +13,14 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-image: linear-gradient(
-      120deg,
-      ${(props) => props.theme.backgroundColors[0]} 0,
-      ${(props) => props.theme.backgroundColors[1]} 19%,
-      ${(props) => props.theme.backgroundColors[2]} 42%,
-      ${(props) => props.theme.backgroundColors[3]} 79%,
-      ${(props) => props.theme.backgroundColors[4]} 100%
+      90deg,
+      ${(props) => props.theme.backgroundColors[0]},
+      ${(props) => props.theme.backgroundColors[1]},
+      ${(props) => props.theme.backgroundColors[2]}
     );
-    background-position: var(--bg-position);
-    background-size: 400% 400%;
     margin: 0;
     padding: 0;
     text-rendering: optimizeLegibility;
-    transition: background-position 2s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

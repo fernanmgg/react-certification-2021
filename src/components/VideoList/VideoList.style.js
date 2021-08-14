@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const CardListWrapper = styled.div`
+const StyledVideoList = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
@@ -21,10 +21,22 @@ const CardListWrapper = styled.div`
   }
 `;
 
+const StyledVideoListRel = styled.div`
+  background-color: ${(props) => props.theme.background};
+  border-radius: 8px;
+  flex: 1 1 0;
+  height: 100vh;
+  overflow-y: scroll;
+  padding-top: 8px;
+  @media (max-width: 900px) {
+    flex: 1 1 480px;
+  }
+`;
+
 const Message = styled.h2`
   color: ${(props) => props.theme.textLight};
   text-align: center;
   width: 100%;
 `;
 
-export { CardListWrapper, Message };
+export { StyledVideoList, StyledVideoListRel, Message };

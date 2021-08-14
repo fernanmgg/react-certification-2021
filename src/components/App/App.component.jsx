@@ -1,32 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { lightTheme } from './App.theme';
 import { GlobalStyle } from './App.style';
+import { lightTheme } from './App.theme';
 import Header from '../Header';
 import Content from '../../views/Content';
-import random from '../../utils/random';
+import useVideoAPI from '../../utils/hooks/useVideoAPI';
 
 function App() {
-  useEffect(() => {
-    const { body } = document;
-
-    const intervalId = setInterval(() => {
-      const xPercent = random(100);
-      const yPercent = random(100);
-      body.style.setProperty('--bg-position', `${xPercent}% ${yPercent}%`);
-    }, 5000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+  const [search, setSearch] = useState('wizeline');
+  const [video, setVideo] = useState(null);
+  const { videos, loading, error } = useVideoAPI(search);
 
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalStyle />
-      <Header />
-      <Content />
+      <Header search={search} setSearch={setSearch} setVideo={setVideo} />
+      <Content
+        videos={videos}
+        loading={loading}
+        error={error}
+        video={video}
+        setVideo={setVideo}
+      />
     </ThemeProvider>
   );
 }

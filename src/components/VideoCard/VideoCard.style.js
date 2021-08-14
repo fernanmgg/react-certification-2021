@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledCard = styled.div`
+const StyledVideoCard = styled.div`
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
@@ -10,7 +10,7 @@ const StyledCard = styled.div`
   width: 345px;
 `;
 
-const CardWrapper = styled.button`
+const Wrapper = styled.button`
   background-color: ${(props) => props.theme.background};
   border: 0;
   cursor: pointer;
@@ -18,12 +18,13 @@ const CardWrapper = styled.button`
   padding: 0;
   position: relative;
   text-align: left;
+  width: 100%;
   &:focus {
     outline: none;
   }
 `;
 
-const CardImage = styled.div`
+const Image = styled.div`
   background-image: url(${(props) => props.backgroundImage});
   background-position: center;
   background-repeat: no-repeat;
@@ -31,7 +32,7 @@ const CardImage = styled.div`
   height: 140px;
 `;
 
-const CardContent = styled.div`
+const Content = styled.div`
   height: 190px;
   overflow: hidden;
   padding: 0 16px;
@@ -64,9 +65,9 @@ const Effects = styled.span`
   top: 0;
   transition: background-color 1s ease;
   &:hover,
-  ${CardWrapper}:focus & {
+  ${Wrapper}:focus & {
     background-color: ${(props) => props.theme.backgroundFocus};
   }
 `;
 
-export { StyledCard, CardWrapper, CardImage, CardContent, Title, Description, Effects };
+export { StyledVideoCard, Wrapper, Image, Content, Title, Description, Effects };
