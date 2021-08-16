@@ -16,7 +16,7 @@ const reducer = (state, action) => {
     case 'UNSET_VIDEO':
       return { ...state, video: null };
     default:
-      throw new Error();
+      throw new Error('Error: Undefined action');
   }
 };
 

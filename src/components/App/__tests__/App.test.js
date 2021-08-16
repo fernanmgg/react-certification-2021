@@ -33,5 +33,10 @@ describe('App UI tests', () => {
       'color',
       darkTheme.textLight.replace(/,\s/g, ',')
     );
+    user.click(theme[0]);
+    expect(themeText[0]).toHaveStyleRule(
+      'color',
+      lightTheme.textLight.replace(/,\s/g, ',')
+    );
   });
 });
