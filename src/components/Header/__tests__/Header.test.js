@@ -1,14 +1,16 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import _ from 'lodash';
 
 import Header from '../Header.component';
+import { wrapWithVideoContext, wrapWithThemeContext } from '../../../state/testing';
 
 describe('Header UI tests', () => {
   test('renders drawer and login buttons, search input and theme checkbox', () => {
-    // eslint-disable-next-line no-undef
-    renderWithThemeContext(<Header />);
+    render(
+      wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' }, jest.fn())
+    );
     const drawer = screen.getByRole('button', { name: /drawer/i });
     const login = screen.getAllByRole('button', { name: /login/i });
     const search = screen.getByRole('textbox', { name: /search/i });
@@ -21,22 +23,26 @@ describe('Header UI tests', () => {
 
   test('calls setSearch after typing', () => {
     _.debounce = jest.fn((fn) => fn);
-    const setSearch = jest.fn();
-    const setVideo = jest.fn();
-    // eslint-disable-next-line no-undef
-    renderWithThemeContext(<Header setSearch={setSearch} setVideo={setVideo} />);
+    const dispatch = jest.fn();
+    render(
+      wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' }, dispatch)
+    );
     const search = screen.getByRole('textbox', { name: /search/i });
     user.type(search, '1');
-    expect(setSearch).toHaveBeenCalledTimes(1);
-    expect(setSearch.mock.calls[0][0]).toBe('1');
-    expect(setVideo).toHaveBeenCalledTimes(1);
-    expect(setVideo.mock.calls[0][0]).toBe(null);
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch.mock.calls[0][0]).toStrictEqual({
+      type: 'SET_SEARCH',
+      payload: '1',
+    });
+    expect(dispatch.mock.calls[1][0]).toStrictEqual({
+      type: 'UNSET_VIDEO',
+    });
   });
 
   test('toggle overlay with home button', () => {
-    const setVideo = jest.fn();
-    // eslint-disable-next-line no-undef
-    renderWithThemeContext(<Header setVideo={setVideo} />);
+    render(
+      wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' }, jest.fn())
+    );
     expect(screen.queryByTestId(/overlay/i)).toBeNull();
     const drawer = screen.getByRole('button', { name: /drawer/i });
     user.click(drawer);
@@ -47,8 +53,9 @@ describe('Header UI tests', () => {
   });
 
   test('toggle overlay when clicking it', () => {
-    // eslint-disable-next-line no-undef
-    renderWithThemeContext(<Header />);
+    render(
+      wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' }, jest.fn())
+    );
     expect(screen.queryByTestId(/overlay/i)).toBeNull();
     const drawer = screen.getByRole('button', { name: /drawer/i });
     user.click(drawer);

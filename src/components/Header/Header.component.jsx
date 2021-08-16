@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import _ from 'lodash';
 
 import { drawerIcon, searchIcon, loginIcon } from './Header.icon';
@@ -19,13 +19,16 @@ import {
   GapFill,
 } from './Header.style';
 import Toggle from '../Toggle';
+import { VideoContext } from '../../state/Video.state';
 
-function Header({ search, setSearch, setVideo, theme, toggleTheme }) {
+function Header({ theme, toggleTheme }) {
+  const { state, dispatch } = useContext(VideoContext);
+  const { search } = state;
   const [drawer, setDrawer] = useState(false);
 
   function fetchVideos(_search) {
-    setSearch(_search);
-    setVideo(null);
+    dispatch({ type: 'SET_SEARCH', payload: _search });
+    dispatch({ type: 'UNSET_VIDEO' });
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +43,7 @@ function Header({ search, setSearch, setVideo, theme, toggleTheme }) {
   }
 
   function handleHomeClick() {
-    setVideo(null);
+    dispatch({ type: 'UNSET_VIDEO' });
     setDrawer(false);
   }
 

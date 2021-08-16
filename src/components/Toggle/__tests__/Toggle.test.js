@@ -1,21 +1,20 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 import Toggle from '../Toggle.component';
+import { wrapWithThemeContext } from '../../../state/testing';
 
 describe('Toggle UI tests', () => {
   test('renders checkbox', () => {
-    // eslint-disable-next-line no-undef
-    renderWithThemeContext(<Toggle />);
+    render(wrapWithThemeContext(<Toggle />));
     const theme = screen.getByRole('checkbox', { name: /theme/i });
     expect(theme).toBeInTheDocument();
   });
 
   test('toggle passed value when clicked', () => {
     const toggle = jest.fn();
-    // eslint-disable-next-line no-undef
-    renderWithThemeContext(<Toggle value={false} toggle={toggle} />);
+    render(wrapWithThemeContext(<Toggle value={false} toggle={toggle} />));
     const theme = screen.getByRole('checkbox', { name: /theme/i });
     user.click(theme);
     expect(toggle).toHaveBeenCalledTimes(1);
