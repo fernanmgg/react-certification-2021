@@ -72,6 +72,7 @@ const DrawerButton = styled.button`
 `;
 
 const SearchWrapper = styled.div`
+  align-items: center;
   background-color: ${(props) => props.theme.backgroundTransparent};
   border-radius: 8px;
   display: flex;
@@ -89,7 +90,7 @@ const Search = styled.input`
   border-radius: inherit;
   color: ${(props) => props.theme.text};
   font-size: 0.9rem;
-  padding: 8px 8px 8px 32px;
+  padding: 8px 8px 8px 36px;
   outline: none;
   transition: background-color 0.25s;
   width: inherit;
@@ -99,6 +100,8 @@ const Search = styled.input`
 `;
 
 const Options = styled.div`
+  align-items: center;
+  display: flex;
   @media (max-width: 600px) {
     display: none;
   }
@@ -126,6 +129,7 @@ const Icon = styled.svg`
 `;
 
 const InlineIcon = styled(Icon)`
+  margin-left: 8px;
   position: absolute;
   z-index: 1;
 `;
