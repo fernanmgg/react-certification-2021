@@ -3,10 +3,17 @@ import { render, screen } from '@testing-library/react';
 
 import VideoList from '../VideoList.component';
 import { mockedVideos } from '../VideoList.mock';
+import { wrapWithVideoContext } from '../../../state/testing';
 
 describe('VideoList UI tests', () => {
   test('renders video cards', () => {
-    render(<VideoList videos={mockedVideos} loading={false} error={false} />);
+    render(
+      wrapWithVideoContext(
+        <VideoList videos={mockedVideos} loading={false} error={false} />,
+        {},
+        jest.fn()
+      )
+    );
     const title1 = screen.getByText(/test title 1/i);
     const title2 = screen.getByText(/test title 2/i);
     const title3 = screen.getByText(/test title 3/i);

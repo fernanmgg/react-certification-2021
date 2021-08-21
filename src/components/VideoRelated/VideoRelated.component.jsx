@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import {
   StyledVideoRelated,
@@ -8,13 +8,19 @@ import {
   Title,
   Effects,
 } from './VideoRelated.style';
+import { VideoContext } from '../../state/Video.state';
 
-function VideoRelated({ videoId, image, title, description, setVideo }) {
+function VideoRelated({ videoId, image, title, description }) {
+  const { dispatch } = useContext(VideoContext);
+
   function handleClick() {
-    setVideo({
-      videoId,
-      title,
-      description,
+    dispatch({
+      type: 'SET_VIDEO',
+      payload: {
+        videoId,
+        title,
+        description,
+      },
     });
   }
 

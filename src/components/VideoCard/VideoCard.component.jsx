@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import {
   StyledVideoCard,
@@ -9,13 +9,19 @@ import {
   Description,
   Effects,
 } from './VideoCard.style';
+import { VideoContext } from '../../state/Video.state';
 
-function VideoCard({ videoId, image, title, description, setVideo }) {
+function VideoCard({ videoId, image, title, description }) {
+  const { dispatch } = useContext(VideoContext);
+
   function handleClick() {
-    setVideo({
-      videoId,
-      title,
-      description,
+    dispatch({
+      type: 'SET_VIDEO',
+      payload: {
+        videoId,
+        title,
+        description,
+      },
     });
   }
 

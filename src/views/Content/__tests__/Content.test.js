@@ -2,10 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import Content from '../Content.view';
+import { wrapWithVideoContext } from '../../../state/testing';
 
 describe('Content UI tests', () => {
   test('renders Home view if video is null', () => {
-    render(<Content videos={[]} video={null} />);
+    render(wrapWithVideoContext(<Content />, { search: '', video: null }, jest.fn()));
     const text = screen.getByText(/react bootcamp 2021/i);
     expect(text).toBeInTheDocument();
   });
@@ -16,7 +17,7 @@ describe('Content UI tests', () => {
       title: 'Test title',
       description: 'Test description',
     };
-    render(<Content video={video} />);
+    render(wrapWithVideoContext(<Content />, { video }, jest.fn()));
     const title = screen.getByText(/test title/i);
     expect(title).toBeInTheDocument();
   });

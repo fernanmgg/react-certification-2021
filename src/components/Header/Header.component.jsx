@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import _ from 'lodash';
 
 import { drawerIcon, searchIcon, loginIcon } from './Header.icon';
@@ -12,18 +12,23 @@ import {
   SearchWrapper,
   Search,
   Options,
-  Toggle,
+  ToggleText,
   LoginButton,
   Icon,
   InlineIcon,
+  GapFill,
 } from './Header.style';
+import Toggle from '../Toggle';
+import { VideoContext } from '../../state/Video.state';
 
-function Header({ search, setSearch, setVideo }) {
+function Header({ theme, toggleTheme }) {
+  const { state, dispatch } = useContext(VideoContext);
+  const { search } = state;
   const [drawer, setDrawer] = useState(false);
 
   function fetchVideos(_search) {
-    setSearch(_search);
-    setVideo(null);
+    dispatch({ type: 'SET_SEARCH', payload: _search });
+    dispatch({ type: 'UNSET_VIDEO' });
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,7 +43,7 @@ function Header({ search, setSearch, setVideo }) {
   }
 
   function handleHomeClick() {
-    setVideo(null);
+    dispatch({ type: 'UNSET_VIDEO' });
     setDrawer(false);
   }
 
@@ -49,9 +54,17 @@ function Header({ search, setSearch, setVideo }) {
   return (
     <StyledHeader>
       {drawer && <Overlay onClick={handleOverlayClick} data-testid="overlay" />}
-      <DrawerMenu DrawerMenu drawer={drawer}>
+      <DrawerMenu drawer={drawer}>
         <DrawerItem onClick={handleHomeClick} aria-label="home">
           Home
+        </DrawerItem>
+        <DrawerItem hiddenItem>
+          Dark Mode
+          <GapFill />
+          <Toggle toggleBackground={false} value={theme} toggle={toggleTheme} />
+        </DrawerItem>
+        <DrawerItem aria-label="login" hiddenItem>
+          Login
         </DrawerItem>
       </DrawerMenu>
       <Wrapper>
@@ -66,10 +79,10 @@ function Header({ search, setSearch, setVideo }) {
           </InlineIcon>
           <Search aria-label="search" defaultValue={search} onChange={handleChange} />
         </SearchWrapper>
-        <div style={{ flexGrow: 1 }} />
+        <GapFill />
         <Options>
-          <Toggle aria-label="theme" type="checkbox" />
-          <span style={{ fontSize: '0.8em' }}>Dark Mode</span>
+          <ToggleText>Dark Mode</ToggleText>
+          <Toggle toggleBackground value={theme} toggle={toggleTheme} />
           <LoginButton aria-label="login">
             <Icon viewBox="0 0 24 24">
               <path d={loginIcon} />

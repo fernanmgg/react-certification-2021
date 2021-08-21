@@ -1,29 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyle } from './App.style';
-import { lightTheme } from './App.theme';
+import { lightTheme, darkTheme } from './App.theme';
 import Header from '../Header';
 import Content from '../../views/Content';
-import useVideoAPI from '../../utils/hooks/useVideoAPI';
+import { VideoContext, initialState, reducer } from '../../state/Video.state';
 
 function App() {
-  const [search, setSearch] = useState('wizeline');
-  const [video, setVideo] = useState(null);
-  const { videos, loading, error } = useVideoAPI(search);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [theme, toggleTheme] = useState(false);
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <GlobalStyle />
-      <Header search={search} setSearch={setSearch} setVideo={setVideo} />
-      <Content
-        videos={videos}
-        loading={loading}
-        error={error}
-        video={video}
-        setVideo={setVideo}
-      />
-    </ThemeProvider>
+    <VideoContext.Provider value={{ state, dispatch }}>
+      <ThemeProvider theme={!theme ? lightTheme : darkTheme}>
+        <GlobalStyle />
+        <Header theme={theme} toggleTheme={toggleTheme} />
+        <Content />
+      </ThemeProvider>
+    </VideoContext.Provider>
   );
 }
 

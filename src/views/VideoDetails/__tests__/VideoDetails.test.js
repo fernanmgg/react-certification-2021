@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import VideoDetails from '../VideoDetails.view';
 import * as useVideoAPI from '../../../utils/hooks/useVideoAPI';
+import { wrapWithVideoContext } from '../../../state/testing';
 
 useVideoAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
@@ -13,7 +14,7 @@ describe('VideoDetails UI tests', () => {
       title: 'Test title',
       description: 'Test description',
     };
-    render(<VideoDetails video={video} />);
+    render(wrapWithVideoContext(<VideoDetails />, { video }, jest.fn()));
     const title = screen.getByText(/test title/i);
     const description = screen.getByText(/test description/i);
     expect(title).toBeInTheDocument();

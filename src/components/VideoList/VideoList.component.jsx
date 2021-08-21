@@ -5,7 +5,7 @@ import VideoCard from '../VideoCard';
 import VideoRelated from '../VideoRelated';
 import charCodeReplace from '../../utils/charCodeReplace';
 
-function VideoList({ videos, loading, error, setVideo, related }) {
+function VideoList({ videos, loading, error, related }) {
   const StyledList = !related ? StyledVideoList : StyledVideoListRel;
   const VideoComponent = !related ? VideoCard : VideoRelated;
   const videoCards =
@@ -24,7 +24,6 @@ function VideoList({ videos, loading, error, setVideo, related }) {
               image={video.snippet.thumbnails.medium.url}
               title={charCodeReplace(video.snippet.title)}
               description={video.snippet.description}
-              setVideo={setVideo}
             />
           );
         })
