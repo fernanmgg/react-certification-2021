@@ -89,7 +89,7 @@ describe('Header UI tests', () => {
       <MemoryRouter>
         {wrapWithVideoContext(
           wrapWithThemeContext(<Header />),
-          { auth: false, search: '' },
+          { auth: null, search: '' },
           jest.fn()
         )}
       </MemoryRouter>
@@ -110,7 +110,7 @@ describe('Header UI tests', () => {
       <MemoryRouter>
         {wrapWithVideoContext(
           wrapWithThemeContext(<Header />),
-          { auth: false, search: '' },
+          { auth: null, search: '' },
           jest.fn()
         )}
       </MemoryRouter>,
@@ -136,7 +136,7 @@ describe('Header UI tests', () => {
       <MemoryRouter>
         {wrapWithVideoContext(
           wrapWithThemeContext(<Header />),
-          { auth: false, search: '' },
+          { auth: null, search: '' },
           jest.fn()
         )}
       </MemoryRouter>
@@ -152,7 +152,7 @@ describe('Header UI tests', () => {
       <MemoryRouter>
         {wrapWithVideoContext(
           wrapWithThemeContext(<Header />),
-          { auth: true, search: '' },
+          { auth: {}, search: '' },
           jest.fn()
         )}
       </MemoryRouter>
@@ -163,5 +163,49 @@ describe('Header UI tests', () => {
     const logout = screen.queryAllByRole('button', { name: /logout/i });
     expect(favorites.length).toEqual(2);
     expect(logout.length).toEqual(2);
+  });
+
+  test('dispatch is called to unset auth', () => {
+    const dispatch = jest.fn();
+    render(
+      <MemoryRouter>
+        {wrapWithVideoContext(
+          wrapWithThemeContext(<Header />),
+          { auth: {}, search: '' },
+          dispatch
+        )}
+      </MemoryRouter>
+    );
+    const auth = screen.getByRole('button', { name: /auth/i });
+    user.click(auth);
+    const logout = screen.queryAllByRole('button', { name: /logout/i })[0];
+    user.click(logout);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith({ type: 'UNSET_AUTH' });
+  });
+
+  test('dispatch is called to set auth if there is auth data in local storage', () => {
+    const dispatch = jest.fn();
+    const auth = {
+      id: '123',
+      name: 'test',
+      avatarUrl: 'test',
+    };
+    localStorage.setItem('auth', JSON.stringify(auth));
+    render(
+      <MemoryRouter>
+        {wrapWithVideoContext(
+          wrapWithThemeContext(<Header />),
+          { auth: null, search: '' },
+          dispatch
+        )}
+      </MemoryRouter>
+    );
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'SET_AUTH',
+      payload: { auth, remember: true },
+    });
+    localStorage.clear();
   });
 });

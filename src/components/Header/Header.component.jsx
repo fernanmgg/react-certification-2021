@@ -34,6 +34,14 @@ function Header({ theme, toggleTheme }) {
   const [login, setLogin] = useState(false);
   const history = useHistory();
 
+  const localAuth = localStorage.getItem('auth');
+  if (localAuth && !auth) {
+    dispatch({
+      type: 'SET_AUTH',
+      payload: { auth: JSON.parse(localAuth), remember: true },
+    });
+  }
+
   function fetchVideos(_search) {
     dispatch({ type: 'SET_SEARCH', payload: _search });
     history.push('/');
@@ -68,6 +76,10 @@ function Header({ theme, toggleTheme }) {
   function handleOverlayClick() {
     setDrawer(false);
     setLogin(false);
+  }
+
+  function handleLogoutClick() {
+    dispatch({ type: 'UNSET_AUTH' });
   }
 
   function handleClick(e) {
@@ -105,7 +117,11 @@ function Header({ theme, toggleTheme }) {
           </DrawerItem>
         )}
         {auth && <DrawerItem hiddenItem>Favorites</DrawerItem>}
-        {auth && <DrawerItem hiddenItem>Logout</DrawerItem>}
+        {auth && (
+          <DrawerItem onClick={handleLogoutClick} hiddenItem>
+            Logout
+          </DrawerItem>
+        )}
       </DrawerMenu>
       <Wrapper>
         <DrawerButton onClick={handleDrawerClick} aria-label="drawer">
@@ -140,7 +156,11 @@ function Header({ theme, toggleTheme }) {
                 </PopupItem>
               )}
               {auth && <PopupItem aria-label="favorites">Favorites</PopupItem>}
-              {auth && <PopupItem aria-label="logout">Logout</PopupItem>}
+              {auth && (
+                <PopupItem aria-label="logout" onClick={handleLogoutClick}>
+                  Logout
+                </PopupItem>
+              )}
             </PopupMenu>
           )}
         </Options>

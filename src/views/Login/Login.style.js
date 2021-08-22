@@ -19,6 +19,16 @@ const Title = styled.h3`
   color: ${(props) => props.theme.textLight};
 `;
 
+const ErrorMessage = styled.div`
+  background-color: ${(props) => props.theme.accentTransparent};
+  border: 1px solid ${(props) => props.theme.accent};
+  border-radius: 4px;
+  color: ${(props) => props.theme.accent};
+  font-size: 0.9rem;
+  margin: 0 0 16px 0;
+  padding: 4px 8px;
+`;
+
 const InputWrapper = styled.label`
   height: 72px;
   width: 100%;
@@ -61,6 +71,11 @@ const InputLabel = styled.span`
   ${(props) => props.active && InputLabelMod}
 `;
 
+const Checkbox = styled.label`
+  color: ${(props) => props.theme.textLight};
+  font-size: 0.9rem;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -83,4 +98,14 @@ const Button = styled.button`
   }
 `;
 
-export { Modal, Title, InputWrapper, Input, InputLabel, ButtonWrapper, Button };
+export {
+  Modal,
+  Title,
+  ErrorMessage,
+  InputWrapper,
+  Input,
+  InputLabel,
+  Checkbox,
+  ButtonWrapper,
+  Button,
+};
