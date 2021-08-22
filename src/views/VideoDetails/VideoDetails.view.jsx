@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import { StyledVideoDetails, Wrapper, Title, Description } from './VideoDetails.style';
 import VideoList from '../../components/VideoList';
 import useVideoAPI from '../../utils/hooks/useVideoAPI';
-import { VideoContext } from '../../state/Video.state';
+import useVideoListAPI from '../../utils/hooks/useVideoListAPI';
 
 function VideoDetails() {
-  const { state } = useContext(VideoContext);
-  const { video } = state;
-  const { videos, loading, error } = useVideoAPI(video.videoId, true);
+  const { videoId } = useParams();
+  const { video } = useVideoAPI(videoId);
+  const { videos, loading, error } = useVideoListAPI(videoId, true);
 
   return (
     <StyledVideoDetails>
@@ -17,7 +18,7 @@ function VideoDetails() {
           width="100%"
           height="480px"
           title={video.title}
-          src={`https://www.youtube.com/embed/${video.videoId}`}
+          src={`https://www.youtube.com/embed/${videoId}`}
         />
         <Title>{video.title}</Title>
         <Description>{video.description}</Description>

@@ -1,53 +1,48 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route } from 'react-router';
 import user from '@testing-library/user-event';
 
 import VideoRelated from '../VideoRelated.component';
-import { wrapWithVideoContext } from '../../../state/testing';
 
 describe('VideoRelated UI tests', () => {
   test('renders related video with correct props', () => {
     render(
-      wrapWithVideoContext(
+      <MemoryRouter>
         <VideoRelated
           key="Test key"
           image="Test image"
           title="Test title"
           description="Test description"
-        />,
-        {},
-        jest.fn()
-      )
+        />
+      </MemoryRouter>
     );
     const title = screen.getByText(/test title/i);
     expect(title).toBeInTheDocument();
   });
 
   test('setVideo is called when related video is clicked', () => {
-    const dispatch = jest.fn();
+    let testLocation;
     render(
-      wrapWithVideoContext(
+      <MemoryRouter>
         <VideoRelated
           key="Test key"
           videoId="Test id"
           image="Test image"
           title="Test title"
           description="Test description"
-        />,
-        {},
-        dispatch
-      )
+        />
+        <Route
+          path="*"
+          render={({ location }) => {
+            testLocation = location;
+            return null;
+          }}
+        />
+      </MemoryRouter>
     );
     const video = screen.getByRole('button');
     user.click(video);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_VIDEO',
-      payload: {
-        videoId: 'Test id',
-        title: 'Test title',
-        description: 'Test description',
-      },
-    });
+    expect(testLocation.pathname).toBe('/video/Test id');
   });
 });

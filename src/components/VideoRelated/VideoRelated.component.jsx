@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
   StyledVideoRelated,
@@ -8,20 +9,12 @@ import {
   Title,
   Effects,
 } from './VideoRelated.style';
-import { VideoContext } from '../../state/Video.state';
 
-function VideoRelated({ videoId, image, title, description }) {
-  const { dispatch } = useContext(VideoContext);
+function VideoRelated({ videoId, image, title }) {
+  const history = useHistory();
 
   function handleClick() {
-    dispatch({
-      type: 'SET_VIDEO',
-      payload: {
-        videoId,
-        title,
-        description,
-      },
-    });
+    history.push(`/video/${videoId}`);
   }
 
   return (

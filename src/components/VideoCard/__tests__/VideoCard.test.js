@@ -1,23 +1,21 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route } from 'react-router';
 import user from '@testing-library/user-event';
 
 import VideoCard from '../VideoCard.component';
-import { wrapWithVideoContext } from '../../../state/testing';
 
 describe('VideoCard UI tests', () => {
   test('renders card with correct props', () => {
     render(
-      wrapWithVideoContext(
+      <MemoryRouter>
         <VideoCard
           key="Test key"
           image="Test image"
           title="Test title"
           description="Test description"
-        />,
-        {},
-        jest.fn()
-      )
+        />
+      </MemoryRouter>
     );
     const title = screen.getByText(/test title/i);
     const description = screen.getByText(/test description/i);
@@ -26,30 +24,27 @@ describe('VideoCard UI tests', () => {
   });
 
   test('setVideo is called when card is clicked', () => {
-    const dispatch = jest.fn();
+    let testLocation;
     render(
-      wrapWithVideoContext(
+      <MemoryRouter>
         <VideoCard
           key="Test key"
           videoId="Test id"
           image="Test image"
           title="Test title"
           description="Test description"
-        />,
-        {},
-        dispatch
-      )
+        />
+        <Route
+          path="*"
+          render={({ location }) => {
+            testLocation = location;
+            return null;
+          }}
+        />
+      </MemoryRouter>
     );
     const video = screen.getByRole('button');
     user.click(video);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_VIDEO',
-      payload: {
-        videoId: 'Test id',
-        title: 'Test title',
-        description: 'Test description',
-      },
-    });
+    expect(testLocation.pathname).toBe('/video/Test id');
   });
 });

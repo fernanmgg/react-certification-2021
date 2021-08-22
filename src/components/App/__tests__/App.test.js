@@ -5,9 +5,9 @@ import 'jest-styled-components';
 
 import App from '../App.component';
 import { lightTheme, darkTheme } from '../App.theme';
-import * as useVideoAPI from '../../../utils/hooks/useVideoAPI';
+import * as useVideoListAPI from '../../../utils/hooks/useVideoListAPI';
 
-useVideoAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
+useVideoListAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
 describe('App UI tests', () => {
   test('renders header and home view', () => {
@@ -16,8 +16,8 @@ describe('App UI tests', () => {
     const homeView = screen.getByText(/react bootcamp 2021/i);
     expect(header).toHaveLength(2);
     expect(homeView).toBeInTheDocument();
-    expect(useVideoAPI.default).toHaveBeenCalled();
-    expect(useVideoAPI.default).toHaveBeenCalledWith('wizeline');
+    expect(useVideoListAPI.default).toHaveBeenCalled();
+    expect(useVideoListAPI.default).toHaveBeenCalledWith('wizeline');
   });
 
   test('theme changes when toggle is clicked', () => {

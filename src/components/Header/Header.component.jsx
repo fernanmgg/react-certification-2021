@@ -1,4 +1,5 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback, useRef, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 
 import { drawerIcon, searchIcon, loginIcon } from './Header.icon';
@@ -13,28 +14,35 @@ import {
   Search,
   Options,
   ToggleText,
-  LoginButton,
+  AuthButton,
+  PopupMenu,
+  PopupItem,
   Icon,
   InlineIcon,
   GapFill,
 } from './Header.style';
 import Toggle from '../Toggle';
 import { VideoContext } from '../../state/Video.state';
+import Login from '../../views/Login';
 
 function Header({ theme, toggleTheme }) {
+  const node = useRef();
   const { state, dispatch } = useContext(VideoContext);
-  const { search } = state;
+  const { auth, search } = state;
   const [drawer, setDrawer] = useState(false);
+  const [user, setUser] = useState(false);
+  const [login, setLogin] = useState(false);
+  const history = useHistory();
 
   function fetchVideos(_search) {
     dispatch({ type: 'SET_SEARCH', payload: _search });
-    dispatch({ type: 'UNSET_VIDEO' });
+    history.push('/');
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounce = useCallback(_.debounce(fetchVideos, 500), []);
 
-  function handleChange(event) {
+  function handleSearchChange(event) {
     debounce(event.target.value);
   }
 
@@ -43,17 +51,45 @@ function Header({ theme, toggleTheme }) {
   }
 
   function handleHomeClick() {
-    dispatch({ type: 'UNSET_VIDEO' });
+    history.push('/');
+    setDrawer(false);
+  }
+
+  function handleUserClick() {
+    setUser(true);
+  }
+
+  function handleLoginClick() {
+    setLogin(true);
+    setUser(false);
     setDrawer(false);
   }
 
   function handleOverlayClick() {
     setDrawer(false);
+    setLogin(false);
   }
+
+  function handleClick(e) {
+    if (node.current.contains(e.target)) {
+      return;
+    }
+    setUser(false);
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, []);
 
   return (
     <StyledHeader>
-      {drawer && <Overlay onClick={handleOverlayClick} data-testid="overlay" />}
+      {(drawer || login) && (
+        <Overlay onClick={handleOverlayClick} data-testid="overlay" />
+      )}
       <DrawerMenu drawer={drawer}>
         <DrawerItem onClick={handleHomeClick} aria-label="home">
           Home
@@ -63,9 +99,13 @@ function Header({ theme, toggleTheme }) {
           <GapFill />
           <Toggle toggleBackground={false} value={theme} toggle={toggleTheme} />
         </DrawerItem>
-        <DrawerItem aria-label="login" hiddenItem>
-          Login
-        </DrawerItem>
+        {!auth && (
+          <DrawerItem aria-label="login" onClick={handleLoginClick} hiddenItem>
+            Login
+          </DrawerItem>
+        )}
+        {auth && <DrawerItem hiddenItem>Favorites</DrawerItem>}
+        {auth && <DrawerItem hiddenItem>Logout</DrawerItem>}
       </DrawerMenu>
       <Wrapper>
         <DrawerButton onClick={handleDrawerClick} aria-label="drawer">
@@ -77,19 +117,35 @@ function Header({ theme, toggleTheme }) {
           <InlineIcon viewBox="0 0 24 24">
             <path d={searchIcon} />
           </InlineIcon>
-          <Search aria-label="search" defaultValue={search} onChange={handleChange} />
+          <Search
+            aria-label="search"
+            defaultValue={search}
+            onChange={handleSearchChange}
+          />
         </SearchWrapper>
         <GapFill />
-        <Options>
+        <Options ref={node}>
           <ToggleText>Dark Mode</ToggleText>
           <Toggle toggleBackground value={theme} toggle={toggleTheme} />
-          <LoginButton aria-label="login">
+          <AuthButton onClick={handleUserClick} aria-label="auth">
             <Icon viewBox="0 0 24 24">
               <path d={loginIcon} />
             </Icon>
-          </LoginButton>
+          </AuthButton>
+          {user && (
+            <PopupMenu>
+              {!auth && (
+                <PopupItem onClick={handleLoginClick} aria-label="login">
+                  Login
+                </PopupItem>
+              )}
+              {auth && <PopupItem aria-label="favorites">Favorites</PopupItem>}
+              {auth && <PopupItem aria-label="logout">Logout</PopupItem>}
+            </PopupMenu>
+          )}
         </Options>
       </Wrapper>
+      {login && <Login close={handleOverlayClick} />}
     </StyledHeader>
   );
 }

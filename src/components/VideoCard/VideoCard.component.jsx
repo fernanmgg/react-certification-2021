@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
   StyledVideoCard,
@@ -9,20 +10,12 @@ import {
   Description,
   Effects,
 } from './VideoCard.style';
-import { VideoContext } from '../../state/Video.state';
 
 function VideoCard({ videoId, image, title, description }) {
-  const { dispatch } = useContext(VideoContext);
+  const history = useHistory();
 
   function handleClick() {
-    dispatch({
-      type: 'SET_VIDEO',
-      payload: {
-        videoId,
-        title,
-        description,
-      },
-    });
+    history.push(`/video/${videoId}`);
   }
 
   return (

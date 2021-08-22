@@ -1,13 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
 import Home from '../Home';
 import VideoDetails from '../VideoDetails';
-import { VideoContext } from '../../state/Video.state';
+import NotFound from '../NotFound';
 
 function Content() {
-  const { state } = useContext(VideoContext);
-  const { video } = state;
-  return <>{video === null ? <Home /> : <VideoDetails />}</>;
+  return (
+    <Switch>
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Route path="/video/:videoId">
+        <VideoDetails />
+      </Route>
+      <Route path="*">
+        <NotFound />
+      </Route>
+    </Switch>
+  );
 }
 
 export default Content;

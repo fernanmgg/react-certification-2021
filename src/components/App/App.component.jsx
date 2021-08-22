@@ -1,4 +1,5 @@
 import React, { useState, useReducer } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyle } from './App.style';
@@ -15,8 +16,10 @@ function App() {
     <VideoContext.Provider value={{ state, dispatch }}>
       <ThemeProvider theme={!theme ? lightTheme : darkTheme}>
         <GlobalStyle />
-        <Header theme={theme} toggleTheme={toggleTheme} />
-        <Content />
+        <Router>
+          <Header theme={theme} toggleTheme={toggleTheme} />
+          <Content />
+        </Router>
       </ThemeProvider>
     </VideoContext.Provider>
   );

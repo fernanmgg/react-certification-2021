@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
+import useVideoListAPI from '../useVideoListAPI';
 import useVideoAPI from '../useVideoAPI';
 
 const controlledPromise = () => {
@@ -10,12 +11,12 @@ const controlledPromise = () => {
   return { deferred, promise };
 };
 
-describe('useVideoAPI tests', () => {
+describe('useVideoListAPI tests', () => {
   test('fetch is called with search of at least one character', async () => {
     const { deferred, promise } = controlledPromise();
     const mockedVideos = ['test 1', 'test 2', 'test 3'];
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoListAPI('1234'));
     expect(result.current.videos).toEqual([]);
     deferred.resolve({
       json: () => ({
@@ -30,7 +31,7 @@ describe('useVideoAPI tests', () => {
 
   test('videos state remains if the search is empty', async () => {
     global.fetch = jest.fn();
-    const { result } = renderHook(() => useVideoAPI(''));
+    const { result } = renderHook(() => useVideoListAPI(''));
     expect(result.current.videos).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(0);
   });
@@ -40,7 +41,7 @@ describe('useVideoAPI tests', () => {
     const mockedVideos = ['test 1', 'test 2', 'test 3'];
     global.fetch = jest.fn(() => promise);
     const { result, waitForNextUpdate } = renderHook(() =>
-      useVideoAPI('A1234567890', true)
+      useVideoListAPI('A1234567890', true)
     );
     expect(result.current.videos).toEqual([]);
     deferred.resolve({
@@ -56,7 +57,7 @@ describe('useVideoAPI tests', () => {
 
   test('videos state remains if the video ID is not valid', async () => {
     global.fetch = jest.fn();
-    const { result } = renderHook(() => useVideoAPI('123', true));
+    const { result } = renderHook(() => useVideoListAPI('123', true));
     expect(result.current.videos).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(0);
   });
@@ -64,7 +65,7 @@ describe('useVideoAPI tests', () => {
   test('loading state is toggled accordingly', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoListAPI('1234'));
     expect(result.current.loading).toBe(true);
     deferred.resolve();
     await waitForNextUpdate();
@@ -75,7 +76,7 @@ describe('useVideoAPI tests', () => {
   test('error state is toggled accordingly', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoListAPI('1234'));
     expect(result.current.error).toBe(false);
     deferred.reject();
     await waitForNextUpdate();
@@ -86,7 +87,7 @@ describe('useVideoAPI tests', () => {
   test('returns error if API does not return items object', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
-    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('1234'));
+    const { result, waitForNextUpdate } = renderHook(() => useVideoListAPI('1234'));
     expect(result.current.error).toBe(false);
     deferred.resolve({
       json: () => ({ test: 'test' }),
@@ -94,5 +95,71 @@ describe('useVideoAPI tests', () => {
     await waitForNextUpdate();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(result.current.error).toBe(true);
+  });
+});
+
+describe('useVideoAPI tests', () => {
+  test('fetch is called with video ID of appropriate length', async () => {
+    const { deferred, promise } = controlledPromise();
+    const mockedVideo = [
+      {
+        snippet: {
+          title: 'Test title',
+          description: 'Test description',
+        },
+      },
+    ];
+    global.fetch = jest.fn(() => promise);
+    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('A1234567890'));
+    expect(result.current.video).toEqual({ title: '', description: 'Fetching info...' });
+    deferred.resolve({
+      json: () => ({
+        items: mockedVideo,
+      }),
+    });
+    await waitForNextUpdate();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch.mock.calls[0][0]).toMatch(/id=A1234567890/i);
+    expect(result.current.video).toEqual(mockedVideo[0].snippet);
+  });
+
+  test('returns error message if the video ID is not valid', async () => {
+    global.fetch = jest.fn();
+    const { result } = renderHook(() => useVideoAPI('123'));
+    expect(result.current.video).toEqual({
+      title: '',
+      description: 'Error fetching info...',
+    });
+    expect(fetch).toHaveBeenCalledTimes(0);
+  });
+
+  test('returns error message if there is an error in the fetch', async () => {
+    const { deferred, promise } = controlledPromise();
+    global.fetch = jest.fn(() => promise);
+    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('A1234567890'));
+    expect(result.current.video).toEqual({ title: '', description: 'Fetching info...' });
+    deferred.reject();
+    await waitForNextUpdate();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(result.current.video).toEqual({
+      title: '',
+      description: 'Error fetching info...',
+    });
+  });
+
+  test('returns error message if API does not return items object', async () => {
+    const { deferred, promise } = controlledPromise();
+    global.fetch = jest.fn(() => promise);
+    const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('A1234567890'));
+    expect(result.current.video).toEqual({ title: '', description: 'Fetching info...' });
+    deferred.resolve({
+      json: () => ({ test: 'test' }),
+    });
+    await waitForNextUpdate();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(result.current.video).toEqual({
+      title: '',
+      description: 'Error fetching info...',
+    });
   });
 });
