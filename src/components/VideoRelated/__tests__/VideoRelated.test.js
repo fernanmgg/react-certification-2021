@@ -8,7 +8,7 @@ import VideoRelated from '../VideoRelated.component';
 describe('VideoRelated UI tests', () => {
   test('renders related video with correct props', () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/video/test']}>
         <VideoRelated
           key="Test key"
           image="Test image"
@@ -21,10 +21,10 @@ describe('VideoRelated UI tests', () => {
     expect(title).toBeInTheDocument();
   });
 
-  test('setVideo is called when related video is clicked', () => {
+  test('redirects to /video/** route when related video is clicked', () => {
     let testLocation;
     render(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/video/test']}>
         <VideoRelated
           key="Test key"
           videoId="Test id"
@@ -44,5 +44,30 @@ describe('VideoRelated UI tests', () => {
     const video = screen.getByRole('button');
     user.click(video);
     expect(testLocation.pathname).toBe('/video/Test id');
+  });
+
+  test('redirects to /favorites/** route when card is clicked', () => {
+    let testLocation;
+    render(
+      <MemoryRouter initialEntries={['/favorites/test']}>
+        <VideoRelated
+          key="Test key"
+          videoId="Test id"
+          image="Test image"
+          title="Test title"
+          description="Test description"
+        />
+        <Route
+          path="*"
+          render={({ location }) => {
+            testLocation = location;
+            return null;
+          }}
+        />
+      </MemoryRouter>
+    );
+    const video = screen.getByRole('button');
+    user.click(video);
+    expect(testLocation.pathname).toBe('/favorites/Test id');
   });
 });

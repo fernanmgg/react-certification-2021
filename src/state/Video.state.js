@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { getFavorites } from '../utils/favoritesDB';
+
 const VideoContext = React.createContext();
 
 const initialState = {
   auth: null,
+  favorites: [],
   search: 'wizeline',
 };
 
@@ -15,11 +18,15 @@ const reducer = (state, action) => {
       if (action.payload.remember)
         localStorage.setItem('auth', JSON.stringify(action.payload.auth));
       else sessionStorage.setItem('auth', JSON.stringify(action.payload.auth));
-      return { ...state, auth: action.payload.auth };
+      return {
+        ...state,
+        auth: action.payload.auth,
+        favorites: getFavorites(action.payload.auth.name),
+      };
     case 'UNSET_AUTH':
       localStorage.removeItem('auth');
       sessionStorage.removeItem('auth');
-      return { ...state, auth: null };
+      return { ...state, auth: null, favorites: [] };
     default:
       throw new Error('Error: Undefined action');
   }

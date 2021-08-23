@@ -13,41 +13,56 @@ describe('Reducer function tests', () => {
   });
 
   test('returns state with set search', () => {
-    const state = { auth: null, search: '' };
+    const state = { auth: null, favorites: [], search: '' };
     const action = { type: 'SET_SEARCH', payload: 'test' };
-    expect(reducer(state, action)).toEqual({ auth: null, search: 'test' });
+    expect(reducer(state, action)).toEqual({ auth: null, favorites: [], search: 'test' });
   });
 
   test('returns state with set auth in local storage', () => {
-    const state = { auth: null, search: '' };
+    const state = { auth: null, favorites: [], search: '' };
     const action = {
       type: 'SET_AUTH',
       payload: { auth, remember: true },
     };
     expect(localStorage.getItem('auth')).toBeNull();
-    expect(reducer(state, action)).toEqual({ auth, search: '' });
+    expect(reducer(state, action)).toEqual({ auth, favorites: [], search: '' });
     expect(JSON.parse(localStorage.getItem('auth'))).toEqual(auth);
   });
 
   test('returns state with set auth in session storage', () => {
-    const state = { auth: null, search: '' };
+    const state = { auth: null, favorites: [], search: '' };
     const action = {
       type: 'SET_AUTH',
       payload: { auth, remember: false },
     };
     expect(sessionStorage.getItem('auth')).toBeNull();
-    expect(reducer(state, action)).toEqual({ auth, search: '' });
+    expect(reducer(state, action)).toEqual({ auth, favorites: [], search: '' });
     expect(JSON.parse(sessionStorage.getItem('auth'))).toEqual(auth);
   });
 
+  test('returns state with favorites from storage', () => {
+    const state = { auth, favorites: [], search: '' };
+    const action = {
+      type: 'SET_AUTH',
+      payload: { auth, remember: false },
+    };
+    const favorites = [{ name: 'test', videos: ['test 1', 'test 2', 'test 3'] }];
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    expect(reducer(state, action)).toEqual({
+      auth,
+      favorites: favorites[0].videos,
+      search: '',
+    });
+  });
+
   test('returns state with unset video', () => {
-    const state = { auth, search: '' };
+    const state = { auth, favorites: [], search: '' };
     const action = { type: 'UNSET_AUTH' };
-    expect(reducer(state, action)).toEqual({ auth: null, search: '' });
+    expect(reducer(state, action)).toEqual({ auth: null, favorites: [], search: '' });
   });
 
   test('throws error with undefined action', () => {
-    const state = { auth: null, search: '' };
+    const state = { auth: null, favorites: [], search: '' };
     const action = { type: 'UNDEFINED_ACTION' };
     expect(() => {
       reducer(state, action);

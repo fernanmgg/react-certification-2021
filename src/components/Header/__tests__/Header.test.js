@@ -65,6 +65,26 @@ describe('Header UI tests', () => {
     expect(overlay).not.toBeInTheDocument();
   });
 
+  test('toggles overlay with favorites button', () => {
+    render(
+      <MemoryRouter>
+        {wrapWithVideoContext(
+          wrapWithThemeContext(<Header />),
+          { auth: {}, search: '' },
+          jest.fn()
+        )}
+      </MemoryRouter>
+    );
+    expect(screen.queryByTestId(/overlay/i)).toBeNull();
+    const drawer = screen.getByRole('button', { name: /drawer/i });
+    user.click(drawer);
+    const overlay = screen.queryByTestId(/overlay/i);
+    expect(overlay).toBeInTheDocument();
+    const favorites = screen.queryAllByRole('button', { name: /favorites/i })[0];
+    user.click(favorites);
+    expect(overlay).not.toBeInTheDocument();
+  });
+
   test('toggles overlay when clicking it', () => {
     render(
       <MemoryRouter>
@@ -182,30 +202,5 @@ describe('Header UI tests', () => {
     user.click(logout);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({ type: 'UNSET_AUTH' });
-  });
-
-  test('dispatch is called to set auth if there is auth data in local storage', () => {
-    const dispatch = jest.fn();
-    const auth = {
-      id: '123',
-      name: 'test',
-      avatarUrl: 'test',
-    };
-    localStorage.setItem('auth', JSON.stringify(auth));
-    render(
-      <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { auth: null, search: '' },
-          dispatch
-        )}
-      </MemoryRouter>
-    );
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_AUTH',
-      payload: { auth, remember: true },
-    });
-    localStorage.clear();
   });
 });

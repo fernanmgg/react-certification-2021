@@ -1,5 +1,6 @@
 import charCodeReplace from '../charCodeReplace';
 import loginAPI from '../loginAPI';
+import { getFavorites } from '../favoritesDB';
 
 describe('Char code replacement function tests', () => {
   test('replaces char codes with corresponding character', () => {
@@ -26,5 +27,22 @@ describe('Login API tests', () => {
     return loginAPI('test', 'test').catch((error) => {
       expect(error.message).toMatch(/username or password invalid/i);
     });
+  });
+});
+
+describe('FavoritesDB tests', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  test('returns empty array if there are no favorites for given user in local storage', () => {
+    expect(getFavorites('test')).toEqual([]);
+  });
+
+  test('returns favorites array if there are favorites for given user in local storage', () => {
+    const videos = ['test 1', 'test 2', 'test 3'];
+    const favorites = [{ name: 'test', videos }];
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    expect(getFavorites('test')).toEqual(videos);
   });
 });

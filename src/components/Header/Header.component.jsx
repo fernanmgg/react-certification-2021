@@ -23,7 +23,7 @@ import {
 } from './Header.style';
 import Toggle from '../Toggle';
 import { VideoContext } from '../../state/Video.state';
-import Login from '../../views/Login';
+import Login from '../Login';
 
 function Header({ theme, toggleTheme }) {
   const node = useRef();
@@ -33,14 +33,6 @@ function Header({ theme, toggleTheme }) {
   const [user, setUser] = useState(false);
   const [login, setLogin] = useState(false);
   const history = useHistory();
-
-  const localAuth = localStorage.getItem('auth');
-  if (localAuth && !auth) {
-    dispatch({
-      type: 'SET_AUTH',
-      payload: { auth: JSON.parse(localAuth), remember: true },
-    });
-  }
 
   function fetchVideos(_search) {
     dispatch({ type: 'SET_SEARCH', payload: _search });
@@ -78,8 +70,16 @@ function Header({ theme, toggleTheme }) {
     setLogin(false);
   }
 
+  function handleFavoritesClick() {
+    history.push('/favorites');
+    setUser(false);
+    setDrawer(false);
+  }
+
   function handleLogoutClick() {
     dispatch({ type: 'UNSET_AUTH' });
+    setUser(false);
+    setDrawer(false);
   }
 
   function handleClick(e) {
@@ -116,9 +116,13 @@ function Header({ theme, toggleTheme }) {
             Login
           </DrawerItem>
         )}
-        {auth && <DrawerItem hiddenItem>Favorites</DrawerItem>}
         {auth && (
-          <DrawerItem onClick={handleLogoutClick} hiddenItem>
+          <DrawerItem aria-label="favorites" onClick={handleFavoritesClick} hiddenItem>
+            Favorites
+          </DrawerItem>
+        )}
+        {auth && (
+          <DrawerItem aria-label="logout" onClick={handleLogoutClick} hiddenItem>
             Logout
           </DrawerItem>
         )}
@@ -155,7 +159,11 @@ function Header({ theme, toggleTheme }) {
                   Login
                 </PopupItem>
               )}
-              {auth && <PopupItem aria-label="favorites">Favorites</PopupItem>}
+              {auth && (
+                <PopupItem aria-label="favorites" onClick={handleFavoritesClick}>
+                  Favorites
+                </PopupItem>
+              )}
               {auth && (
                 <PopupItem aria-label="logout" onClick={handleLogoutClick}>
                   Logout

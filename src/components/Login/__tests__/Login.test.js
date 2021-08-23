@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
-import Login from '../Login.view';
+import Login from '../Login.component';
 import { wrapWithVideoContext } from '../../../state/testing';
 import * as loginAPI from '../../../utils/loginAPI';
 

@@ -12,9 +12,11 @@ import {
 
 function VideoRelated({ videoId, image, title }) {
   const history = useHistory();
+  const favorites = history.location.pathname.match(/favorites/i);
 
   function handleClick() {
-    history.push(`/video/${videoId}`);
+    if (!favorites) history.push(`/video/${videoId}`);
+    else history.push(`/favorites/${videoId}`);
   }
 
   return (

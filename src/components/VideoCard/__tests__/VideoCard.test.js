@@ -23,7 +23,7 @@ describe('VideoCard UI tests', () => {
     expect(description).toBeInTheDocument();
   });
 
-  test('setVideo is called when card is clicked', () => {
+  test('redirects to /video/** route when card is clicked', () => {
     let testLocation;
     render(
       <MemoryRouter>
@@ -46,5 +46,30 @@ describe('VideoCard UI tests', () => {
     const video = screen.getByRole('button');
     user.click(video);
     expect(testLocation.pathname).toBe('/video/Test id');
+  });
+
+  test('redirects to /favorites/** route when card is clicked', () => {
+    let testLocation;
+    render(
+      <MemoryRouter initialEntries={['/favorites']}>
+        <VideoCard
+          key="Test key"
+          videoId="Test id"
+          image="Test image"
+          title="Test title"
+          description="Test description"
+        />
+        <Route
+          path="*"
+          render={({ location }) => {
+            testLocation = location;
+            return null;
+          }}
+        />
+      </MemoryRouter>
+    );
+    const video = screen.getByRole('button');
+    user.click(video);
+    expect(testLocation.pathname).toBe('/favorites/Test id');
   });
 });
