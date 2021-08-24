@@ -7,7 +7,29 @@ const StyledVideoCard = styled.div`
   height: 345px;
   margin: 10px;
   overflow: hidden;
+  position: relative;
   width: 345px;
+`;
+
+const FavoriteButton = styled.button`
+  background-color: ${(props) => props.theme.background};
+  border: 1px solid ${(props) => props.theme.accent};
+  border-radius: 8px;
+  color: ${(props) => props.theme.accent};
+  cursor: pointer;
+  font-size: 0.75rem;
+  margin: 8px;
+  opacity: 0;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+  &:hover,
+  ${StyledVideoCard}:hover & {
+    opacity: 1;
+  }
 `;
 
 const Wrapper = styled.button`
@@ -70,4 +92,13 @@ const Effects = styled.span`
   }
 `;
 
-export { StyledVideoCard, Wrapper, Image, Content, Title, Description, Effects };
+export {
+  StyledVideoCard,
+  FavoriteButton,
+  Wrapper,
+  Image,
+  Content,
+  Title,
+  Description,
+  Effects,
+};

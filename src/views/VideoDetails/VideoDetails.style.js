@@ -24,9 +24,9 @@ const Favorite = styled.div`
 
 const FavoriteButton = styled.button`
   background-color: ${(props) => props.theme.backgroundTransparent};
-  color: ${(props) => props.theme.accent};
   border: 1px solid ${(props) => props.theme.accent};
   border-radius: 8px;
+  color: ${(props) => props.theme.accent};
   cursor: pointer;
   font-size: 1rem;
   margin: 0 8px;

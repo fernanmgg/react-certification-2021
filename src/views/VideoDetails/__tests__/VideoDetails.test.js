@@ -61,9 +61,9 @@ describe('VideoDetails UI tests', () => {
         dispatch
       )
     );
-    const addFavorite = screen.getByRole('button', { name: /add favorite/i });
-    expect(addFavorite).toBeInTheDocument();
-    user.click(addFavorite);
+    const favorite = screen.getByRole('button', { name: /add favorite/i });
+    expect(favorite).toBeInTheDocument();
+    user.click(favorite);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'ADD_FAVORITE',
@@ -85,9 +85,9 @@ describe('VideoDetails UI tests', () => {
         dispatch
       )
     );
-    const addFavorite = screen.getByRole('button', { name: /remove favorite/i });
-    expect(addFavorite).toBeInTheDocument();
-    user.click(addFavorite);
+    const favorite = screen.getByRole('button', { name: /remove favorite/i });
+    expect(favorite).toBeInTheDocument();
+    user.click(favorite);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'REMOVE_FAVORITE',
