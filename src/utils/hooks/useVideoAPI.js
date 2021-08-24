@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { defaultVideo, loadingVideo, errorVideo } from './useVideoAPI.vars';
 
-const key = process.env.REACT_APP_API_KEY;
+const key = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const baseUrl = 'https://www.googleapis.com/youtube/v3/videos?';
 

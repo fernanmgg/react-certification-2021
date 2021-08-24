@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import Header from '../Header.component';
 import { wrapWithVideoContext, wrapWithThemeContext } from '../../../state/testing';
+import * as app from '../../../firebase.config';
 
 describe('Header UI tests', () => {
   test('renders drawer and auth buttons, search input and theme checkbox', () => {
@@ -185,8 +186,12 @@ describe('Header UI tests', () => {
     expect(logout.length).toEqual(2);
   });
 
-  test('dispatch is called to unset auth', () => {
+  test('dispatch is called to unset auth when logout button is clicked', () => {
     const dispatch = jest.fn();
+    const mockedSignOut = jest.fn();
+    app.default.auth = jest.fn(() => ({
+      signOut: mockedSignOut,
+    }));
     render(
       <MemoryRouter>
         {wrapWithVideoContext(
@@ -200,6 +205,7 @@ describe('Header UI tests', () => {
     user.click(auth);
     const logout = screen.queryAllByRole('button', { name: /logout/i })[0];
     user.click(logout);
+    expect(mockedSignOut).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({ type: 'UNSET_AUTH' });
   });

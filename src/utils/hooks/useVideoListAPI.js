@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const key = process.env.REACT_APP_API_KEY;
+const key = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const baseUrl = 'https://www.googleapis.com/youtube/v3/search?';
 

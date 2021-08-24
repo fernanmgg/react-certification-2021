@@ -14,6 +14,7 @@ import {
 } from './Login.style';
 import { VideoContext } from '../../state/Video.state';
 import loginAPI from '../../utils/loginAPI';
+import app from '../../firebase.config';
 
 function Login({ close }) {
   const [username, setUsername] = useState('');
@@ -27,6 +28,26 @@ function Login({ close }) {
       .then((auth) => {
         setErrorMessage('');
         dispatch({ type: 'SET_AUTH', payload: { auth, remember } });
+        close();
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
+  }
+
+  function loginFirebase() {
+    app
+      .auth()
+      .signInWithEmailAndPassword(username, password)
+      .then(({ user }) => {
+        setErrorMessage('');
+        dispatch({
+          type: 'SET_AUTH',
+          payload: {
+            auth: { id: user.uid, name: user.displayName, avatarUrl: user.photoURL },
+            remember,
+          },
+        });
         close();
       })
       .catch((error) => {
@@ -70,6 +91,7 @@ function Login({ close }) {
       </Checkbox>
       <ButtonWrapper>
         <Button onClick={close}>Cancel</Button>
+        <Button onClick={loginFirebase}>Firebase</Button>
         <Button onClick={login}>Login</Button>
       </ButtonWrapper>
     </Modal>,

@@ -7,11 +7,11 @@ const Modal = styled.div`
   display: flex;
   flex-direction: column;
   left: 50%;
-  min-width: 360px;
   padding: 0 16px;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
+  width: 360px;
   z-index: 3;
 `;
 
@@ -26,6 +26,8 @@ const ErrorMessage = styled.div`
   color: ${(props) => props.theme.accent};
   font-size: 0.9rem;
   margin: 0 0 16px 0;
+  max-height: 4.8rem;
+  overflow: hidden;
   padding: 4px 8px;
 `;
 

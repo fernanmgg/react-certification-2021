@@ -24,6 +24,7 @@ import {
 import Toggle from '../Toggle';
 import { VideoContext } from '../../state/Video.state';
 import Login from '../Login';
+import app from '../../firebase.config';
 
 function Header({ theme, toggleTheme }) {
   const node = useRef();
@@ -77,6 +78,7 @@ function Header({ theme, toggleTheme }) {
   }
 
   function handleLogoutClick() {
+    app.auth().signOut();
     dispatch({ type: 'UNSET_AUTH' });
     setUser(false);
     setDrawer(false);
