@@ -1,32 +1,97 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
+import user from '@testing-library/user-event';
 
 import VideoDetails from '../VideoDetails.view';
 import * as useVideoAPI from '../../../utils/hooks/useVideoAPI';
 import * as useVideoListAPI from '../../../utils/hooks/useVideoListAPI';
+import { wrapWithVideoContext } from '../../../state/testing';
+import * as favoritesDB from '../../../utils/favoritesDB';
 
-useVideoAPI.default = jest.fn(() => ({
-  video: { title: 'Test title', description: 'Test description' },
-}));
+const video = {
+  snippet: {
+    title: 'test title',
+    description: 'test description',
+    thumbnails: {
+      medium: {
+        url: 'test',
+      },
+    },
+  },
+};
+
+useVideoAPI.default = jest.fn(() => ({ video }));
 useVideoListAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
 describe('VideoDetails UI tests', () => {
   test('renders details with correct props', () => {
     render(
-      <MemoryRouter initialEntries={['/video/Test id']}>
-        <Route path="/video/:videoId">
-          <VideoDetails />
-        </Route>
-      </MemoryRouter>
+      wrapWithVideoContext(
+        <MemoryRouter initialEntries={['/video/testId']}>
+          <Route path="/video/:videoId">
+            <VideoDetails />
+          </Route>
+        </MemoryRouter>,
+        { auth: null },
+        jest.fn()
+      )
     );
     const title = screen.getByText(/test title/i);
     const description = screen.getByText(/test description/i);
     expect(title).toBeInTheDocument();
     expect(description).toBeInTheDocument();
     expect(useVideoAPI.default).toHaveBeenCalled();
-    expect(useVideoAPI.default).toHaveBeenCalledWith('Test id');
+    expect(useVideoAPI.default).toHaveBeenCalledWith('testId');
     expect(useVideoListAPI.default).toHaveBeenCalled();
-    expect(useVideoListAPI.default).toHaveBeenCalledWith('Test id', true);
+    expect(useVideoListAPI.default).toHaveBeenCalledWith('testId', true);
+  });
+
+  test('renders "Add favorite" button if the video is not favorite', () => {
+    const dispatch = jest.fn();
+    favoritesDB.isFavorite = jest.fn(() => false);
+    render(
+      wrapWithVideoContext(
+        <MemoryRouter initialEntries={['/video/testId']}>
+          <Route path="/video/:videoId">
+            <VideoDetails />
+          </Route>
+        </MemoryRouter>,
+        { auth: { name: 'test' } },
+        dispatch
+      )
+    );
+    const addFavorite = screen.getByRole('button', { name: /add favorite/i });
+    expect(addFavorite).toBeInTheDocument();
+    user.click(addFavorite);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'ADD_FAVORITE',
+      payload: { name: 'test', video: { id: { videoId: 'testId' }, ...video } },
+    });
+  });
+
+  test('renders "Remove favorite" button if the video is favorite', () => {
+    const dispatch = jest.fn();
+    favoritesDB.isFavorite = jest.fn(() => true);
+    render(
+      wrapWithVideoContext(
+        <MemoryRouter initialEntries={['/video/testId']}>
+          <Route path="/video/:videoId">
+            <VideoDetails />
+          </Route>
+        </MemoryRouter>,
+        { auth: { name: 'test' } },
+        dispatch
+      )
+    );
+    const addFavorite = screen.getByRole('button', { name: /remove favorite/i });
+    expect(addFavorite).toBeInTheDocument();
+    user.click(addFavorite);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'REMOVE_FAVORITE',
+      payload: { name: 'test', videoId: 'testId' },
+    });
   });
 });

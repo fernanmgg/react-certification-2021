@@ -46,11 +46,11 @@ describe('Reducer function tests', () => {
       type: 'SET_AUTH',
       payload: { auth, remember: false },
     };
-    const favorites = [{ name: 'test', videos: ['test 1', 'test 2', 'test 3'] }];
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    const videos = ['test 1', 'test 2', 'test 3'];
+    localStorage.setItem(auth.name, JSON.stringify(videos));
     expect(reducer(state, action)).toEqual({
       auth,
-      favorites: favorites[0].videos,
+      favorites: videos,
       search: '',
     });
   });
@@ -59,6 +59,37 @@ describe('Reducer function tests', () => {
     const state = { auth, favorites: [], search: '' };
     const action = { type: 'UNSET_AUTH' };
     expect(reducer(state, action)).toEqual({ auth: null, favorites: [], search: '' });
+  });
+
+  test('returns state with added favorite', () => {
+    const state = { auth, favorites: [], search: '' };
+    const video = 'test 4';
+    const action = {
+      type: 'ADD_FAVORITE',
+      payload: { name: auth.name, video },
+    };
+    const videos = ['test 1', 'test 2', 'test 3'];
+    localStorage.setItem(auth.name, JSON.stringify(videos));
+    expect(reducer(state, action)).toEqual({
+      auth,
+      favorites: [video, ...videos],
+      search: '',
+    });
+  });
+
+  test('returns state with deleted favorite', () => {
+    const state = { auth, favorites: [], search: '' };
+    const action = {
+      type: 'REMOVE_FAVORITE',
+      payload: { name: auth.name, videoId: 'test 2' },
+    };
+    const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
+    localStorage.setItem(auth.name, JSON.stringify(videos));
+    expect(reducer(state, action)).toEqual({
+      auth,
+      favorites: [{ id: { videoId: 'test 1' } }],
+      search: '',
+    });
   });
 
   test('throws error with undefined action', () => {

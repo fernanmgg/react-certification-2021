@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getFavorites } from '../utils/favoritesDB';
+import { getFavorites, addFavorite, removeFavorite } from '../utils/favoritesDB';
 
 const VideoContext = React.createContext();
 
@@ -27,6 +27,12 @@ const reducer = (state, action) => {
       localStorage.removeItem('auth');
       sessionStorage.removeItem('auth');
       return { ...state, auth: null, favorites: [] };
+    case 'ADD_FAVORITE':
+      addFavorite(action.payload.name, action.payload.video);
+      return { ...state, favorites: getFavorites(action.payload.name) };
+    case 'REMOVE_FAVORITE':
+      removeFavorite(action.payload.name, action.payload.videoId);
+      return { ...state, favorites: getFavorites(action.payload.name) };
     default:
       throw new Error('Error: Undefined action');
   }

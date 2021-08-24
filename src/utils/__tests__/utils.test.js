@@ -1,6 +1,6 @@
 import charCodeReplace from '../charCodeReplace';
 import loginAPI from '../loginAPI';
-import { getFavorites } from '../favoritesDB';
+import { getFavorites, isFavorite, addFavorite, removeFavorite } from '../favoritesDB';
 
 describe('Char code replacement function tests', () => {
   test('replaces char codes with corresponding character', () => {
@@ -41,8 +41,43 @@ describe('FavoritesDB tests', () => {
 
   test('returns favorites array if there are favorites for given user in local storage', () => {
     const videos = ['test 1', 'test 2', 'test 3'];
-    const favorites = [{ name: 'test', videos }];
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    localStorage.setItem('test', JSON.stringify(videos));
     expect(getFavorites('test')).toEqual(videos);
+  });
+
+  test('returns true if favorite is in local storage', () => {
+    const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
+    localStorage.setItem('test', JSON.stringify(videos));
+    expect(isFavorite('test', 'test 1')).toBeTruthy();
+  });
+
+  test('returns false if favorite is not in local storage', () => {
+    const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
+    localStorage.setItem('test', JSON.stringify(videos));
+    expect(isFavorite('test', 'test 3')).toBeFalsy();
+  });
+
+  test('adds favorite to old local storage if user already has favorites', () => {
+    const video = 'test 4';
+    const videos = ['test 1', 'test 2', 'test 3'];
+    localStorage.setItem('test', JSON.stringify(videos));
+    addFavorite('test', video);
+    expect(JSON.parse(localStorage.getItem('test'))).toEqual([video, ...videos]);
+  });
+
+  test('adds favorite to new local storage if user has no favorites', () => {
+    const video = 'test';
+    addFavorite('test', video);
+    expect(JSON.parse(localStorage.getItem('test'))).toEqual([video]);
+  });
+
+  test('removes favorite from local storage', () => {
+    const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
+    localStorage.setItem('test', JSON.stringify(videos));
+    removeFavorite('test', 'test 2');
+    removeFavorite('...', '...');
+    expect(JSON.parse(localStorage.getItem('test'))).toEqual([
+      { id: { videoId: 'test 1' } },
+    ]);
   });
 });

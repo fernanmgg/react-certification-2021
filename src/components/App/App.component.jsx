@@ -14,8 +14,8 @@ function App() {
   const [theme, toggleTheme] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem('favorites'))
-      localStorage.setItem('favorites', JSON.stringify(AppFavs));
+    if (!localStorage.getItem('Wizeline'))
+      localStorage.setItem('Wizeline', JSON.stringify(AppFavs));
 
     const localAuth = localStorage.getItem('auth');
     if (localAuth) {

@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import useVideoListAPI from '../useVideoListAPI';
 import useVideoAPI from '../useVideoAPI';
+import { loadingVideo, errorVideo } from '../useVideoAPI.vars';
 
 const controlledPromise = () => {
   let deferred;
@@ -98,38 +99,42 @@ describe('useVideoListAPI tests', () => {
   });
 });
 
+const mockedItems = [
+  {
+    id: { videoId: '123' },
+    snippet: {
+      title: 'test',
+      description: 'test',
+      thumbnails: {
+        medium: {
+          url: 'test',
+        },
+      },
+    },
+  },
+];
+
 describe('useVideoAPI tests', () => {
   test('fetch is called with video ID of appropriate length', async () => {
     const { deferred, promise } = controlledPromise();
-    const mockedVideo = [
-      {
-        snippet: {
-          title: 'Test title',
-          description: 'Test description',
-        },
-      },
-    ];
     global.fetch = jest.fn(() => promise);
     const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('A1234567890'));
-    expect(result.current.video).toEqual({ title: '', description: 'Fetching info...' });
+    expect(result.current.video).toEqual(loadingVideo);
     deferred.resolve({
       json: () => ({
-        items: mockedVideo,
+        items: mockedItems,
       }),
     });
     await waitForNextUpdate();
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch.mock.calls[0][0]).toMatch(/id=A1234567890/i);
-    expect(result.current.video).toEqual(mockedVideo[0].snippet);
+    expect(result.current.video).toEqual(mockedItems[0]);
   });
 
   test('returns error message if the video ID is not valid', async () => {
     global.fetch = jest.fn();
     const { result } = renderHook(() => useVideoAPI('123'));
-    expect(result.current.video).toEqual({
-      title: '',
-      description: 'Error fetching info...',
-    });
+    expect(result.current.video).toEqual(errorVideo);
     expect(fetch).toHaveBeenCalledTimes(0);
   });
 
@@ -137,29 +142,23 @@ describe('useVideoAPI tests', () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
     const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('A1234567890'));
-    expect(result.current.video).toEqual({ title: '', description: 'Fetching info...' });
+    expect(result.current.video).toEqual(loadingVideo);
     deferred.reject();
     await waitForNextUpdate();
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(result.current.video).toEqual({
-      title: '',
-      description: 'Error fetching info...',
-    });
+    expect(result.current.video).toEqual(errorVideo);
   });
 
   test('returns error message if API does not return items object', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
     const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('A1234567890'));
-    expect(result.current.video).toEqual({ title: '', description: 'Fetching info...' });
+    expect(result.current.video).toEqual(loadingVideo);
     deferred.resolve({
       json: () => ({ test: 'test' }),
     });
     await waitForNextUpdate();
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(result.current.video).toEqual({
-      title: '',
-      description: 'Error fetching info...',
-    });
+    expect(result.current.video).toEqual(errorVideo);
   });
 });

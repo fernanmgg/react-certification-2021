@@ -17,6 +17,22 @@ const Wrapper = styled.div`
   margin: 0 16px;
 `;
 
+const Favorite = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
+const FavoriteButton = styled.button`
+  background-color: ${(props) => props.theme.backgroundTransparent};
+  color: ${(props) => props.theme.accent};
+  border: 1px solid ${(props) => props.theme.accent};
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 8px;
+  padding: 8px;
+`;
+
 const Title = styled.div`
   color: ${(props) => props.theme.text};
   font-size: 1.5rem;
@@ -28,4 +44,4 @@ const Description = styled.div`
   margin: 16px 0;
 `;
 
-export { StyledVideoDetails, Wrapper, Title, Description };
+export { StyledVideoDetails, Wrapper, Favorite, FavoriteButton, Title, Description };
