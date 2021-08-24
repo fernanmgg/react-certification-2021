@@ -116,10 +116,14 @@ const ToggleText = styled.span`
 
 const AuthButton = styled.button`
   background-color: ${(props) => props.theme.backgroundTransparent};
+  background-image: ${(props) => props.bgImage};
+  background-size: 100%;
   border: 0;
   border-radius: 50%;
   cursor: pointer;
   margin-left: 24px;
+  min-height: 32px;
+  min-width: 35px;
 `;
 
 const PopupMenu = styled.div`

@@ -147,10 +147,16 @@ function Header({ theme, toggleTheme }) {
         <Options ref={node}>
           <ToggleText>Dark Mode</ToggleText>
           <Toggle toggleBackground value={theme} toggle={toggleTheme} />
-          <AuthButton onClick={handleUserClick} aria-label="auth">
-            <Icon viewBox="0 0 24 24">
-              <path d={loginIcon} />
-            </Icon>
+          <AuthButton
+            onClick={handleUserClick}
+            aria-label="auth"
+            bgImage={auth ? `url(${auth.avatarUrl})` : 'none'}
+          >
+            {!auth && (
+              <Icon viewBox="0 0 24 24">
+                <path d={loginIcon} />
+              </Icon>
+            )}
           </AuthButton>
           {user && (
             <PopupMenu>
