@@ -12,7 +12,12 @@ import {
 import VideoList from '../../components/VideoList';
 import useVideoAPI from '../../utils/hooks/useVideoAPI';
 import { VideoContext } from '../../state/Video.state';
-import { isFavorite } from '../../utils/favoritesDB';
+import {
+  getFavoritesInfo,
+  isFavorite,
+  addFavorite,
+  removeFavorite,
+} from '../../utils/favoritesDB';
 
 function FavoriteVideoDetails() {
   const { videoId } = useParams();
@@ -23,15 +28,11 @@ function FavoriteVideoDetails() {
   function updateFavorites() {
     const favorite = isFavorite(auth.name, videoId);
     if (!favorite) {
-      dispatch({
-        type: 'ADD_FAVORITE',
-        payload: { name: auth.name, video: { id: { videoId }, ...video } },
-      });
+      addFavorite(auth.name, { id: { videoId }, ...video });
+      dispatch({ type: 'ADD_FAVORITE', payload: { name: auth.name, videoId } });
     } else {
-      dispatch({
-        type: 'REMOVE_FAVORITE',
-        payload: { name: auth.name, videoId },
-      });
+      removeFavorite(auth.name, videoId);
+      dispatch({ type: 'REMOVE_FAVORITE', payload: { name: auth.name, videoId } });
     }
   }
 
@@ -52,7 +53,7 @@ function FavoriteVideoDetails() {
         <Title>{video.snippet.title}</Title>
         <Description>{video.snippet.description}</Description>
       </Wrapper>
-      <VideoList videos={favorites} related />
+      <VideoList videos={getFavoritesInfo(auth.name, favorites)} related />
     </StyledVideoDetails>
   );
 }

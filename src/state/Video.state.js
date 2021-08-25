@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { getFavorites, addFavorite, removeFavorite } from '../utils/favoritesDB';
-
 const VideoContext = React.createContext();
 
 const initialState = {
@@ -15,24 +13,25 @@ const reducer = (state, action) => {
     case 'SET_SEARCH':
       return { ...state, search: action.payload };
     case 'SET_AUTH':
-      if (action.payload.remember)
-        localStorage.setItem('auth', JSON.stringify(action.payload.auth));
-      else sessionStorage.setItem('auth', JSON.stringify(action.payload.auth));
       return {
         ...state,
         auth: action.payload.auth,
-        favorites: getFavorites(action.payload.auth.name),
+        favorites: action.payload.favorites,
       };
     case 'UNSET_AUTH':
-      localStorage.removeItem('auth');
-      sessionStorage.removeItem('auth');
       return { ...state, auth: null, favorites: [] };
     case 'ADD_FAVORITE':
-      addFavorite(action.payload.name, action.payload.video);
-      return { ...state, favorites: getFavorites(action.payload.name) };
+      return {
+        ...state,
+        favorites: [action.payload.videoId, ...state.favorites],
+      };
     case 'REMOVE_FAVORITE':
-      removeFavorite(action.payload.name, action.payload.videoId);
-      return { ...state, favorites: getFavorites(action.payload.name) };
+      return {
+        ...state,
+        favorites: state.favorites.filter(
+          (element) => element !== action.payload.videoId
+        ),
+      };
     default:
       throw new Error('Error: Undefined action');
   }

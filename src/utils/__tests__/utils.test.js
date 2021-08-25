@@ -1,6 +1,12 @@
 import charCodeReplace from '../charCodeReplace';
 import loginAPI from '../loginAPI';
-import { getFavorites, isFavorite, addFavorite, removeFavorite } from '../favoritesDB';
+import {
+  getFavorites,
+  getFavoritesInfo,
+  isFavorite,
+  addFavorite,
+  removeFavorite,
+} from '../favoritesDB';
 
 describe('Char code replacement function tests', () => {
   test('replaces char codes with corresponding character', () => {
@@ -39,10 +45,17 @@ describe('FavoritesDB tests', () => {
     expect(getFavorites('test')).toEqual([]);
   });
 
-  test('returns favorites array if there are favorites for given user in local storage', () => {
-    const videos = ['test 1', 'test 2', 'test 3'];
+  test('returns favorites IDs if there are favorites for given user in local storage', () => {
+    const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
     localStorage.setItem('test', JSON.stringify(videos));
-    expect(getFavorites('test')).toEqual(videos);
+    expect(getFavorites('test')).toEqual(['test 1', 'test 2']);
+  });
+
+  test('returns favorites info from IDs', () => {
+    const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
+    const favorites = ['test 1', 'test 2'];
+    localStorage.setItem('test', JSON.stringify(videos));
+    expect(getFavoritesInfo('test', favorites)).toEqual(videos);
   });
 
   test('returns true if favorite is in local storage', () => {
@@ -58,7 +71,7 @@ describe('FavoritesDB tests', () => {
   });
 
   test('adds favorite to old local storage if user already has favorites', () => {
-    const video = 'test 4';
+    const video = 'test 0';
     const videos = ['test 1', 'test 2', 'test 3'];
     localStorage.setItem('test', JSON.stringify(videos));
     addFavorite('test', video);

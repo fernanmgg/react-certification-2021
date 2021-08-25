@@ -7,87 +7,53 @@ const auth = {
 };
 
 describe('Reducer function tests', () => {
-  beforeEach(() => {
-    localStorage.clear();
-    sessionStorage.clear();
-  });
-
   test('returns state with set search', () => {
     const state = { auth: null, favorites: [], search: '' };
     const action = { type: 'SET_SEARCH', payload: 'test' };
     expect(reducer(state, action)).toEqual({ auth: null, favorites: [], search: 'test' });
   });
 
-  test('returns state with set auth in local storage', () => {
+  test('returns state with set auth and favorites', () => {
     const state = { auth: null, favorites: [], search: '' };
     const action = {
       type: 'SET_AUTH',
-      payload: { auth, remember: true },
+      payload: { auth, favorites: ['test 1', 'test 2', 'test 3'] },
     };
-    expect(localStorage.getItem('auth')).toBeNull();
-    expect(reducer(state, action)).toEqual({ auth, favorites: [], search: '' });
-    expect(JSON.parse(localStorage.getItem('auth'))).toEqual(auth);
-  });
-
-  test('returns state with set auth in session storage', () => {
-    const state = { auth: null, favorites: [], search: '' };
-    const action = {
-      type: 'SET_AUTH',
-      payload: { auth, remember: false },
-    };
-    expect(sessionStorage.getItem('auth')).toBeNull();
-    expect(reducer(state, action)).toEqual({ auth, favorites: [], search: '' });
-    expect(JSON.parse(sessionStorage.getItem('auth'))).toEqual(auth);
-  });
-
-  test('returns state with favorites from storage', () => {
-    const state = { auth, favorites: [], search: '' };
-    const action = {
-      type: 'SET_AUTH',
-      payload: { auth, remember: false },
-    };
-    const videos = ['test 1', 'test 2', 'test 3'];
-    localStorage.setItem(auth.name, JSON.stringify(videos));
     expect(reducer(state, action)).toEqual({
       auth,
-      favorites: videos,
+      favorites: ['test 1', 'test 2', 'test 3'],
       search: '',
     });
   });
 
-  test('returns state with unset video', () => {
-    const state = { auth, favorites: [], search: '' };
+  test('returns state with unset auth', () => {
+    const state = { auth, favorites: ['test 1', 'test 2', 'test 3'], search: '' };
     const action = { type: 'UNSET_AUTH' };
     expect(reducer(state, action)).toEqual({ auth: null, favorites: [], search: '' });
   });
 
   test('returns state with added favorite', () => {
-    const state = { auth, favorites: [], search: '' };
-    const video = 'test 4';
+    const state = { auth, favorites: ['test 1', 'test 2', 'test 3'], search: '' };
     const action = {
       type: 'ADD_FAVORITE',
-      payload: { name: auth.name, video },
+      payload: { name: auth.name, videoId: 'test 0' },
     };
-    const videos = ['test 1', 'test 2', 'test 3'];
-    localStorage.setItem(auth.name, JSON.stringify(videos));
     expect(reducer(state, action)).toEqual({
       auth,
-      favorites: [video, ...videos],
+      favorites: ['test 0', 'test 1', 'test 2', 'test 3'],
       search: '',
     });
   });
 
   test('returns state with deleted favorite', () => {
-    const state = { auth, favorites: [], search: '' };
+    const state = { auth, favorites: ['test 1', 'test 2', 'test 3'], search: '' };
     const action = {
       type: 'REMOVE_FAVORITE',
       payload: { name: auth.name, videoId: 'test 2' },
     };
-    const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
-    localStorage.setItem(auth.name, JSON.stringify(videos));
     expect(reducer(state, action)).toEqual({
       auth,
-      favorites: [{ id: { videoId: 'test 1' } }],
+      favorites: ['test 1', 'test 3'],
       search: '',
     });
   });

@@ -14,6 +14,7 @@ import {
 } from './Login.style';
 import { VideoContext } from '../../state/Video.state';
 import loginAPI from '../../utils/loginAPI';
+import { getFavorites } from '../../utils/favoritesDB';
 import app from '../../firebase.config';
 
 function Login({ close }) {
@@ -23,11 +24,20 @@ function Login({ close }) {
   const [errorMessage, setErrorMessage] = useState('');
   const { dispatch } = useContext(VideoContext);
 
+  function writeStorage(auth) {
+    if (remember) localStorage.setItem('auth', JSON.stringify(auth));
+    else sessionStorage.setItem('auth', JSON.stringify(auth));
+  }
+
   function login() {
     loginAPI(username, password)
       .then((auth) => {
         setErrorMessage('');
-        dispatch({ type: 'SET_AUTH', payload: { auth, remember } });
+        writeStorage(auth);
+        dispatch({
+          type: 'SET_AUTH',
+          payload: { auth, favorites: getFavorites(auth.name) },
+        });
         close();
       })
       .catch((error) => {
@@ -41,12 +51,11 @@ function Login({ close }) {
       .signInWithEmailAndPassword(username, password)
       .then(({ user }) => {
         setErrorMessage('');
+        const auth = { id: user.uid, name: user.displayName, avatarUrl: user.photoURL };
+        writeStorage(auth);
         dispatch({
           type: 'SET_AUTH',
-          payload: {
-            auth: { id: user.uid, name: user.displayName, avatarUrl: user.photoURL },
-            remember,
-          },
+          payload: { auth, favorites: getFavorites(auth.name) },
         });
         close();
       })

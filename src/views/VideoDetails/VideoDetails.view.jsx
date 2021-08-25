@@ -13,7 +13,7 @@ import VideoList from '../../components/VideoList';
 import useVideoAPI from '../../utils/hooks/useVideoAPI';
 import useVideoListAPI from '../../utils/hooks/useVideoListAPI';
 import { VideoContext } from '../../state/Video.state';
-import { isFavorite } from '../../utils/favoritesDB';
+import { isFavorite, addFavorite, removeFavorite } from '../../utils/favoritesDB';
 
 function VideoDetails() {
   const { videoId } = useParams();
@@ -25,15 +25,11 @@ function VideoDetails() {
   function updateFavorites() {
     const favorite = isFavorite(auth.name, videoId);
     if (!favorite) {
-      dispatch({
-        type: 'ADD_FAVORITE',
-        payload: { name: auth.name, video: { id: { videoId }, ...video } },
-      });
+      addFavorite(auth.name, { id: { videoId }, ...video });
+      dispatch({ type: 'ADD_FAVORITE', payload: { name: auth.name, videoId } });
     } else {
-      dispatch({
-        type: 'REMOVE_FAVORITE',
-        payload: { name: auth.name, videoId },
-      });
+      removeFavorite(auth.name, videoId);
+      dispatch({ type: 'REMOVE_FAVORITE', payload: { name: auth.name, videoId } });
     }
   }
 

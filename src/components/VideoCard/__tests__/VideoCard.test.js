@@ -32,23 +32,16 @@ describe('VideoCard UI tests', () => {
   test('renders "Add favorite" button if the video is not favorite', () => {
     const dispatch = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => false);
-    const video = {
-      id: { videoId: 'test id' },
-      snippet: {
-        title: 'test title',
-        description: 'test description',
-        thumbnails: { medium: { url: 'test image' } },
-      },
-    };
+    favoritesDB.addFavorite = jest.fn();
     render(
       wrapWithVideoContext(
         <MemoryRouter>
           <VideoCard
             key="test key"
-            videoId={video.id.videoId}
-            image={video.snippet.thumbnails.medium.url}
-            title={video.snippet.title}
-            description={video.snippet.description}
+            videoId="test id"
+            image="test image"
+            title="test title"
+            description="test description"
           />
         </MemoryRouter>,
         { auth: { name: 'test' } },
@@ -61,13 +54,14 @@ describe('VideoCard UI tests', () => {
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'ADD_FAVORITE',
-      payload: { name: 'test', video },
+      payload: { name: 'test', videoId: 'test id' },
     });
   });
 
   test('renders "Remove favorite" button if the video is favorite', () => {
     const dispatch = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => true);
+    favoritesDB.removeFavorite = jest.fn();
     render(
       wrapWithVideoContext(
         <MemoryRouter>

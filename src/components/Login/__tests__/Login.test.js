@@ -85,14 +85,16 @@ describe('Login UI tests', () => {
     const login = screen.getByRole('button', { name: /login/i });
     user.type(username, 'test');
     user.type(password, 'test');
+    expect(sessionStorage.getItem('auth')).toBeNull();
     await act(async () => {
       user.click(login);
       deferred.resolve(auth);
     });
+    expect(JSON.parse(sessionStorage.getItem('auth'))).toEqual(auth);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'SET_AUTH',
-      payload: { auth, remember: false },
+      payload: { auth, favorites: [] },
     });
   });
 
@@ -113,14 +115,16 @@ describe('Login UI tests', () => {
     user.type(username, 'test');
     user.type(password, 'test');
     user.click(remember);
+    expect(localStorage.getItem('auth')).toBeNull();
     await act(async () => {
       user.click(login);
       deferred.resolve(auth);
     });
+    expect(JSON.parse(localStorage.getItem('auth'))).toEqual(auth);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'SET_AUTH',
-      payload: { auth, remember: true },
+      payload: { auth, favorites: [] },
     });
   });
 
@@ -170,7 +174,7 @@ describe('Login UI tests', () => {
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'SET_AUTH',
-      payload: { auth, remember: false },
+      payload: { auth, favorites: [] },
     });
   });
 

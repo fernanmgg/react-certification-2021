@@ -12,7 +12,7 @@ import {
   Effects,
 } from './VideoCard.style';
 import { VideoContext } from '../../state/Video.state';
-import { isFavorite } from '../../utils/favoritesDB';
+import { isFavorite, addFavorite, removeFavorite } from '../../utils/favoritesDB';
 
 function VideoCard({ videoId, image, title, description }) {
   const history = useHistory();
@@ -28,21 +28,14 @@ function VideoCard({ videoId, image, title, description }) {
   function updateFavorites() {
     const favorite = isFavorite(auth.name, videoId);
     if (!favorite) {
-      dispatch({
-        type: 'ADD_FAVORITE',
-        payload: {
-          name: auth.name,
-          video: {
-            id: { videoId },
-            snippet: { title, description, thumbnails: { medium: { url: image } } },
-          },
-        },
+      addFavorite(auth.name, {
+        id: { videoId },
+        snippet: { title, description, thumbnails: { medium: { url: image } } },
       });
+      dispatch({ type: 'ADD_FAVORITE', payload: { name: auth.name, videoId } });
     } else {
-      dispatch({
-        type: 'REMOVE_FAVORITE',
-        payload: { name: auth.name, videoId },
-      });
+      removeFavorite(auth.name, videoId);
+      dispatch({ type: 'REMOVE_FAVORITE', payload: { name: auth.name, videoId } });
     }
   }
 

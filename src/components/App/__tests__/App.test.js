@@ -10,7 +10,7 @@ import * as useVideoListAPI from '../../../utils/hooks/useVideoListAPI';
 useVideoListAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
 describe('App UI tests', () => {
-  test('renders header and home view, login button if there is no auth info in local storage', () => {
+  test('renders header and home view, login button if there is no auth info in storage', () => {
     render(<App />);
     const header = screen.getByRole('button', { name: /login/i });
     const homeView = screen.getByText(/react bootcamp 2021/i);
@@ -20,12 +20,8 @@ describe('App UI tests', () => {
     expect(useVideoListAPI.default).toHaveBeenCalledWith('wizeline');
   });
 
-  test('renders header and home view, logout button if there is auth info in local storage', () => {
-    const auth = {
-      id: '123',
-      name: 'test',
-      avatarUrl: 'test',
-    };
+  test('renders header and home view, logout button if there is auth info in storage', () => {
+    const auth = { id: '123', name: 'test', avatarUrl: 'test' };
     localStorage.setItem('auth', JSON.stringify(auth));
     render(<App />);
     const header = screen.getByRole('button', { name: /logout/i });

@@ -79,6 +79,8 @@ function Header({ theme, toggleTheme }) {
 
   function handleLogoutClick() {
     app.auth().signOut();
+    localStorage.removeItem('auth');
+    sessionStorage.removeItem('auth');
     dispatch({ type: 'UNSET_AUTH' });
     setUser(false);
     setDrawer(false);

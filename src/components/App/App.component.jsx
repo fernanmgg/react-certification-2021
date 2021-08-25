@@ -8,6 +8,7 @@ import Header from '../Header';
 import Content from '../../views/Content';
 import { VideoContext, initialState, reducer } from '../../state/Video.state';
 import AppFavs from './App.favs';
+import { getFavorites } from '../../utils/favoritesDB';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -17,11 +18,14 @@ function App() {
     if (!localStorage.getItem('Wizeline'))
       localStorage.setItem('Wizeline', JSON.stringify(AppFavs));
 
-    const localAuth = localStorage.getItem('auth');
-    if (localAuth) {
+    const storageAuth = localStorage.getItem('auth') || sessionStorage.getItem('auth');
+    if (storageAuth) {
       dispatch({
         type: 'SET_AUTH',
-        payload: { auth: JSON.parse(localAuth), remember: true },
+        payload: {
+          auth: JSON.parse(storageAuth),
+          favorites: getFavorites(JSON.parse(storageAuth).name),
+        },
       });
     }
   }, []);

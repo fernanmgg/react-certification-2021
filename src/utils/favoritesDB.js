@@ -1,7 +1,17 @@
 function getFavorites(name) {
   const localData = localStorage.getItem(name);
   if (localData) {
-    return JSON.parse(localData);
+    return JSON.parse(localData).map((element) => element.id.videoId);
+  }
+  return [];
+}
+
+function getFavoritesInfo(name, favorites) {
+  const localData = localStorage.getItem(name);
+  if (localData) {
+    return JSON.parse(localData).filter((element) =>
+      favorites.includes(element.id.videoId)
+    );
   }
   return [];
 }
@@ -33,4 +43,4 @@ function removeFavorite(name, videoId) {
   }
 }
 
-export { getFavorites, isFavorite, addFavorite, removeFavorite };
+export { getFavorites, getFavoritesInfo, isFavorite, addFavorite, removeFavorite };

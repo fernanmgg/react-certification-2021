@@ -63,7 +63,7 @@ describe('FavoriteVideoDetails UI tests', () => {
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'ADD_FAVORITE',
-      payload: { name: 'test', video: { id: { videoId: 'testId' }, ...video } },
+      payload: { name: 'test', videoId: 'testId' },
     });
   });
 
