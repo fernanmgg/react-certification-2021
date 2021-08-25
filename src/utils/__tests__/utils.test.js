@@ -1,4 +1,5 @@
 import charCodeReplace from '../charCodeReplace';
+import stringCutoff from '../stringCutoff';
 import loginAPI from '../loginAPI';
 import {
   getFavorites,
@@ -13,6 +14,20 @@ describe('Char code replacement function tests', () => {
     expect(
       charCodeReplace('We&#39;re &quot;testing&quot; components &amp; functions')
     ).toBe(`We're "testing" components & functions`);
+  });
+});
+
+describe('String cutoff function tests', () => {
+  test('keeps original string if it is shorter or equal to max length', () => {
+    expect(stringCutoff('one two three', 13)).toBe('one two three');
+  });
+
+  test('cuts on last space before max length and replaces with " ..."', () => {
+    expect(stringCutoff('one two three', 10)).toBe('one two ...');
+  });
+
+  test('cuts through word if there is no space before max length', () => {
+    expect(stringCutoff('onetwothree', 5)).toBe('onetw');
   });
 });
 

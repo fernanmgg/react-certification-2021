@@ -17,6 +17,7 @@ import {
   AuthButton,
   PopupMenu,
   PopupItem,
+  Username,
   Icon,
   InlineIcon,
   GapFill,
@@ -169,6 +170,7 @@ function Header({ theme, toggleTheme }) {
                   Login
                 </PopupItem>
               )}
+              {auth && <Username>{auth.name}</Username>}
               {auth && (
                 <PopupItem aria-label="favorites" onClick={handleFavoritesClick}>
                   Favorites

@@ -18,6 +18,7 @@ import {
   addFavorite,
   removeFavorite,
 } from '../../utils/favoritesDB';
+import stringCutoff from '../../utils/stringCutoff';
 
 function FavoriteVideoDetails() {
   const { videoId } = useParams();
@@ -28,7 +29,13 @@ function FavoriteVideoDetails() {
   function updateFavorites() {
     const favorite = isFavorite(auth.id, videoId);
     if (!favorite) {
-      addFavorite(auth.id, { id: { videoId }, ...video });
+      addFavorite(auth.id, {
+        id: { videoId },
+        snippet: {
+          ...video.snippet,
+          description: stringCutoff(video.snippet.description, 160),
+        },
+      });
       dispatch({ type: 'ADD_FAVORITE', payload: videoId });
     } else {
       removeFavorite(auth.id, videoId);

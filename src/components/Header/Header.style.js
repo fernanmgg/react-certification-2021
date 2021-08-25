@@ -133,7 +133,8 @@ const PopupMenu = styled.div`
   position: absolute;
   right: 0;
   top: 50%;
-  min-width: 120px;
+  width: 120px;
+  z-index: 1;
 `;
 
 const PopupItem = styled.button`
@@ -153,6 +154,18 @@ const PopupItem = styled.button`
   &:hover {
     background-color: ${(props) => props.theme.backgroundFocus};
   }
+`;
+
+const Username = styled.div`
+  background-color: ${(props) => props.theme.background};
+  border-bottom: 2px solid ${(props) => props.theme.textLight};
+  color: ${(props) => props.theme.text};
+  font-size: 0.8rem;
+  height: 32px;
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 `;
 
 const Icon = styled.svg`
@@ -186,6 +199,7 @@ export {
   AuthButton,
   PopupMenu,
   PopupItem,
+  Username,
   Icon,
   InlineIcon,
   GapFill,

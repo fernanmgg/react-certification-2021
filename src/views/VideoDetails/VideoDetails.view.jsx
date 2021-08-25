@@ -14,6 +14,7 @@ import useVideoAPI from '../../utils/hooks/useVideoAPI';
 import useVideoListAPI from '../../utils/hooks/useVideoListAPI';
 import { VideoContext } from '../../state/Video.state';
 import { isFavorite, addFavorite, removeFavorite } from '../../utils/favoritesDB';
+import stringCutoff from '../../utils/stringCutoff';
 
 function VideoDetails() {
   const { videoId } = useParams();
@@ -25,7 +26,13 @@ function VideoDetails() {
   function updateFavorites() {
     const favorite = isFavorite(auth.id, videoId);
     if (!favorite) {
-      addFavorite(auth.id, { id: { videoId }, ...video });
+      addFavorite(auth.id, {
+        id: { videoId },
+        snippet: {
+          ...video.snippet,
+          description: stringCutoff(video.snippet.description, 160),
+        },
+      });
       dispatch({ type: 'ADD_FAVORITE', payload: videoId });
     } else {
       removeFavorite(auth.id, videoId);

@@ -168,20 +168,22 @@ describe('Header UI tests', () => {
     expect(login.length).toEqual(2);
   });
 
-  test('shows favorites and logout buttons when authenticated', () => {
+  test('shows username, favorites and logout buttons when authenticated', () => {
     render(
       <MemoryRouter>
         {wrapWithVideoContext(
           wrapWithThemeContext(<Header />),
-          { auth: {}, search: '' },
+          { auth: { name: 'Test User' }, search: '' },
           jest.fn()
         )}
       </MemoryRouter>
     );
     const auth = screen.getByRole('button', { name: /auth/i });
     user.click(auth);
+    const username = screen.queryByText(/test user/i);
     const favorites = screen.queryAllByRole('button', { name: /favorites/i });
     const logout = screen.queryAllByRole('button', { name: /logout/i });
+    expect(username).toBeInTheDocument();
     expect(favorites.length).toEqual(2);
     expect(logout.length).toEqual(2);
   });
