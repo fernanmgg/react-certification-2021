@@ -26,16 +26,16 @@ function VideoCard({ videoId, image, title, description }) {
   }
 
   function updateFavorites() {
-    const favorite = isFavorite(auth.name, videoId);
+    const favorite = isFavorite(auth.id, videoId);
     if (!favorite) {
-      addFavorite(auth.name, {
+      addFavorite(auth.id, {
         id: { videoId },
         snippet: { title, description, thumbnails: { medium: { url: image } } },
       });
-      dispatch({ type: 'ADD_FAVORITE', payload: { name: auth.name, videoId } });
+      dispatch({ type: 'ADD_FAVORITE', payload: videoId });
     } else {
-      removeFavorite(auth.name, videoId);
-      dispatch({ type: 'REMOVE_FAVORITE', payload: { name: auth.name, videoId } });
+      removeFavorite(auth.id, videoId);
+      dispatch({ type: 'REMOVE_FAVORITE', payload: videoId });
     }
   }
 
@@ -43,7 +43,7 @@ function VideoCard({ videoId, image, title, description }) {
     <StyledVideoCard>
       {auth && (
         <FavoriteButton onClick={updateFavorites}>
-          {!isFavorite(auth.name, videoId) ? 'Add' : 'Remove'} favorite
+          {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
         </FavoriteButton>
       )}
       <Wrapper onClick={handleClick}>

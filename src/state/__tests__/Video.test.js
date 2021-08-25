@@ -34,10 +34,7 @@ describe('Reducer function tests', () => {
 
   test('returns state with added favorite', () => {
     const state = { auth, favorites: ['test 1', 'test 2', 'test 3'], search: '' };
-    const action = {
-      type: 'ADD_FAVORITE',
-      payload: { name: auth.name, videoId: 'test 0' },
-    };
+    const action = { type: 'ADD_FAVORITE', payload: 'test 0' };
     expect(reducer(state, action)).toEqual({
       auth,
       favorites: ['test 0', 'test 1', 'test 2', 'test 3'],
@@ -47,10 +44,7 @@ describe('Reducer function tests', () => {
 
   test('returns state with deleted favorite', () => {
     const state = { auth, favorites: ['test 1', 'test 2', 'test 3'], search: '' };
-    const action = {
-      type: 'REMOVE_FAVORITE',
-      payload: { name: auth.name, videoId: 'test 2' },
-    };
+    const action = { type: 'REMOVE_FAVORITE', payload: 'test 2' };
     expect(reducer(state, action)).toEqual({
       auth,
       favorites: ['test 1', 'test 3'],

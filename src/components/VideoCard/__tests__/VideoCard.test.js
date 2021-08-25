@@ -52,10 +52,7 @@ describe('VideoCard UI tests', () => {
     expect(favorite).toBeInTheDocument();
     user.click(favorite);
     expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'ADD_FAVORITE',
-      payload: { name: 'test', videoId: 'test id' },
-    });
+    expect(dispatch).toHaveBeenCalledWith({ type: 'ADD_FAVORITE', payload: 'test id' });
   });
 
   test('renders "Remove favorite" button if the video is favorite', () => {
@@ -83,7 +80,7 @@ describe('VideoCard UI tests', () => {
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'REMOVE_FAVORITE',
-      payload: { name: 'test', videoId: 'test id' },
+      payload: 'test id',
     });
   });
 

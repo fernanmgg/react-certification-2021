@@ -26,13 +26,13 @@ function FavoriteVideoDetails() {
   const { auth, favorites } = state;
 
   function updateFavorites() {
-    const favorite = isFavorite(auth.name, videoId);
+    const favorite = isFavorite(auth.id, videoId);
     if (!favorite) {
-      addFavorite(auth.name, { id: { videoId }, ...video });
-      dispatch({ type: 'ADD_FAVORITE', payload: { name: auth.name, videoId } });
+      addFavorite(auth.id, { id: { videoId }, ...video });
+      dispatch({ type: 'ADD_FAVORITE', payload: videoId });
     } else {
-      removeFavorite(auth.name, videoId);
-      dispatch({ type: 'REMOVE_FAVORITE', payload: { name: auth.name, videoId } });
+      removeFavorite(auth.id, videoId);
+      dispatch({ type: 'REMOVE_FAVORITE', payload: videoId });
     }
   }
 
@@ -47,13 +47,13 @@ function FavoriteVideoDetails() {
         />
         <Favorite>
           <FavoriteButton onClick={updateFavorites}>
-            {!isFavorite(auth.name, videoId) ? 'Add' : 'Remove'} favorite
+            {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
           </FavoriteButton>
         </Favorite>
         <Title>{video.snippet.title}</Title>
         <Description>{video.snippet.description}</Description>
       </Wrapper>
-      <VideoList videos={getFavoritesInfo(auth.name, favorites)} related />
+      <VideoList videos={getFavoritesInfo(auth.id, favorites)} related />
     </StyledVideoDetails>
   );
 }

@@ -36,7 +36,7 @@ function Login({ close }) {
         writeStorage(auth);
         dispatch({
           type: 'SET_AUTH',
-          payload: { auth, favorites: getFavorites(auth.name) },
+          payload: { auth, favorites: getFavorites(auth.id) },
         });
         close();
       })
@@ -51,11 +51,17 @@ function Login({ close }) {
       .signInWithEmailAndPassword(username, password)
       .then(({ user }) => {
         setErrorMessage('');
-        const auth = { id: user.uid, name: user.displayName, avatarUrl: user.photoURL };
+        const auth = {
+          id: user.uid,
+          name: user.displayName || user.uid,
+          avatarUrl:
+            user.photoURL ||
+            'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+        };
         writeStorage(auth);
         dispatch({
           type: 'SET_AUTH',
-          payload: { auth, favorites: getFavorites(auth.name) },
+          payload: { auth, favorites: getFavorites(auth.id) },
         });
         close();
       })

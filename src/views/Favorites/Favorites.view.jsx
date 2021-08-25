@@ -13,7 +13,7 @@ function Favorites() {
     <>
       <Title>{auth.name}&#39;s Favorite Videos</Title>
       <Wrapper>
-        <VideoList videos={getFavoritesInfo(auth.name, favorites)} />
+        <VideoList videos={getFavoritesInfo(auth.id, favorites)} />
       </Wrapper>
     </>
   );

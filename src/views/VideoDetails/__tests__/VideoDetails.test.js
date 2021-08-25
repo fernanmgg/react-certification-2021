@@ -50,6 +50,7 @@ describe('VideoDetails UI tests', () => {
   test('renders "Add favorite" button if the video is not favorite', () => {
     const dispatch = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => false);
+    favoritesDB.addFavorite = jest.fn();
     render(
       wrapWithVideoContext(
         <MemoryRouter initialEntries={['/video/testId']}>
@@ -65,15 +66,13 @@ describe('VideoDetails UI tests', () => {
     expect(favorite).toBeInTheDocument();
     user.click(favorite);
     expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'ADD_FAVORITE',
-      payload: { name: 'test', videoId: 'testId' },
-    });
+    expect(dispatch).toHaveBeenCalledWith({ type: 'ADD_FAVORITE', payload: 'testId' });
   });
 
   test('renders "Remove favorite" button if the video is favorite', () => {
     const dispatch = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => true);
+    favoritesDB.removeFavorite = jest.fn();
     render(
       wrapWithVideoContext(
         <MemoryRouter initialEntries={['/video/testId']}>
@@ -89,9 +88,6 @@ describe('VideoDetails UI tests', () => {
     expect(favorite).toBeInTheDocument();
     user.click(favorite);
     expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'REMOVE_FAVORITE',
-      payload: { name: 'test', videoId: 'testId' },
-    });
+    expect(dispatch).toHaveBeenCalledWith({ type: 'REMOVE_FAVORITE', payload: 'testId' });
   });
 });

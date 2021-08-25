@@ -23,14 +23,12 @@ const reducer = (state, action) => {
     case 'ADD_FAVORITE':
       return {
         ...state,
-        favorites: [action.payload.videoId, ...state.favorites],
+        favorites: [action.payload, ...state.favorites],
       };
     case 'REMOVE_FAVORITE':
       return {
         ...state,
-        favorites: state.favorites.filter(
-          (element) => element !== action.payload.videoId
-        ),
+        favorites: state.favorites.filter((element) => element !== action.payload),
       };
     default:
       throw new Error('Error: Undefined action');

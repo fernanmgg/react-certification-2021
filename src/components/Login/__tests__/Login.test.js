@@ -150,7 +150,6 @@ describe('Login UI tests', () => {
   });
 
   test('dispatch is called with valid firebase credentials', async () => {
-    const auth = { id: '123', name: 'test', avatarUrl: 'test' };
     const authFirebase = { uid: '123', displayName: 'test', photoURL: 'test' };
     const { deferred, promise } = controlledPromise();
     const dispatch = jest.fn();
@@ -174,7 +173,43 @@ describe('Login UI tests', () => {
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: 'SET_AUTH',
-      payload: { auth, favorites: [] },
+      payload: { auth: { id: '123', name: 'test', avatarUrl: 'test' }, favorites: [] },
+    });
+  });
+
+  test('dispatch is called with fail-safe data for firebase', async () => {
+    const authFirebase = { uid: '123', displayName: null, photoURL: null };
+    const { deferred, promise } = controlledPromise();
+    const dispatch = jest.fn();
+    app.default.auth = jest.fn(() => ({
+      signInWithEmailAndPassword: jest.fn(() => promise),
+    }));
+    const div = document.createElement('div');
+    div.setAttribute('id', 'login');
+    render(wrapWithVideoContext(<Login />, {}, dispatch), {
+      container: document.body.appendChild(div),
+    });
+    const username = screen.getByLabelText(/username/i);
+    const password = screen.getByLabelText(/password/i);
+    const firebase = screen.getByRole('button', { name: /firebase/i });
+    user.type(username, 'test');
+    user.type(password, 'test');
+    await act(async () => {
+      user.click(firebase);
+      deferred.resolve({ user: authFirebase });
+    });
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'SET_AUTH',
+      payload: {
+        auth: {
+          id: '123',
+          name: '123',
+          avatarUrl:
+            'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+        },
+        favorites: [],
+      },
     });
   });
 

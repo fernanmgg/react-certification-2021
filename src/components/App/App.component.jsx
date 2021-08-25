@@ -15,8 +15,10 @@ function App() {
   const [theme, toggleTheme] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem('Wizeline'))
-      localStorage.setItem('Wizeline', JSON.stringify(AppFavs));
+    if (!localStorage.getItem('123'))
+      localStorage.setItem('123', JSON.stringify(AppFavs));
+    if (!localStorage.getItem('Bv9uJPEosSfVRdwaaRpiNvOFdop1'))
+      localStorage.setItem('Bv9uJPEosSfVRdwaaRpiNvOFdop1', JSON.stringify(AppFavs));
 
     const storageAuth = localStorage.getItem('auth') || sessionStorage.getItem('auth');
     if (storageAuth) {
@@ -24,7 +26,7 @@ function App() {
         type: 'SET_AUTH',
         payload: {
           auth: JSON.parse(storageAuth),
-          favorites: getFavorites(JSON.parse(storageAuth).name),
+          favorites: getFavorites(JSON.parse(storageAuth).id),
         },
       });
     }

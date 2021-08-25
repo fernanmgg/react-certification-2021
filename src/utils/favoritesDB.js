@@ -1,13 +1,13 @@
-function getFavorites(name) {
-  const localData = localStorage.getItem(name);
+function getFavorites(id) {
+  const localData = localStorage.getItem(id);
   if (localData) {
     return JSON.parse(localData).map((element) => element.id.videoId);
   }
   return [];
 }
 
-function getFavoritesInfo(name, favorites) {
-  const localData = localStorage.getItem(name);
+function getFavoritesInfo(id, favorites) {
+  const localData = localStorage.getItem(id);
   if (localData) {
     return JSON.parse(localData).filter((element) =>
       favorites.includes(element.id.videoId)
@@ -16,30 +16,30 @@ function getFavoritesInfo(name, favorites) {
   return [];
 }
 
-function isFavorite(name, videoId) {
-  const localData = localStorage.getItem(name);
+function isFavorite(id, videoId) {
+  const localData = localStorage.getItem(id);
   if (localData) {
     return JSON.parse(localData).some((element) => element.id.videoId === videoId);
   }
   return false;
 }
 
-function addFavorite(name, video) {
-  const localData = localStorage.getItem(name);
+function addFavorite(id, video) {
+  const localData = localStorage.getItem(id);
   if (localData) {
-    localStorage.setItem(name, JSON.stringify([video, ...JSON.parse(localData)]));
+    localStorage.setItem(id, JSON.stringify([video, ...JSON.parse(localData)]));
   } else {
-    localStorage.setItem(name, JSON.stringify([video]));
+    localStorage.setItem(id, JSON.stringify([video]));
   }
 }
 
-function removeFavorite(name, videoId) {
-  const localData = localStorage.getItem(name);
+function removeFavorite(id, videoId) {
+  const localData = localStorage.getItem(id);
   if (localData) {
     const videos = JSON.parse(localData).filter(
       (element) => element.id.videoId !== videoId
     );
-    localStorage.setItem(name, JSON.stringify(videos));
+    localStorage.setItem(id, JSON.stringify(videos));
   }
 }
 
