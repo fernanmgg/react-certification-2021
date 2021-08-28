@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
   StyledVideoRelated,
@@ -8,20 +9,14 @@ import {
   Title,
   Effects,
 } from './VideoRelated.style';
-import { VideoContext } from '../../state/Video.state';
 
-function VideoRelated({ videoId, image, title, description }) {
-  const { dispatch } = useContext(VideoContext);
+function VideoRelated({ videoId, image, title }) {
+  const history = useHistory();
+  const favorites = history.location.pathname.match(/favorites/i);
 
   function handleClick() {
-    dispatch({
-      type: 'SET_VIDEO',
-      payload: {
-        videoId,
-        title,
-        description,
-      },
-    });
+    if (!favorites) history.push(`/video/${videoId}`);
+    else history.push(`/favorites/${videoId}`);
   }
 
   return (

@@ -5,7 +5,7 @@ import VideoCard from '../VideoCard';
 import VideoRelated from '../VideoRelated';
 import charCodeReplace from '../../utils/charCodeReplace';
 
-function VideoList({ videos, loading, error, related }) {
+function VideoList({ videos = [], loading = false, error = false, related = false }) {
   const StyledList = !related ? StyledVideoList : StyledVideoListRel;
   const VideoComponent = !related ? VideoCard : VideoRelated;
   const videoCards =

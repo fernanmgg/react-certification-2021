@@ -8,20 +8,23 @@ import {
   FavoriteButton,
   Title,
   Description,
-} from './VideoDetails.style';
+} from '../VideoDetails/VideoDetails.style';
 import VideoList from '../../components/VideoList';
 import useVideoAPI from '../../utils/hooks/useVideoAPI';
-import useVideoListAPI from '../../utils/hooks/useVideoListAPI';
 import { VideoContext } from '../../state/Video.state';
-import { isFavorite, addFavorite, removeFavorite } from '../../utils/favoritesDB';
+import {
+  getFavoritesInfo,
+  isFavorite,
+  addFavorite,
+  removeFavorite,
+} from '../../utils/favoritesDB';
 import stringCutoff from '../../utils/stringCutoff';
 
-function VideoDetails() {
+function FavoriteVideoDetails() {
   const { videoId } = useParams();
   const { video } = useVideoAPI(videoId);
-  const { videos, loading, error } = useVideoListAPI(videoId, true);
   const { state, dispatch } = useContext(VideoContext);
-  const { auth } = state;
+  const { auth, favorites } = state;
 
   function updateFavorites() {
     const favorite = isFavorite(auth.id, videoId);
@@ -49,19 +52,17 @@ function VideoDetails() {
           title={video.snippet.title}
           src={`https://www.youtube.com/embed/${videoId}`}
         />
-        {auth && (
-          <Favorite>
-            <FavoriteButton onClick={updateFavorites}>
-              {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
-            </FavoriteButton>
-          </Favorite>
-        )}
+        <Favorite>
+          <FavoriteButton onClick={updateFavorites}>
+            {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
+          </FavoriteButton>
+        </Favorite>
         <Title>{video.snippet.title}</Title>
         <Description>{video.snippet.description}</Description>
       </Wrapper>
-      <VideoList videos={videos} loading={loading} error={error} related />
+      <VideoList videos={getFavoritesInfo(auth.id, favorites)} related />
     </StyledVideoDetails>
   );
 }
 
-export default VideoDetails;
+export default FavoriteVideoDetails;

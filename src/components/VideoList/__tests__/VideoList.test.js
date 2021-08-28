@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 
 import VideoList from '../VideoList.component';
 import { mockedVideos } from '../VideoList.mock';
@@ -9,7 +10,9 @@ describe('VideoList UI tests', () => {
   test('renders video cards', () => {
     render(
       wrapWithVideoContext(
-        <VideoList videos={mockedVideos} loading={false} error={false} />,
+        <MemoryRouter>
+          <VideoList videos={mockedVideos} loading={false} error={false} />
+        </MemoryRouter>,
         {},
         jest.fn()
       )
@@ -26,6 +29,12 @@ describe('VideoList UI tests', () => {
     expect(description1).toBeInTheDocument();
     expect(description2).toBeInTheDocument();
     expect(description3).toBeInTheDocument();
+  });
+
+  test('renders message with default props', () => {
+    render(<VideoList />);
+    const text = screen.queryByText(/no videos found.../i);
+    expect(text).toBeInTheDocument();
   });
 
   test('renders message if there are no videos', () => {

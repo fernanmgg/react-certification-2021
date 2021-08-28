@@ -1,48 +1,43 @@
 import { useState, useEffect } from 'react';
 
-const key = process.env.REACT_APP_API_KEY;
+import { defaultVideo, loadingVideo, errorVideo } from './useVideoAPI.vars';
 
-const baseUrl = 'https://www.googleapis.com/youtube/v3/search?';
+const key = process.env.REACT_APP_YOUTUBE_API_KEY;
 
-export default function useVideoAPI(query, relatedVideos = false) {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+const baseUrl = 'https://www.googleapis.com/youtube/v3/videos?';
+
+export default function useVideoAPI(videoId) {
+  const [video, setVideo] = useState(defaultVideo);
 
   useEffect(() => {
     function buildURI() {
       const fields = [
+        `id=${videoId}`,
         'part=snippet',
-        'fields=items(id(videoId),snippet(title,description,thumbnails(medium(url))))',
-        'maxResults=20',
-        'type=video',
+        'fields=items(snippet(title,description,thumbnails(medium(url))))',
         `key=${key}`,
       ];
-      if (!relatedVideos) fields.push(`q=${query}`);
-      else fields.push(`relatedToVideoId=${query}`);
       return baseUrl.concat(
         fields.reduce((previous, current) => previous.concat(`&${current}`))
       );
     }
 
     const fetchData = async () => {
-      setLoading(true);
+      setVideo(loadingVideo);
       try {
         const response = await fetch(encodeURI(buildURI()));
         const json = await response.json();
-        if (json.items) setVideos(json.items);
-        else setError(true);
+        if (json.items) setVideo(json.items[0]);
+        else setVideo(errorVideo);
       } catch (e) {
-        setError(true);
+        setVideo(errorVideo);
       }
-      setLoading(false);
     };
 
-    const check = !relatedVideos
-      ? query.length > 0 && query.length < 64
-      : /[A-Za-z0-9_-]{11}/.test(query);
+    const check = /[A-Za-z0-9_-]{11}/.test(videoId);
     if (check) fetchData();
-  }, [query, relatedVideos]);
+    else setVideo(errorVideo);
+  }, [videoId]);
 
-  return { videos, loading, error };
+  return { video };
 }

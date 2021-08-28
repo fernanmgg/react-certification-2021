@@ -28,9 +28,9 @@ const DrawerItem = styled.button`
   align-items: center;
   background-color: ${(props) => props.theme.background};
   border-bottom: 1px solid ${(props) => props.theme.textLight};
-  border-left: 0px;
-  border-right: 0px;
-  border-top: 0px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
   color: ${(props) => props.theme.textLight};
   cursor: pointer;
   display: flex;
@@ -86,7 +86,7 @@ const SearchWrapper = styled.div`
 
 const Search = styled.input`
   background: none;
-  border: 0;
+  border: none;
   border-radius: inherit;
   color: ${(props) => props.theme.text};
   font-size: 0.9rem;
@@ -102,6 +102,7 @@ const Search = styled.input`
 const Options = styled.div`
   align-items: center;
   display: flex;
+  position: relative;
   @media (max-width: 600px) {
     display: none;
   }
@@ -113,12 +114,58 @@ const ToggleText = styled.span`
   margin-right: 8px;
 `;
 
-const LoginButton = styled.button`
+const AuthButton = styled.button`
   background-color: ${(props) => props.theme.backgroundTransparent};
+  background-image: ${(props) => props.bgImage};
+  background-size: 100%;
   border: 0;
   border-radius: 50%;
   cursor: pointer;
   margin-left: 24px;
+  min-height: 32px;
+  min-width: 35px;
+`;
+
+const PopupMenu = styled.div`
+  background-color: ${(props) => props.theme.background};
+  border-radius: 4px;
+  padding: 8px 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 120px;
+  z-index: 1;
+`;
+
+const PopupItem = styled.button`
+  align-items: center;
+  background-color: ${(props) => props.theme.background};
+  border: none;
+  color: ${(props) => props.theme.textLight};
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  height: 32px;
+  padding-left: 16px;
+  text-align: left;
+  transition: background-color 1s ease;
+  width: 100%;
+  &:hover {
+    background-color: ${(props) => props.theme.backgroundFocus};
+  }
+`;
+
+const Username = styled.div`
+  background-color: ${(props) => props.theme.background};
+  border-bottom: 2px solid ${(props) => props.theme.textLight};
+  color: ${(props) => props.theme.text};
+  font-size: 0.8rem;
+  height: 32px;
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 `;
 
 const Icon = styled.svg`
@@ -149,7 +196,10 @@ export {
   Search,
   Options,
   ToggleText,
-  LoginButton,
+  AuthButton,
+  PopupMenu,
+  PopupItem,
+  Username,
   Icon,
   InlineIcon,
   GapFill,

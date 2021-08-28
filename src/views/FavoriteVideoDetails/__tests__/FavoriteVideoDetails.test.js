@@ -3,9 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
 import user from '@testing-library/user-event';
 
-import VideoDetails from '../VideoDetails.view';
+import FavoriteVideoDetails from '../FavoriteVideoDetails.view';
 import * as useVideoAPI from '../../../utils/hooks/useVideoAPI';
-import * as useVideoListAPI from '../../../utils/hooks/useVideoListAPI';
 import { wrapWithVideoContext } from '../../../state/testing';
 import * as favoritesDB from '../../../utils/favoritesDB';
 
@@ -22,18 +21,17 @@ const video = {
 };
 
 useVideoAPI.default = jest.fn(() => ({ video }));
-useVideoListAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
-describe('VideoDetails UI tests', () => {
+describe('FavoriteVideoDetails UI tests', () => {
   test('renders details with correct props', () => {
     render(
       wrapWithVideoContext(
-        <MemoryRouter initialEntries={['/video/testId']}>
-          <Route path="/video/:videoId">
-            <VideoDetails />
+        <MemoryRouter initialEntries={['/favorites/Test id']}>
+          <Route path="/favorites/:videoId">
+            <FavoriteVideoDetails />
           </Route>
         </MemoryRouter>,
-        { auth: null },
+        { auth: { name: 'test' }, favorites: [] },
         jest.fn()
       )
     );
@@ -42,9 +40,7 @@ describe('VideoDetails UI tests', () => {
     expect(title).toBeInTheDocument();
     expect(description).toBeInTheDocument();
     expect(useVideoAPI.default).toHaveBeenCalled();
-    expect(useVideoAPI.default).toHaveBeenCalledWith('testId');
-    expect(useVideoListAPI.default).toHaveBeenCalled();
-    expect(useVideoListAPI.default).toHaveBeenCalledWith('testId', true);
+    expect(useVideoAPI.default).toHaveBeenCalledWith('Test id');
   });
 
   test('renders "Add favorite" button if the video is not favorite', () => {
@@ -55,10 +51,10 @@ describe('VideoDetails UI tests', () => {
       wrapWithVideoContext(
         <MemoryRouter initialEntries={['/video/testId']}>
           <Route path="/video/:videoId">
-            <VideoDetails />
+            <FavoriteVideoDetails />
           </Route>
         </MemoryRouter>,
-        { auth: { name: 'test' } },
+        { auth: { name: 'test' }, favorites: [] },
         dispatch
       )
     );
@@ -77,10 +73,10 @@ describe('VideoDetails UI tests', () => {
       wrapWithVideoContext(
         <MemoryRouter initialEntries={['/video/testId']}>
           <Route path="/video/:videoId">
-            <VideoDetails />
+            <FavoriteVideoDetails />
           </Route>
         </MemoryRouter>,
-        { auth: { name: 'test' } },
+        { auth: { name: 'test' }, favorites: [] },
         dispatch
       )
     );
