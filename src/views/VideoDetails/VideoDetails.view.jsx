@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import {
   StyledVideoDetails,
   Wrapper,
+  Video,
+  Details,
   Favorite,
   FavoriteButton,
   Title,
@@ -43,21 +45,25 @@ function VideoDetails() {
   return (
     <StyledVideoDetails>
       <Wrapper>
-        <iframe
-          width="100%"
-          height="480px"
-          title={video.snippet.title}
-          src={`https://www.youtube.com/embed/${videoId}`}
-        />
-        {auth && (
-          <Favorite>
-            <FavoriteButton onClick={updateFavorites}>
-              {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
-            </FavoriteButton>
-          </Favorite>
-        )}
-        <Title>{video.snippet.title}</Title>
-        <Description>{video.snippet.description}</Description>
+        <Video>
+          <iframe
+            width="100%"
+            height="100%"
+            title={video.snippet.title}
+            src={`https://www.youtube.com/embed/${videoId}`}
+          />
+        </Video>
+        <Details>
+          {auth && (
+            <Favorite>
+              <FavoriteButton onClick={updateFavorites}>
+                {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
+              </FavoriteButton>
+            </Favorite>
+          )}
+          <Title>{video.snippet.title}</Title>
+          <Description>{video.snippet.description}</Description>
+        </Details>
       </Wrapper>
       <VideoList videos={videos} loading={loading} error={error} related />
     </StyledVideoDetails>

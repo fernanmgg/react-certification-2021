@@ -27,14 +27,14 @@ export default function useVideoAPI(videoId) {
       try {
         const response = await fetch(encodeURI(buildURI()));
         const json = await response.json();
-        if (json.items) setVideo(json.items[0]);
+        if (Array.isArray(json.items) && json.items.length === 1) setVideo(json.items[0]);
         else setVideo(errorVideo);
       } catch (e) {
         setVideo(errorVideo);
       }
     };
 
-    const check = /[A-Za-z0-9_-]{11}/.test(videoId);
+    const check = /^[A-Za-z0-9_-]{11}$/.test(videoId);
     if (check) fetchData();
     else setVideo(errorVideo);
   }, [videoId]);

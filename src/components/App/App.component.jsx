@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useReducer } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -14,23 +14,20 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [theme, toggleTheme] = useState(false);
 
-  useEffect(() => {
-    if (!localStorage.getItem('123'))
-      localStorage.setItem('123', JSON.stringify(AppFavs));
-    if (!localStorage.getItem('Bv9uJPEosSfVRdwaaRpiNvOFdop1'))
-      localStorage.setItem('Bv9uJPEosSfVRdwaaRpiNvOFdop1', JSON.stringify(AppFavs));
+  if (!localStorage.getItem('123')) localStorage.setItem('123', JSON.stringify(AppFavs));
+  if (!localStorage.getItem('Bv9uJPEosSfVRdwaaRpiNvOFdop1'))
+    localStorage.setItem('Bv9uJPEosSfVRdwaaRpiNvOFdop1', JSON.stringify(AppFavs));
 
-    const storageAuth = localStorage.getItem('auth') || sessionStorage.getItem('auth');
-    if (storageAuth) {
-      dispatch({
-        type: 'SET_AUTH',
-        payload: {
-          auth: JSON.parse(storageAuth),
-          favorites: getFavorites(JSON.parse(storageAuth).id),
-        },
-      });
-    }
-  }, []);
+  const storageAuth = localStorage.getItem('auth') || sessionStorage.getItem('auth');
+  if (!state.auth && storageAuth) {
+    dispatch({
+      type: 'SET_AUTH',
+      payload: {
+        auth: JSON.parse(storageAuth),
+        favorites: getFavorites(JSON.parse(storageAuth).id),
+      },
+    });
+  }
 
   return (
     <VideoContext.Provider value={{ state, dispatch }}>

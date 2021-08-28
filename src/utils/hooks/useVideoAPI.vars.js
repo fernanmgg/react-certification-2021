@@ -1,5 +1,4 @@
 const defaultVideo = {
-  id: { videoId: '' },
   snippet: {
     title: '...',
     description: '...',
@@ -12,7 +11,6 @@ const defaultVideo = {
 };
 
 const loadingVideo = {
-  id: { videoId: '' },
   snippet: {
     title: '',
     description: 'Fetching info...',
@@ -25,7 +23,6 @@ const loadingVideo = {
 };
 
 const errorVideo = {
-  id: { videoId: '' },
   snippet: {
     title: '',
     description: 'Error fetching info...',

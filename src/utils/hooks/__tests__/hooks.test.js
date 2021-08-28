@@ -149,7 +149,7 @@ describe('useVideoAPI tests', () => {
     expect(result.current.video).toEqual(errorVideo);
   });
 
-  test('returns error message if API does not return items object', async () => {
+  test('returns error message if API does not return items array with one element', async () => {
     const { deferred, promise } = controlledPromise();
     global.fetch = jest.fn(() => promise);
     const { result, waitForNextUpdate } = renderHook(() => useVideoAPI('A1234567890'));

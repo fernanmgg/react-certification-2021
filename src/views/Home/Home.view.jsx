@@ -9,6 +9,7 @@ function Home() {
   const { state } = useContext(VideoContext);
   const { search } = state;
   const { videos, loading, error } = useVideoListAPI(search);
+
   return (
     <>
       <Title>React Bootcamp 2021</Title>
