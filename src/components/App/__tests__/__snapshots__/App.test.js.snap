@@ -1,0 +1,1080 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App UI tests renders correctly, auth info in storage 1`] = `
+<DocumentFragment>
+  .c0 {
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 0px 4px 8px 4px rgba(0,0,0,0.2);
+  color: rgba(0,0,0,0.8);
+}
+
+.c1 {
+  background-color: rgb(255,255,255);
+  position: fixed;
+  height: 100%;
+  -webkit-transition: left 0.15s linear;
+  transition: left 0.15s linear;
+  width: 240px;
+  z-index: 3;
+  left: -240px;
+}
+
+.c2 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgb(255,255,255);
+  border-bottom: 1px solid rgba(0,0,0,0.5);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  font-size: 1rem;
+  height: 64px;
+  padding-left: 16px;
+  text-align: left;
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
+  width: inherit;
+}
+
+.c2:hover {
+  background-color: rgba(0,0,0,0.16);
+}
+
+.c3 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgb(255,255,255);
+  border-bottom: 1px solid rgba(0,0,0,0.5);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  font-size: 1rem;
+  height: 64px;
+  padding-left: 16px;
+  text-align: left;
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
+  width: inherit;
+}
+
+.c3:hover {
+  background-color: rgba(0,0,0,0.16);
+}
+
+.c11 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 64px;
+  padding: 0 24px;
+}
+
+.c12 {
+  background-color: transparent;
+  border: 0;
+  border-radius: 100%;
+  cursor: pointer;
+  -webkit-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+}
+
+.c12:hover {
+  background-color: rgba(255,255,255,0.5);
+}
+
+.c14 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 32px;
+  position: relative;
+  width: 20ch;
+}
+
+.c16 {
+  background: none;
+  border: none;
+  border-radius: inherit;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9rem;
+  padding: 8px 8px 8px 36px;
+  outline: none;
+  -webkit-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+  width: inherit;
+}
+
+.c16:hover {
+  background-color: rgba(255,255,255,0.5);
+}
+
+.c17 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+.c18 {
+  color: rgba(0,0,0,0.5);
+  font-size: 0.8rem;
+  margin-right: 8px;
+}
+
+.c20 {
+  background-color: rgba(255,255,255,0.5);
+  background-image: url(test);
+  background-size: 100%;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 24px;
+  min-height: 32px;
+  min-width: 35px;
+}
+
+.c13 {
+  fill: rgba(0,0,0,0.8);
+  font-size: 1.5rem;
+  height: 1em;
+  width: 1em;
+}
+
+.c15 {
+  margin-left: 8px;
+  position: absolute;
+  z-index: 1;
+}
+
+.c4 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c5 {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.c8 {
+  background-color: rgba(0,0,0,0.16);
+  border-radius: 34px;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.c19 {
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 34px;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.c10 {
+  background-color: rgb(255,255,255);
+  border-radius: 50%;
+  bottom: 4px;
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  width: 26px;
+}
+
+.c6 {
+  height: 0;
+  opacity: 0;
+  width: 0;
+}
+
+.c6:checked ~ .c7 {
+  background-color: #57c6e1;
+}
+
+.c6:checked ~ .c7 > .c9 {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+@media (min-width:600px) {
+  .c3 {
+    display: none;
+  }
+}
+
+@media (max-width:600px) {
+  .c14 {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c17 {
+    display: none;
+  }
+}
+
+@media (min-width:405px) {
+
+}
+
+@media (min-width:770px) {
+
+}
+
+@media (min-width:1135px) {
+
+}
+
+@media (min-width:1500px) {
+
+}
+
+@media (min-width:1865px) {
+
+}
+
+<header
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <button
+        aria-label="home"
+        class="c2"
+      >
+        Home
+      </button>
+      <button
+        class="c3"
+      >
+        Dark Mode
+        <div
+          class="c4"
+        />
+        <label
+          class="c5"
+        >
+          <input
+            aria-label="theme"
+            class="c6"
+            type="checkbox"
+          />
+          <span
+            class="c7 c8"
+          >
+            <span
+              class="c9 c10"
+            />
+          </span>
+        </label>
+      </button>
+      <button
+        aria-label="favorites"
+        class="c3"
+      >
+        Favorites
+      </button>
+      <button
+        aria-label="logout"
+        class="c3"
+      >
+        Logout
+      </button>
+    </div>
+    <div
+      class="c11"
+    >
+      <button
+        aria-label="drawer"
+        class="c12"
+      >
+        <svg
+          class="c13"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+          />
+        </svg>
+      </button>
+      <div
+        class="c14"
+      >
+        <svg
+          class="c13 c15"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          />
+        </svg>
+        <input
+          aria-label="search"
+          class="c16"
+          maxlength="64"
+          value="wizeline"
+        />
+      </div>
+      <div
+        class="c4"
+      />
+      <div
+        class="c17"
+      >
+        <span
+          class="c18"
+        >
+          Dark Mode
+        </span>
+        <label
+          class="c5"
+        >
+          <input
+            aria-label="theme"
+            class="c6"
+            type="checkbox"
+          />
+          <span
+            class="c7 c19"
+          >
+            <span
+              class="c9 c10"
+            />
+          </span>
+        </label>
+        <button
+          aria-label="auth"
+          class="c20"
+        />
+      </div>
+    </div>
+  </header>
+  .c0 {
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+}
+
+@media (min-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (min-width:405px) {
+
+}
+
+@media (min-width:770px) {
+
+}
+
+@media (min-width:1135px) {
+
+}
+
+@media (min-width:1500px) {
+
+}
+
+@media (min-width:1865px) {
+
+}
+
+<h1
+    class="c0"
+  >
+    React Bootcamp 2021
+  </h1>
+  .c0 {
+  background-color: rgba(255,255,255,0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.c2 {
+  color: rgba(0,0,0,0.5);
+  text-align: center;
+  width: 100%;
+}
+
+@media (min-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (min-width:405px) {
+  .c1 {
+    width: 385px;
+  }
+}
+
+@media (min-width:770px) {
+  .c1 {
+    width: 750px;
+  }
+}
+
+@media (min-width:1135px) {
+  .c1 {
+    width: 1115px;
+  }
+}
+
+@media (min-width:1500px) {
+  .c1 {
+    width: 1480px;
+  }
+}
+
+@media (min-width:1865px) {
+  .c1 {
+    width: 1845px;
+  }
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        No videos found...
+      </h2>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`App UI tests renders correctly, no auth info in storage 1`] = `
+<DocumentFragment>
+  .c0 {
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 0px 4px 8px 4px rgba(0,0,0,0.2);
+  color: rgba(0,0,0,0.8);
+}
+
+.c1 {
+  background-color: rgb(255,255,255);
+  position: fixed;
+  height: 100%;
+  -webkit-transition: left 0.15s linear;
+  transition: left 0.15s linear;
+  width: 240px;
+  z-index: 3;
+  left: -240px;
+}
+
+.c2 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgb(255,255,255);
+  border-bottom: 1px solid rgba(0,0,0,0.5);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  font-size: 1rem;
+  height: 64px;
+  padding-left: 16px;
+  text-align: left;
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
+  width: inherit;
+}
+
+.c2:hover {
+  background-color: rgba(0,0,0,0.16);
+}
+
+.c3 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgb(255,255,255);
+  border-bottom: 1px solid rgba(0,0,0,0.5);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  font-size: 1rem;
+  height: 64px;
+  padding-left: 16px;
+  text-align: left;
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
+  width: inherit;
+}
+
+.c3:hover {
+  background-color: rgba(0,0,0,0.16);
+}
+
+.c11 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 64px;
+  padding: 0 24px;
+}
+
+.c12 {
+  background-color: transparent;
+  border: 0;
+  border-radius: 100%;
+  cursor: pointer;
+  -webkit-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+}
+
+.c12:hover {
+  background-color: rgba(255,255,255,0.5);
+}
+
+.c14 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 32px;
+  position: relative;
+  width: 20ch;
+}
+
+.c16 {
+  background: none;
+  border: none;
+  border-radius: inherit;
+  color: rgba(0,0,0,0.8);
+  font-size: 0.9rem;
+  padding: 8px 8px 8px 36px;
+  outline: none;
+  -webkit-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+  width: inherit;
+}
+
+.c16:hover {
+  background-color: rgba(255,255,255,0.5);
+}
+
+.c17 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+.c18 {
+  color: rgba(0,0,0,0.5);
+  font-size: 0.8rem;
+  margin-right: 8px;
+}
+
+.c20 {
+  background-color: rgba(255,255,255,0.5);
+  background-image: none;
+  background-size: 100%;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 24px;
+  min-height: 32px;
+  min-width: 35px;
+}
+
+.c13 {
+  fill: rgba(0,0,0,0.8);
+  font-size: 1.5rem;
+  height: 1em;
+  width: 1em;
+}
+
+.c15 {
+  margin-left: 8px;
+  position: absolute;
+  z-index: 1;
+}
+
+.c4 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c5 {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.c8 {
+  background-color: rgba(0,0,0,0.16);
+  border-radius: 34px;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.c19 {
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 34px;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.c10 {
+  background-color: rgb(255,255,255);
+  border-radius: 50%;
+  bottom: 4px;
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  width: 26px;
+}
+
+.c6 {
+  height: 0;
+  opacity: 0;
+  width: 0;
+}
+
+.c6:checked ~ .c7 {
+  background-color: #57c6e1;
+}
+
+.c6:checked ~ .c7 > .c9 {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+@media (min-width:600px) {
+  .c3 {
+    display: none;
+  }
+}
+
+@media (max-width:600px) {
+  .c14 {
+    width: 100%;
+  }
+}
+
+@media (max-width:600px) {
+  .c17 {
+    display: none;
+  }
+}
+
+@media (min-width:405px) {
+
+}
+
+@media (min-width:770px) {
+
+}
+
+@media (min-width:1135px) {
+
+}
+
+@media (min-width:1500px) {
+
+}
+
+@media (min-width:1865px) {
+
+}
+
+<header
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <button
+        aria-label="home"
+        class="c2"
+      >
+        Home
+      </button>
+      <button
+        class="c3"
+      >
+        Dark Mode
+        <div
+          class="c4"
+        />
+        <label
+          class="c5"
+        >
+          <input
+            aria-label="theme"
+            class="c6"
+            type="checkbox"
+          />
+          <span
+            class="c7 c8"
+          >
+            <span
+              class="c9 c10"
+            />
+          </span>
+        </label>
+      </button>
+      <button
+        aria-label="login"
+        class="c3"
+      >
+        Login
+      </button>
+    </div>
+    <div
+      class="c11"
+    >
+      <button
+        aria-label="drawer"
+        class="c12"
+      >
+        <svg
+          class="c13"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+          />
+        </svg>
+      </button>
+      <div
+        class="c14"
+      >
+        <svg
+          class="c13 c15"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          />
+        </svg>
+        <input
+          aria-label="search"
+          class="c16"
+          maxlength="64"
+          value="wizeline"
+        />
+      </div>
+      <div
+        class="c4"
+      />
+      <div
+        class="c17"
+      >
+        <span
+          class="c18"
+        >
+          Dark Mode
+        </span>
+        <label
+          class="c5"
+        >
+          <input
+            aria-label="theme"
+            class="c6"
+            type="checkbox"
+          />
+          <span
+            class="c7 c19"
+          >
+            <span
+              class="c9 c10"
+            />
+          </span>
+        </label>
+        <button
+          aria-label="auth"
+          class="c20"
+        >
+          <svg
+            class="c13"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  .c0 {
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+}
+
+@media (min-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (min-width:405px) {
+
+}
+
+@media (min-width:770px) {
+
+}
+
+@media (min-width:1135px) {
+
+}
+
+@media (min-width:1500px) {
+
+}
+
+@media (min-width:1865px) {
+
+}
+
+<h1
+    class="c0"
+  >
+    React Bootcamp 2021
+  </h1>
+  .c0 {
+  background-color: rgba(255,255,255,0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.c2 {
+  color: rgba(0,0,0,0.5);
+  text-align: center;
+  width: 100%;
+}
+
+@media (min-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (max-width:600px) {
+
+}
+
+@media (min-width:405px) {
+  .c1 {
+    width: 385px;
+  }
+}
+
+@media (min-width:770px) {
+  .c1 {
+    width: 750px;
+  }
+}
+
+@media (min-width:1135px) {
+  .c1 {
+    width: 1115px;
+  }
+}
+
+@media (min-width:1500px) {
+  .c1 {
+    width: 1480px;
+  }
+}
+
+@media (min-width:1865px) {
+  .c1 {
+    width: 1845px;
+  }
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <h2
+        class="c2"
+      >
+        No videos found...
+      </h2>
+    </div>
+  </div>
+</DocumentFragment>
+`;

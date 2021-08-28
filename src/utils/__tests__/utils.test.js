@@ -56,14 +56,14 @@ describe('FavoritesDB tests', () => {
     localStorage.clear();
   });
 
-  test('returns empty array if there are no favorites for given user in local storage', () => {
-    expect(getFavorites('test')).toEqual([]);
-  });
-
   test('returns favorites IDs if there are favorites for given user in local storage', () => {
     const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
     localStorage.setItem('test', JSON.stringify(videos));
     expect(getFavorites('test')).toEqual(['test 1', 'test 2']);
+  });
+
+  test('returns empty array if there are no favorites for given user in local storage', () => {
+    expect(getFavorites('test')).toEqual([]);
   });
 
   test('returns favorites info from IDs', () => {
@@ -71,6 +71,10 @@ describe('FavoritesDB tests', () => {
     const favorites = ['test 1', 'test 2'];
     localStorage.setItem('test', JSON.stringify(videos));
     expect(getFavoritesInfo('test', favorites)).toEqual(videos);
+  });
+
+  test('returns empty array if there are no favorites info for given user in local storage', () => {
+    expect(getFavoritesInfo('test', [])).toEqual([]);
   });
 
   test('returns true if favorite is in local storage', () => {
@@ -83,6 +87,10 @@ describe('FavoritesDB tests', () => {
     const videos = [{ id: { videoId: 'test 1' } }, { id: { videoId: 'test 2' } }];
     localStorage.setItem('test', JSON.stringify(videos));
     expect(isFavorite('test', 'test 3')).toBeFalsy();
+  });
+
+  test('returns false if there are no favorites for user in local storage', () => {
+    expect(isFavorite('test', 'test')).toBeFalsy();
   });
 
   test('adds favorite to old local storage if user already has favorites', () => {

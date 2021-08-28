@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledVideoDetails = styled.div`
+const StyledDetails = styled.div`
   background-color: ${(props) => props.theme.backgroundTransparent};
   display: flex;
   flex-direction: row;
@@ -29,7 +29,7 @@ const Video = styled.div`
   flex: 1 1 0;
 `;
 
-const Details = styled.div`
+const Info = styled.div`
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
@@ -66,10 +66,10 @@ const Description = styled.div`
 `;
 
 export {
-  StyledVideoDetails,
+  StyledDetails,
   Wrapper,
   Video,
-  Details,
+  Info,
   Favorite,
   FavoriteButton,
   Title,

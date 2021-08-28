@@ -145,6 +145,7 @@ function Header({ theme, toggleTheme }) {
           <Search
             aria-label="search"
             defaultValue={search}
+            maxLength="64"
             onChange={handleSearchChange}
           />
         </SearchWrapper>
