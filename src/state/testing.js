@@ -8,9 +8,11 @@ const wrapWithThemeContext = (children) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
-const wrapWithVideoContext = (children, state, dispatch) => {
+const wrapWithVideoContext = (children, state = {}, actions = {}) => {
   return (
-    <VideoContext.Provider value={{ state, dispatch }}>{children}</VideoContext.Provider>
+    <VideoContext.Provider value={{ state, ...actions }}>
+      {children}
+    </VideoContext.Provider>
   );
 };
 

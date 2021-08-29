@@ -34,8 +34,7 @@ describe('VideoDetails UI tests', () => {
             <VideoDetails />
           </Route>
         </MemoryRouter>,
-        { auth: null },
-        jest.fn()
+        { auth: null }
       )
     );
     expect(asFragment()).toMatchSnapshot();

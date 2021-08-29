@@ -1,4 +1,5 @@
-import { reducer } from '../Video.state';
+import { reducer } from '../Video.reducer';
+import { actions } from '../Video.actions';
 
 const auth = {
   id: '123',
@@ -58,5 +59,41 @@ describe('Reducer function tests', () => {
     expect(() => {
       reducer(state, action);
     }).toThrow(/error: undefined action/i);
+  });
+});
+
+describe('Actions tests', () => {
+  test('dispatch is called with proper payload', () => {
+    const dispatch = jest.fn();
+    const { setSearch, setAuth, unsetAuth, addFav, remFav } = actions(dispatch);
+    setSearch('setSearch test');
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenLastCalledWith({
+      type: 'SET_SEARCH',
+      payload: 'setSearch test',
+    });
+    setAuth('setAuth test');
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenLastCalledWith({
+      type: 'SET_AUTH',
+      payload: 'setAuth test',
+    });
+    unsetAuth();
+    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenLastCalledWith({
+      type: 'UNSET_AUTH',
+    });
+    addFav('addFav test');
+    expect(dispatch).toHaveBeenCalledTimes(4);
+    expect(dispatch).toHaveBeenLastCalledWith({
+      type: 'ADD_FAVORITE',
+      payload: 'addFav test',
+    });
+    remFav('remFav test');
+    expect(dispatch).toHaveBeenCalledTimes(5);
+    expect(dispatch).toHaveBeenLastCalledWith({
+      type: 'REMOVE_FAVORITE',
+      payload: 'remFav test',
+    });
   });
 });

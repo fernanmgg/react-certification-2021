@@ -29,7 +29,7 @@ import app from '../../firebase.config';
 
 function Header({ theme, toggleTheme }) {
   const node = useRef();
-  const { state, dispatch } = useContext(VideoContext);
+  const { state, setSearch, unsetAuth } = useContext(VideoContext);
   const { auth, search } = state;
   const [drawer, setDrawer] = useState(false);
   const [user, setUser] = useState(false);
@@ -37,7 +37,7 @@ function Header({ theme, toggleTheme }) {
   const history = useHistory();
 
   function fetchVideos(_search) {
-    dispatch({ type: 'SET_SEARCH', payload: _search });
+    setSearch(_search);
     history.push('/');
   }
 
@@ -82,7 +82,7 @@ function Header({ theme, toggleTheme }) {
     app.auth().signOut();
     localStorage.removeItem('auth');
     sessionStorage.removeItem('auth');
-    dispatch({ type: 'UNSET_AUTH' });
+    unsetAuth();
     setUser(false);
     setDrawer(false);
   }

@@ -8,9 +8,7 @@ import { wrapWithVideoContext } from '../../../state/testing';
 describe('Content UI tests', () => {
   test('renders Home view by default', () => {
     render(
-      <MemoryRouter>
-        {wrapWithVideoContext(<Content />, { search: '' }, jest.fn())}
-      </MemoryRouter>
+      <MemoryRouter>{wrapWithVideoContext(<Content />, { search: '' })}</MemoryRouter>
     );
     const text = screen.getByText(/react bootcamp 2021/i);
     expect(text).toBeInTheDocument();

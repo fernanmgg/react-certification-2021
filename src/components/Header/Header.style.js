@@ -39,10 +39,10 @@ const DrawerItem = styled.button`
   height: 64px;
   padding-left: 16px;
   text-align: left;
-  transition: background-color 1s ease;
   width: inherit;
   &:hover {
     background-color: ${(props) => props.theme.backgroundFocus};
+    transition: background-color 1s ease;
   }
   ${(props) =>
     props.hiddenItem &&

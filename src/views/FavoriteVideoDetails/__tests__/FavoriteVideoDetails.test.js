@@ -31,8 +31,7 @@ describe('FavoriteVideoDetails UI tests', () => {
             <FavoriteVideoDetails />
           </Route>
         </MemoryRouter>,
-        { auth: { name: 'test' }, favorites: [] },
-        jest.fn()
+        { auth: { name: 'test' }, favorites: [] }
       )
     );
     expect(asFragment()).toMatchSnapshot();

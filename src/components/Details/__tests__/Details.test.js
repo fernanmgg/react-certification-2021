@@ -31,8 +31,7 @@ describe('Details UI tests', () => {
             <Details />
           </Route>
         </MemoryRouter>,
-        { auth: null },
-        jest.fn()
+        { auth: null }
       )
     );
     const title = screen.getByText(/test title/i);
@@ -44,7 +43,7 @@ describe('Details UI tests', () => {
   });
 
   test('renders "Add favorite" button if the video is not favorite', () => {
-    const dispatch = jest.fn();
+    const addFav = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => false);
     favoritesDB.addFavorite = jest.fn();
     render(
@@ -55,18 +54,18 @@ describe('Details UI tests', () => {
           </Route>
         </MemoryRouter>,
         { auth: { name: 'test' } },
-        dispatch
+        { addFav }
       )
     );
     const favorite = screen.getByRole('button', { name: /add favorite/i });
     expect(favorite).toBeInTheDocument();
     user.click(favorite);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({ type: 'ADD_FAVORITE', payload: 'testId' });
+    expect(addFav).toHaveBeenCalledTimes(1);
+    expect(addFav).toHaveBeenCalledWith('testId');
   });
 
   test('renders "Remove favorite" button if the video is favorite', () => {
-    const dispatch = jest.fn();
+    const remFav = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => true);
     favoritesDB.removeFavorite = jest.fn();
     render(
@@ -77,14 +76,14 @@ describe('Details UI tests', () => {
           </Route>
         </MemoryRouter>,
         { auth: { name: 'test' } },
-        dispatch
+        { remFav }
       )
     );
     const favorite = screen.getByRole('button', { name: /remove favorite/i });
     expect(favorite).toBeInTheDocument();
     user.click(favorite);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({ type: 'REMOVE_FAVORITE', payload: 'testId' });
+    expect(remFav).toHaveBeenCalledTimes(1);
+    expect(remFav).toHaveBeenCalledWith('testId');
   });
 
   test('renders error message if there is a problem fetching data', () => {
@@ -100,8 +99,7 @@ describe('Details UI tests', () => {
             <Details />
           </Route>
         </MemoryRouter>,
-        { auth: null },
-        jest.fn()
+        { auth: null }
       )
     );
     expect(screen.getByText(/error fetching details.../i)).toBeInTheDocument();
@@ -120,9 +118,7 @@ describe('Details UI tests', () => {
             <Details />
           </Route>
           <Route path="/404">404</Route>
-        </MemoryRouter>,
-        {},
-        jest.fn()
+        </MemoryRouter>
       )
     );
     expect(screen.getByText(/404/i)).toBeInTheDocument();

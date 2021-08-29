@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -6,12 +6,12 @@ import { GlobalStyle } from './App.style';
 import { lightTheme, darkTheme } from './App.theme';
 import Header from '../Header';
 import Content from '../../views/Content';
-import { VideoContext, initialState, reducer } from '../../state/Video.state';
+import { VideoContext, VideoContextData } from '../../state/Video.state';
 import AppFavs from './App.favs';
 import { getFavorites } from '../../utils/favoritesDB';
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { state, actions } = VideoContextData();
   const [theme, toggleTheme] = useState(false);
 
   if (!localStorage.getItem('123')) localStorage.setItem('123', JSON.stringify(AppFavs));
@@ -20,17 +20,14 @@ function App() {
 
   const storageAuth = localStorage.getItem('auth') || sessionStorage.getItem('auth');
   if (!state.auth && storageAuth) {
-    dispatch({
-      type: 'SET_AUTH',
-      payload: {
-        auth: JSON.parse(storageAuth),
-        favorites: getFavorites(JSON.parse(storageAuth).id),
-      },
+    actions.setAuth({
+      auth: JSON.parse(storageAuth),
+      favorites: getFavorites(JSON.parse(storageAuth).id),
     });
   }
 
   return (
-    <VideoContext.Provider value={{ state, dispatch }}>
+    <VideoContext.Provider value={{ state, ...actions }}>
       <ThemeProvider theme={!theme ? lightTheme : darkTheme}>
         <GlobalStyle />
         <Router>

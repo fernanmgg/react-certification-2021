@@ -20,10 +20,10 @@ import stringCutoff from '../../utils/stringCutoff';
 function VideoDetails({ videos = [], loading = false, error = false }) {
   const { videoId } = useParams();
   const { video, redirect, fetchError } = useVideoAPI(videoId);
-  const { state, dispatch } = useContext(VideoContext);
+  const { state, addFav, remFav } = useContext(VideoContext);
   const { auth } = state;
 
-  function updateFavorites() {
+  function handleFavoriteClick() {
     if (!isFavorite(auth.id, videoId)) {
       addFavorite(auth.id, {
         id: { videoId },
@@ -32,10 +32,10 @@ function VideoDetails({ videos = [], loading = false, error = false }) {
           description: stringCutoff(video.snippet.description, 160),
         },
       });
-      dispatch({ type: 'ADD_FAVORITE', payload: videoId });
+      addFav(videoId);
     } else {
       removeFavorite(auth.id, videoId);
-      dispatch({ type: 'REMOVE_FAVORITE', payload: videoId });
+      remFav(videoId);
     }
   }
 
@@ -57,7 +57,7 @@ function VideoDetails({ videos = [], loading = false, error = false }) {
             <>
               {auth && (
                 <Favorite>
-                  <FavoriteButton onClick={updateFavorites}>
+                  <FavoriteButton onClick={handleFavoriteClick}>
                     {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
                   </FavoriteButton>
                 </Favorite>

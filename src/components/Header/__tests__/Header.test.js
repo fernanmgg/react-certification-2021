@@ -12,11 +12,7 @@ describe('Header UI tests', () => {
   test('renders drawer and auth buttons, search input and theme checkbox', () => {
     render(
       <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { search: '' },
-          jest.fn()
-        )}
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' })}
       </MemoryRouter>
     );
     const drawer = screen.getByRole('button', { name: /drawer/i });
@@ -31,29 +27,26 @@ describe('Header UI tests', () => {
 
   test('calls setSearch after typing', () => {
     _.debounce = jest.fn((fn) => fn);
-    const dispatch = jest.fn();
-    render(
-      <MemoryRouter>
-        {wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' }, dispatch)}
-      </MemoryRouter>
-    );
-    const search = screen.getByRole('textbox', { name: /search/i });
-    user.type(search, '1');
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_SEARCH',
-      payload: '1',
-    });
-  });
-
-  test('toggles overlay with home button', () => {
+    const setSearch = jest.fn();
     render(
       <MemoryRouter>
         {wrapWithVideoContext(
           wrapWithThemeContext(<Header />),
           { search: '' },
-          jest.fn()
+          { setSearch }
         )}
+      </MemoryRouter>
+    );
+    const search = screen.getByRole('textbox', { name: /search/i });
+    user.type(search, 'test');
+    expect(setSearch).toHaveBeenCalledTimes(4);
+    expect(setSearch).toHaveBeenLastCalledWith('test');
+  });
+
+  test('toggles overlay with home button', () => {
+    render(
+      <MemoryRouter>
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' })}
       </MemoryRouter>
     );
     expect(screen.queryByTestId(/overlay/i)).toBeNull();
@@ -69,11 +62,7 @@ describe('Header UI tests', () => {
   test('toggles overlay with favorites button', () => {
     render(
       <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { auth: {}, search: '' },
-          jest.fn()
-        )}
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), { auth: {}, search: '' })}
       </MemoryRouter>
     );
     expect(screen.queryByTestId(/overlay/i)).toBeNull();
@@ -89,11 +78,7 @@ describe('Header UI tests', () => {
   test('toggles overlay when clicking it', () => {
     render(
       <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { search: '' },
-          jest.fn()
-        )}
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), { search: '' })}
       </MemoryRouter>
     );
     expect(screen.queryByTestId(/overlay/i)).toBeNull();
@@ -108,11 +93,10 @@ describe('Header UI tests', () => {
   test('toggles user menu when clicking user button and somewhere else', () => {
     render(
       <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { auth: null, search: '' },
-          jest.fn()
-        )}
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), {
+          auth: null,
+          search: '',
+        })}
       </MemoryRouter>
     );
     expect(screen.queryAllByRole('button', { name: /login/i }).length).toEqual(1);
@@ -129,11 +113,10 @@ describe('Header UI tests', () => {
     div.setAttribute('id', 'login');
     render(
       <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { auth: null, search: '' },
-          jest.fn()
-        )}
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), {
+          auth: null,
+          search: '',
+        })}
       </MemoryRouter>,
       {
         container: document.body.appendChild(div),
@@ -155,11 +138,10 @@ describe('Header UI tests', () => {
   test('shows login buttons when not authenticated', () => {
     render(
       <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { auth: null, search: '' },
-          jest.fn()
-        )}
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), {
+          auth: null,
+          search: '',
+        })}
       </MemoryRouter>
     );
     const auth = screen.getByRole('button', { name: /auth/i });
@@ -171,11 +153,10 @@ describe('Header UI tests', () => {
   test('shows username, favorites and logout buttons when authenticated', () => {
     render(
       <MemoryRouter>
-        {wrapWithVideoContext(
-          wrapWithThemeContext(<Header />),
-          { auth: { name: 'Test User' }, search: '' },
-          jest.fn()
-        )}
+        {wrapWithVideoContext(wrapWithThemeContext(<Header />), {
+          auth: { name: 'Test User' },
+          search: '',
+        })}
       </MemoryRouter>
     );
     const auth = screen.getByRole('button', { name: /auth/i });
@@ -188,8 +169,8 @@ describe('Header UI tests', () => {
     expect(logout.length).toEqual(2);
   });
 
-  test('dispatch is called to unset auth when logout button is clicked', () => {
-    const dispatch = jest.fn();
+  test('unsetAuth is called to unset auth when logout button is clicked', () => {
+    const unsetAuth = jest.fn();
     const mockedSignOut = jest.fn();
     app.default.auth = jest.fn(() => ({
       signOut: mockedSignOut,
@@ -199,7 +180,7 @@ describe('Header UI tests', () => {
         {wrapWithVideoContext(
           wrapWithThemeContext(<Header />),
           { auth: {}, search: '' },
-          dispatch
+          { unsetAuth }
         )}
       </MemoryRouter>
     );
@@ -208,7 +189,6 @@ describe('Header UI tests', () => {
     const logout = screen.queryAllByRole('button', { name: /logout/i })[0];
     user.click(logout);
     expect(mockedSignOut).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({ type: 'UNSET_AUTH' });
+    expect(unsetAuth).toHaveBeenCalledTimes(1);
   });
 });

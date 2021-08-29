@@ -42,13 +42,13 @@ exports[`App UI tests renders correctly, auth info in storage 1`] = `
   height: 64px;
   padding-left: 16px;
   text-align: left;
-  -webkit-transition: background-color 1s ease;
-  transition: background-color 1s ease;
   width: inherit;
 }
 
 .c2:hover {
   background-color: rgba(0,0,0,0.16);
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
 }
 
 .c3 {
@@ -74,13 +74,13 @@ exports[`App UI tests renders correctly, auth info in storage 1`] = `
   height: 64px;
   padding-left: 16px;
   text-align: left;
-  -webkit-transition: background-color 1s ease;
-  transition: background-color 1s ease;
   width: inherit;
 }
 
 .c3:hover {
   background-color: rgba(0,0,0,0.16);
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
 }
 
 .c11 {
@@ -580,13 +580,13 @@ exports[`App UI tests renders correctly, no auth info in storage 1`] = `
   height: 64px;
   padding-left: 16px;
   text-align: left;
-  -webkit-transition: background-color 1s ease;
-  transition: background-color 1s ease;
   width: inherit;
 }
 
 .c2:hover {
   background-color: rgba(0,0,0,0.16);
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
 }
 
 .c3 {
@@ -612,13 +612,13 @@ exports[`App UI tests renders correctly, no auth info in storage 1`] = `
   height: 64px;
   padding-left: 16px;
   text-align: left;
-  -webkit-transition: background-color 1s ease;
-  transition: background-color 1s ease;
   width: inherit;
 }
 
 .c3:hover {
   background-color: rgba(0,0,0,0.16);
+  -webkit-transition: background-color 1s ease;
+  transition: background-color 1s ease;
 }
 
 .c11 {

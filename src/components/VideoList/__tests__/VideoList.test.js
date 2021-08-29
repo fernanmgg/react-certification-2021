@@ -12,9 +12,7 @@ describe('VideoList UI tests', () => {
       wrapWithVideoContext(
         <MemoryRouter>
           <VideoList videos={mockedVideos} loading={false} error={false} />
-        </MemoryRouter>,
-        {},
-        jest.fn()
+        </MemoryRouter>
       )
     );
     const title1 = screen.getByText(/test title 1/i);
