@@ -15,8 +15,7 @@ describe('PrivateRoute tests', () => {
             Public Route
           </Route>
         </MemoryRouter>,
-        { auth: {} },
-        jest.fn()
+        { auth: {} }
       )
     );
     expect(screen.getByText(/private route/i)).toBeInTheDocument();
@@ -31,8 +30,7 @@ describe('PrivateRoute tests', () => {
             Public Route
           </Route>
         </MemoryRouter>,
-        { auth: null },
-        jest.fn()
+        { auth: null }
       )
     );
     expect(screen.getByText(/public route/i)).toBeInTheDocument();

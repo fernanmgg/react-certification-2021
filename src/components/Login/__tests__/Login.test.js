@@ -19,7 +19,7 @@ describe('Login UI tests', () => {
   test('renders title, inputs and buttons', () => {
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, jest.fn()), {
+    render(wrapWithVideoContext(<Login />), {
       container: document.body.appendChild(div),
     });
     const title = screen.getByText(/log in/i);
@@ -39,7 +39,7 @@ describe('Login UI tests', () => {
   test('input style is changed when user types', () => {
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, jest.fn()), {
+    render(wrapWithVideoContext(<Login />), {
       container: document.body.appendChild(div),
     });
     const username = screen.getByLabelText(/username/i);
@@ -62,7 +62,7 @@ describe('Login UI tests', () => {
     const close = jest.fn();
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login close={close} />, {}, jest.fn()), {
+    render(wrapWithVideoContext(<Login close={close} />), {
       container: document.body.appendChild(div),
     });
     const cancel = screen.getByRole('button', { name: /cancel/i });
@@ -70,14 +70,14 @@ describe('Login UI tests', () => {
     expect(close).toHaveBeenCalledTimes(1);
   });
 
-  test('dispatch is called with valid credentials, remember false', async () => {
+  test('setAuth is called with valid credentials, remember false', async () => {
     const auth = { id: '123', name: 'test', avatarUrl: 'test' };
     const { deferred, promise } = controlledPromise();
-    const dispatch = jest.fn();
+    const setAuth = jest.fn();
     loginAPI.default = jest.fn(() => promise);
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, dispatch), {
+    render(wrapWithVideoContext(<Login />, {}, { setAuth }), {
       container: document.body.appendChild(div),
     });
     const username = screen.getByLabelText(/username/i);
@@ -91,21 +91,18 @@ describe('Login UI tests', () => {
       deferred.resolve(auth);
     });
     expect(JSON.parse(sessionStorage.getItem('auth'))).toEqual(auth);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_AUTH',
-      payload: { auth, favorites: [] },
-    });
+    expect(setAuth).toHaveBeenCalledTimes(1);
+    expect(setAuth).toHaveBeenCalledWith({ auth, favorites: [] });
   });
 
-  test('dispatch is called with valid credentials, remember true', async () => {
+  test('setAuth is called with valid credentials, remember true', async () => {
     const auth = { id: '123', name: 'test', avatarUrl: 'test' };
     const { deferred, promise } = controlledPromise();
-    const dispatch = jest.fn();
+    const setAuth = jest.fn();
     loginAPI.default = jest.fn(() => promise);
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, dispatch), {
+    render(wrapWithVideoContext(<Login />, {}, { setAuth }), {
       container: document.body.appendChild(div),
     });
     const username = screen.getByLabelText(/username/i);
@@ -121,11 +118,8 @@ describe('Login UI tests', () => {
       deferred.resolve(auth);
     });
     expect(JSON.parse(localStorage.getItem('auth'))).toEqual(auth);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_AUTH',
-      payload: { auth, favorites: [] },
-    });
+    expect(setAuth).toHaveBeenCalledTimes(1);
+    expect(setAuth).toHaveBeenCalledWith({ auth, favorites: [] });
   });
 
   test('error message is shown with invalid credentials', async () => {
@@ -133,7 +127,7 @@ describe('Login UI tests', () => {
     loginAPI.default = jest.fn(() => promise);
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, jest.fn()), {
+    render(wrapWithVideoContext(<Login />), {
       container: document.body.appendChild(div),
     });
     const username = screen.getByLabelText(/username/i);
@@ -149,16 +143,16 @@ describe('Login UI tests', () => {
     expect(screen.getByText(/username or password invalid/i)).toBeInTheDocument();
   });
 
-  test('dispatch is called with valid firebase credentials', async () => {
+  test('setAuth is called with valid firebase credentials', async () => {
     const authFirebase = { uid: '123', displayName: 'test', photoURL: 'test' };
     const { deferred, promise } = controlledPromise();
-    const dispatch = jest.fn();
+    const setAuth = jest.fn();
     app.default.auth = jest.fn(() => ({
       signInWithEmailAndPassword: jest.fn(() => promise),
     }));
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, dispatch), {
+    render(wrapWithVideoContext(<Login />, {}, { setAuth }), {
       container: document.body.appendChild(div),
     });
     const username = screen.getByLabelText(/username/i);
@@ -170,23 +164,23 @@ describe('Login UI tests', () => {
       user.click(firebase);
       deferred.resolve({ user: authFirebase });
     });
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_AUTH',
-      payload: { auth: { id: '123', name: 'test', avatarUrl: 'test' }, favorites: [] },
+    expect(setAuth).toHaveBeenCalledTimes(1);
+    expect(setAuth).toHaveBeenCalledWith({
+      auth: { id: '123', name: 'test', avatarUrl: 'test' },
+      favorites: [],
     });
   });
 
-  test('dispatch is called with fail-safe data for firebase', async () => {
+  test('setAuth is called with fail-safe data for firebase', async () => {
     const authFirebase = { uid: '123', displayName: null, photoURL: null };
     const { deferred, promise } = controlledPromise();
-    const dispatch = jest.fn();
+    const setAuth = jest.fn();
     app.default.auth = jest.fn(() => ({
       signInWithEmailAndPassword: jest.fn(() => promise),
     }));
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, dispatch), {
+    render(wrapWithVideoContext(<Login />, {}, { setAuth }), {
       container: document.body.appendChild(div),
     });
     const username = screen.getByLabelText(/username/i);
@@ -198,18 +192,15 @@ describe('Login UI tests', () => {
       user.click(firebase);
       deferred.resolve({ user: authFirebase });
     });
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'SET_AUTH',
-      payload: {
-        auth: {
-          id: '123',
-          name: '123',
-          avatarUrl:
-            'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
-        },
-        favorites: [],
+    expect(setAuth).toHaveBeenCalledTimes(1);
+    expect(setAuth).toHaveBeenCalledWith({
+      auth: {
+        id: '123',
+        name: '123',
+        avatarUrl:
+          'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
       },
+      favorites: [],
     });
   });
 
@@ -220,7 +211,7 @@ describe('Login UI tests', () => {
     }));
     const div = document.createElement('div');
     div.setAttribute('id', 'login');
-    render(wrapWithVideoContext(<Login />, {}, jest.fn()), {
+    render(wrapWithVideoContext(<Login />), {
       container: document.body.appendChild(div),
     });
     const username = screen.getByLabelText(/username/i);

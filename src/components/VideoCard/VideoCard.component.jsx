@@ -17,36 +17,36 @@ import { isFavorite, addFavorite, removeFavorite } from '../../utils/favoritesDB
 function VideoCard({ videoId, image, title, description }) {
   const history = useHistory();
   const favorites = history.location.pathname.match(/favorites/i);
-  const { state, dispatch } = useContext(VideoContext);
+  const { state, addFav, remFav } = useContext(VideoContext);
   const { auth } = state;
 
-  function handleClick() {
+  function handleCardClick() {
     if (!favorites) history.push(`/video/${videoId}`);
     else history.push(`/favorites/${videoId}`);
   }
 
-  function updateFavorites() {
+  function handleFavoriteClick() {
     const favorite = isFavorite(auth.id, videoId);
     if (!favorite) {
       addFavorite(auth.id, {
         id: { videoId },
         snippet: { title, description, thumbnails: { medium: { url: image } } },
       });
-      dispatch({ type: 'ADD_FAVORITE', payload: videoId });
+      addFav(videoId);
     } else {
       removeFavorite(auth.id, videoId);
-      dispatch({ type: 'REMOVE_FAVORITE', payload: videoId });
+      remFav(videoId);
     }
   }
 
   return (
     <StyledVideoCard>
       {auth && (
-        <FavoriteButton onClick={updateFavorites}>
+        <FavoriteButton onClick={handleFavoriteClick}>
           {!isFavorite(auth.id, videoId) ? 'Add' : 'Remove'} favorite
         </FavoriteButton>
       )}
-      <Wrapper onClick={handleClick}>
+      <Wrapper onClick={handleCardClick}>
         <Image backgroundImage={image} />
         <Content>
           <Title>{title}</Title>

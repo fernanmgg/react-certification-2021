@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavoriteVideoDetails UI tests renders correctly 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  height: calc(100vh - 64px - 16px);
+  margin-top: 16px;
+  padding: 16px;
+  width: 100%;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 3 1 0;
+  -ms-flex: 3 1 0;
+  flex: 3 1 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+  margin: 0 16px;
+}
+
+.c2 {
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  margin-top: 8px;
+}
+
+.c5 {
+  border: 1px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 8px;
+  padding: 8px;
+}
+
+.c6 {
+  font-size: 1.5rem;
+}
+
+.c7 {
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+  font-size: 1rem;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.c8 {
+  border-radius: 8px;
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+  overflow-y: scroll;
+  padding-top: 8px;
+}
+
+.c9 {
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width:900px) {
+  .c0 {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 200vh;
+  }
+}
+
+@media (max-width:900px) {
+  .c1 {
+    margin: 16px 0;
+  }
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        <iframe
+          height="100%"
+          src="https://www.youtube.com/embed/testId"
+          title="testId"
+          width="100%"
+        />
+      </div>
+      <div
+        class="c3"
+      >
+        <div
+          class="c4"
+        >
+          <button
+            class="c5"
+          >
+            Add favorite
+          </button>
+        </div>
+        <div
+          class="c6"
+        >
+          test title
+        </div>
+        <div
+          class="c7"
+        >
+          test description
+        </div>
+      </div>
+    </div>
+    <div
+      class="c8"
+    >
+      <h2
+        class="c9"
+      >
+        No videos found...
+      </h2>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -14,14 +14,14 @@ function VideoRelated({ videoId, image, title }) {
   const history = useHistory();
   const favorites = history.location.pathname.match(/favorites/i);
 
-  function handleClick() {
+  function handleRelatedClick() {
     if (!favorites) history.push(`/video/${videoId}`);
     else history.push(`/favorites/${videoId}`);
   }
 
   return (
     <StyledVideoRelated>
-      <Wrapper onClick={handleClick}>
+      <Wrapper onClick={handleRelatedClick}>
         <Image backgroundImage={image} />
         <Content>
           <Title>{title}</Title>

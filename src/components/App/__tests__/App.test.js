@@ -10,26 +10,16 @@ import * as useVideoListAPI from '../../../utils/hooks/useVideoListAPI';
 useVideoListAPI.default = jest.fn(() => ({ videos: [], loading: false, error: false }));
 
 describe('App UI tests', () => {
-  test('renders header and home view, login button if there is no auth info in storage', () => {
-    render(<App />);
-    const header = screen.getByRole('button', { name: /login/i });
-    const homeView = screen.getByText(/react bootcamp 2021/i);
-    expect(header).toBeInTheDocument();
-    expect(homeView).toBeInTheDocument();
-    expect(useVideoListAPI.default).toHaveBeenCalled();
-    expect(useVideoListAPI.default).toHaveBeenCalledWith('wizeline');
+  test('renders correctly, no auth info in storage', () => {
+    const { asFragment } = render(<App />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  test('renders header and home view, logout button if there is auth info in storage', () => {
+  test('renders correctly, auth info in storage', () => {
     const auth = { id: '123', name: 'test', avatarUrl: 'test' };
     localStorage.setItem('auth', JSON.stringify(auth));
-    render(<App />);
-    const header = screen.getByRole('button', { name: /logout/i });
-    const homeView = screen.getByText(/react bootcamp 2021/i);
-    expect(header).toBeInTheDocument();
-    expect(homeView).toBeInTheDocument();
-    expect(useVideoListAPI.default).toHaveBeenCalled();
-    expect(useVideoListAPI.default).toHaveBeenCalledWith('wizeline');
+    const { asFragment } = render(<App />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test('theme changes when toggle is clicked', () => {

@@ -22,22 +22,19 @@ function Login({ close }) {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { dispatch } = useContext(VideoContext);
+  const { setAuth } = useContext(VideoContext);
 
   function writeStorage(auth) {
     if (remember) localStorage.setItem('auth', JSON.stringify(auth));
     else sessionStorage.setItem('auth', JSON.stringify(auth));
   }
 
-  function login() {
+  function handleLoginClick() {
     loginAPI(username, password)
       .then((auth) => {
         setErrorMessage('');
         writeStorage(auth);
-        dispatch({
-          type: 'SET_AUTH',
-          payload: { auth, favorites: getFavorites(auth.id) },
-        });
+        setAuth({ auth, favorites: getFavorites(auth.id) });
         close();
       })
       .catch((error) => {
@@ -45,7 +42,7 @@ function Login({ close }) {
       });
   }
 
-  function loginFirebase() {
+  function handleFirebaseClick() {
     app
       .auth()
       .signInWithEmailAndPassword(username, password)
@@ -59,10 +56,7 @@ function Login({ close }) {
             'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
         };
         writeStorage(auth);
-        dispatch({
-          type: 'SET_AUTH',
-          payload: { auth, favorites: getFavorites(auth.id) },
-        });
+        setAuth({ auth, favorites: getFavorites(auth.id) });
         close();
       })
       .catch((error) => {
@@ -106,8 +100,8 @@ function Login({ close }) {
       </Checkbox>
       <ButtonWrapper>
         <Button onClick={close}>Cancel</Button>
-        <Button onClick={loginFirebase}>Firebase</Button>
-        <Button onClick={login}>Login</Button>
+        <Button onClick={handleFirebaseClick}>Firebase</Button>
+        <Button onClick={handleLoginClick}>Login</Button>
       </ButtonWrapper>
     </Modal>,
     document.getElementById('login')

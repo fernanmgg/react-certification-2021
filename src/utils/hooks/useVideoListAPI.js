@@ -40,7 +40,7 @@ export default function useVideoListAPI(query, relatedVideos = false) {
 
     const check = !relatedVideos
       ? query.length > 0 && query.length < 64
-      : /[A-Za-z0-9_-]{11}/.test(query);
+      : /^[A-Za-z0-9_-]{11}$/.test(query);
     if (check) fetchData();
   }, [query, relatedVideos]);
 

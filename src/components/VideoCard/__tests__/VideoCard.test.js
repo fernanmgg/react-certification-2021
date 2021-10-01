@@ -19,8 +19,7 @@ describe('VideoCard UI tests', () => {
             description="test description"
           />
         </MemoryRouter>,
-        { auth: null },
-        jest.fn()
+        { auth: null }
       )
     );
     const title = screen.getByText(/test title/i);
@@ -30,7 +29,7 @@ describe('VideoCard UI tests', () => {
   });
 
   test('renders "Add favorite" button if the video is not favorite', () => {
-    const dispatch = jest.fn();
+    const addFav = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => false);
     favoritesDB.addFavorite = jest.fn();
     render(
@@ -45,18 +44,18 @@ describe('VideoCard UI tests', () => {
           />
         </MemoryRouter>,
         { auth: { name: 'test' } },
-        dispatch
+        { addFav }
       )
     );
     const favorite = screen.getByRole('button', { name: /add favorite/i });
     expect(favorite).toBeInTheDocument();
     user.click(favorite);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({ type: 'ADD_FAVORITE', payload: 'test id' });
+    expect(addFav).toHaveBeenCalledTimes(1);
+    expect(addFav).toHaveBeenCalledWith('test id');
   });
 
   test('renders "Remove favorite" button if the video is favorite', () => {
-    const dispatch = jest.fn();
+    const remFav = jest.fn();
     favoritesDB.isFavorite = jest.fn(() => true);
     favoritesDB.removeFavorite = jest.fn();
     render(
@@ -71,17 +70,14 @@ describe('VideoCard UI tests', () => {
           />
         </MemoryRouter>,
         { auth: { name: 'test' } },
-        dispatch
+        { remFav }
       )
     );
     const favorite = screen.getByRole('button', { name: /remove favorite/i });
     expect(favorite).toBeInTheDocument();
     user.click(favorite);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith({
-      type: 'REMOVE_FAVORITE',
-      payload: 'test id',
-    });
+    expect(remFav).toHaveBeenCalledTimes(1);
+    expect(remFav).toHaveBeenCalledWith('test id');
   });
 
   test('redirects to /video/** route when card is clicked', () => {
@@ -104,8 +100,7 @@ describe('VideoCard UI tests', () => {
             }}
           />
         </MemoryRouter>,
-        { auth: null },
-        jest.fn()
+        { auth: null }
       )
     );
     const video = screen.getByRole('button');
@@ -133,8 +128,7 @@ describe('VideoCard UI tests', () => {
             }}
           />
         </MemoryRouter>,
-        { auth: null },
-        jest.fn()
+        { auth: null }
       )
     );
     const video = screen.getByRole('button');
